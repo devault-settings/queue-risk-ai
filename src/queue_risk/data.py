@@ -39,8 +39,46 @@ def resolved_clean_energy(df: pd.DataFrame) -> pd.DataFrame:
     return out
 
 
+def built_within(df: pd.DataFrame, horizon: int, cutoff=config.DATA_CUTOFF) -> pd.DataFrame:
+    """Clean-energy projects in the date-reporting regions whose `horizon`-year window has
+    closed by `cutoff`, with the label `built` = reached operation within `horizon` years.
+
+    Every status is kept: a project still active, suspended or withdrawn when its window
+    closed is labeled 0. That is what removes the censoring of the "ever built" outcome.
+
+    The 4% of built projects without an operation date take the proposed online date
+    instead (flagged `on_date_imputed`); on projects with both dates, that stand-in gives
+    the same 5-year label 90% of the time. It is used for the LABEL only, never as a feature.
+    Built projects with neither date are dropped (their label is unknown).
+    """
+    end = pd.Timestamp(cutoff)
+    keep = (df["type_1"].isin(config.CLEAN_TYPES)
+            & df["region"].isin(config.DATE_REGIONS)
+            & (df["q_year"] >= config.FIRST_YEAR)
+            & (df["q_date"] + pd.DateOffset(years=horizon) <= end))
+    out = df[keep].copy()
+    is_op = out["q_status"] == "operational"
+    out["on_date_imputed"] = is_op & out["on_date"].isna() & out["prop_date"].notna()
+    done = out["on_date"].where(out["on_date"].notna(), out["prop_date"].where(is_op))
+    out = out[~(is_op & done.isna())]
+    done = done.loc[out.index]
+    out["built"] = (done.notna() & (done <= out["q_date"] + pd.DateOffset(years=horizon))).astype(int)
+    return out
+
+
+def modeling_table(raw: pd.DataFrame, outcome: str = config.OUTCOME) -> pd.DataFrame:
+    """The labeled projects for the chosen outcome definition."""
+    if outcome == "within":
+        return built_within(raw, config.HORIZON)
+    if outcome == "ever":
+        return resolved_clean_energy(raw)
+    raise ValueError(f"unknown outcome {outcome!r}")
+
+
 if __name__ == "__main__":
     raw = load_raw_queue()
-    res = resolved_clean_energy(raw)
-    print(f"raw rows: {len(raw):,}  |  resolved clean-energy rows since {config.FIRST_YEAR}: {len(res):,}")
-    print(res.groupby("q_year")["built"].agg(["size", "mean"]).round(3).to_string())
+    for outcome in ["within", "ever"]:
+        res = modeling_table(raw, outcome)
+        print()
+        print(f"{outcome}: {len(res):,} labeled projects")
+        print(res.groupby("q_year")["built"].agg(["size", "mean"]).round(3).T.to_string())

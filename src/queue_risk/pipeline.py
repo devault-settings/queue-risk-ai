@@ -3,6 +3,7 @@
     python -m queue_risk.pipeline            # model selection on rolling validation only
     python -m queue_risk.pipeline --final    # + one-time test-set "showtime" (Lecture 4)
     python -m queue_risk.pipeline --fast     # small grids, for a quick end-to-end check
+    python -m queue_risk.pipeline --outcome ever   # the "ever built" definition instead
 
 Model selection never touches the test cohort. --final refits each model's selected
 settings on the whole training window and scores the test cohort once, with bootstrap
@@ -24,16 +25,19 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--final", action="store_true", help="score the held-out test cohort")
     ap.add_argument("--fast", action="store_true", help="first value of every grid only")
+    ap.add_argument("--outcome", choices=["within", "ever"], default=config.OUTCOME)
     args = ap.parse_args()
+    split = config.SPLITS[args.outcome]
 
     raw = data.load_raw_queue()
-    projects = data.resolved_clean_energy(raw)
+    projects = data.modeling_table(raw, args.outcome)
     X, y = features.build_features(raw, projects, opposition=text.load_scores())
-    train, test = temporal_split(projects["q_year"])
+    train, test = temporal_split(projects["q_year"], split["train"], split["test"])
     Xtr, ytr, Xte, yte = X[train], y[train], X[test], y[test]
     folds = rolling_folds(projects["q_year"][train])
-    print(f"train {config.TRAIN_YEARS}: {len(ytr):,} projects, {ytr.mean():.1%} built | "
-          f"test {config.TEST_YEARS}: {len(yte):,} projects, {yte.mean():.1%} built | "
+    label = f"built within {config.HORIZON}y" if args.outcome == "within" else "ever built"
+    print(f"outcome: {label} | train {split['train']}: {len(ytr):,} projects, {ytr.mean():.1%} | "
+          f"test {split['test']}: {len(yte):,} projects, {yte.mean():.1%} | "
           f"{X.shape[1]} features, {len(folds)} rolling folds")
 
     rows, test_scores = [], {}
@@ -56,7 +60,7 @@ def main():
 
     table = pd.DataFrame(rows)
     config.FIGURES.parent.mkdir(parents=True, exist_ok=True)
-    out = config.FIGURES.parent / ("results_test.csv" if args.final else "results_validation.csv")
+    out = config.FIGURES.parent / f"results_{args.outcome}_{'test' if args.final else 'validation'}.csv"
     table.to_csv(out, index=False)
     with pd.option_context("display.width", 200, "display.max_columns", 20, "display.precision", 3):
         print(table.drop(columns="secs").to_string(index=False))

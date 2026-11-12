@@ -10,7 +10,14 @@
 
 Only about 13% of the capacity that entered US interconnection queues from 2000 to 2020 was operating by end-2025 (Berkeley Lab, *Queued Up*). An infrastructure fund that backs early-stage projects spends development capital on many projects that later withdraw.
 
-On the day a solar, wind or storage project enters the queue, we predict whether it will reach commercial operation. The fund backs the top **K** projects, and we measure the result as **wasted development spend per built MW**, compared against the rules of thumb investors use today.
+On the day a solar, wind or storage project enters the queue, we predict **whether it will be operating within 5 years**, plus a time-to-build curve (the chance of operating within 2, 3, 4, 5 and 7 years). The fund backs the top **K** projects, and we measure the result as **wasted development spend per built MW**, compared against the rules of thumb investors use today.
+
+## Two outcomes, and why we lead with "within 5 years"
+
+- **Within N years** (default). Every project is labeled once N years have passed since it entered: built in time = 1; still active, suspended or withdrawn = 0. Nothing is censored, so we can test on the most recent cohorts whose window has closed (2019–2020 entries). Training uses 2005–2014 entries, whose 5-year outcomes were known by 2019, so a fund could really have built this model at decision time.
+- **Ever built** (`--outcome ever`). Uses resolved projects only. It is right-censored: withdrawals resolve faster than builds, so recent cohorts look worse than they are. Its test window has to stop at 2015–2017.
+
+"Within N years" needs a completion date, so it covers the six operators that report one for 96% of built projects: CAISO, ERCOT, MISO, NYISO, PJM and SPP, together 66% of queue projects. ISO-NE reports no completion dates, and the non-ISO West and Southeast report few.
 
 ## Running it
 
@@ -20,13 +27,15 @@ pip install -r requirements.txt && pip install -e .
 python tests/selftest.py                  # checks leakage, splits, metrics and data checkpoints (~1 min)
 python -m queue_risk.pipeline             # model selection on rolling validation (~3 min)
 python -m queue_risk.pipeline --final     # one-time test-set run. Don't run until the team agrees.
+python -m queue_risk.timeline             # time-to-build curve, validated on 2013-2014 entries
 ```
 
 ## The pipeline
 
 | Step | Module | Lecture |
 |---|---|---|
-| Load, de-duplicate, label (`built` = operational 1 / withdrawn 0) | [data.py](src/queue_risk/data.py) | — |
+| Load, de-duplicate, label: within N years (default) or ever built | [data.py](src/queue_risk/data.py) | — |
+| Time-to-build curve: one model per horizon, each trained only on cohorts whose window had closed | [timeline.py](src/queue_risk/timeline.py) | 6 |
 | Entry-time features: project attributes plus county and region track records as of the entry date | [features.py](src/queue_risk/features.py) | 2, 8 |
 | Temporal split; rolling-origin validation (fit on years before t, validate on t) | [split.py](src/queue_risk/split.py) | 4, 6 |
 | Benchmark ladder: flat rate → historical rate → logistic → LASSO → CART → random forest → gradient boosting | [models.py](src/queue_risk/models.py) | 3–6 |
@@ -39,27 +48,43 @@ python -m queue_risk.pipeline --final     # one-time test-set run. Don't run unt
 
 `tests/selftest.py` refuses to pass if any of these move.
 
-| Checkpoint | Value |
-|---|---|
-| Rows after de-duplication | 38,066 (135 repeated IDs removed) |
-| Resolved solar/wind/storage projects, 2005–2017 entries | 9,431 |
-| Training cohort (2005–2014 entries) | 5,872 projects, 17.9% built |
-| Test cohort (2015–2017 entries), not yet scored | 3,559 projects, 19.7% built |
+| Checkpoint | Within 5 years (default) | Ever built |
+|---|---|---|
+| Rows after de-duplication | 38,066 (135 repeated IDs removed) | same |
+| Training cohort (2005–2014 entries) | 4,039 projects, 11.7% built | 5,872 projects, 17.9% built |
+| Test cohort, not yet scored | 2019–2020: 3,188 projects, 4.4% built | 2015–2017: 3,559 projects, 19.7% built |
 
 **Validation results (Nov 12):** rolling folds over 2010–2014, 18 features, no text score yet.
 
-| Model | Validation AUC |
-|---|---|
-| Flat rate (rule of thumb) | 0.500 |
-| Historical rate, region × technology | 0.554 |
-| CART | 0.588 |
-| Logistic regression / LASSO | 0.631 / 0.632 |
-| Random forest | 0.633 |
-| **Gradient boosting** | **0.667** |
+| Model | AUC, within 5 years | AUC, ever built |
+|---|---|---|
+| Flat rate (rule of thumb) | 0.500 | 0.500 |
+| Historical rate, region × technology | 0.613 | 0.554 |
+| CART | 0.612 | 0.588 |
+| Logistic regression / LASSO | 0.622 / 0.627 | 0.631 / 0.632 |
+| Random forest | 0.613 | 0.633 |
+| **Gradient boosting** | **0.655** | **0.667** |
+
+**Time-to-build curve, validated by deciding on 2013–2014 entries.** Each horizon trains only on cohorts whose window had closed by 2013.
+
+| Horizon | Trained on | AUC | Predicted rate | Actual rate |
+|---|---|---|---|---|
+| 2 years | 2005–2011 (3,220) | 0.735 | 1.4% | 6.4% |
+| 3 years | 2005–2010 (2,631) | 0.715 | 3.5% | 12.5% |
+| 5 years | 2005–2008 (1,524) | 0.564 | 10.0% | 21.1% |
+| 7 years | 2005–2006 (539) | 0.534 | 16.9% | 24.8% |
+
+There are two lessons:
+- **Data runs short at long horizons.** The honest training window shrinks as the horizon grows. A discrete-time hazard model, which reuses partial histories, is the fix if there's time.
+- **Rates drift between cohorts.** Ranking (AUC) carries over; calibrated rates do not, so they need recalibrating on the latest closed cohort.
 
 ## Things worth knowing about the data
 
-- **Right-censoring.** Withdrawals resolve faster than builds, so once active projects are dropped, recent cohorts look worse than they are. Among resolved projects, the build rate is about 24% for 2015 entries but under 3% from 2021 on. That's why the test window ends at 2017 (≥ 84% of entries resolved). The alternative fixes, a fixed-horizon label or a survival model, are open for the team to decide.
+- **Right-censoring (the "ever built" outcome only).** Withdrawals resolve faster than builds, so once active projects are dropped, recent cohorts look worse than they are. The fixed-horizon outcome avoids this.
+- **A real decline, not an artifact.** Even with fully observed 5-year labels, the build rate falls from 21% for 2014 entries to 3.9% for 2020 entries. The queue is flooding with speculative requests. Ranking still works under this drift, but probabilities need recalibrating.
+- **Missing dates.**
+  - 27% of built projects have no completion date, concentrated outside the six operators above. Inside them, 4% are missing; those take the developer's proposed online date, which gives the same 5-year label 90% of the time. It's used for the label only, never as a feature.
+  - 34% of withdrawn projects have no withdrawal date. The track-record features treat an unknown date as "not known at entry," which undercounts past withdrawals.
 - **Duplicates and dirt.** 135 `entity|q_id` pairs repeat, mostly 1997–2002 gas plants re-listed without county. The more complete row of each pair is kept. One FIPS code is a garbled 9-digit value and is treated as missing.
 - **The "signed agreement" rule is a later decision.** Developers often ignore projects until they sign an interconnection agreement, but that information arrives years after entry. It's a different decision point, not a fair head-to-head benchmark.
 - **This is not a causal claim.** The model ranks how likely a project is to be built. It doesn't say that backing a project makes it more likely to be built.

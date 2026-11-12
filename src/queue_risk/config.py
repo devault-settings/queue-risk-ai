@@ -28,14 +28,32 @@ CLEAN_TYPES = ["Solar", "Wind", "Battery", "Offshore Wind"]
 # Outcome: operational = 1 (built), withdrawn = 0. Active/suspended are unresolved.
 RESOLVED_STATUSES = ["operational", "withdrawn"]
 
+# Two ways to define the outcome (README "Two outcomes"):
+#   "within"  built within HORIZON years of entry. Every project gets a label once its
+#             window has closed (still active or withdrawn = not built in time), so
+#             nothing is censored and the test cohort can be recent. DEFAULT.
+#   "ever"    ever built, among resolved projects only. Recent cohorts are censored
+#             (withdrawals resolve faster than builds), so the test window stops at 2017.
+OUTCOME = "within"
+HORIZON = 5                       # years from queue entry
+CURVE_HORIZONS = [2, 3, 4, 5, 7]  # for the time-to-build curve (timeline.py)
+DATA_CUTOFF = "2025-12-31"        # the file's "as of" date
+
+# The "within" outcome needs a completion date. These six operators report one for
+# 96% of built projects; ISO-NE reports none, the non-ISO West and Southeast few.
+DATE_REGIONS = ["CAISO", "ERCOT", "MISO", "NYISO", "PJM", "SPP"]
+
 # ------------------------------------------------------------------ the split
 # Temporal split, as in Lecture 6 (wildfires: 2015-2022 train / 2023-2024 test).
-# PROPOSAL, pending the data lead: recent cohorts are right-censored (builds take
-# longer to resolve than withdrawals), so the test window stops at 2017, where
-# >= 84% of entries are resolved. See README "Known issues".
 FIRST_YEAR = 2005
-TRAIN_YEARS = (2005, 2014)
-TEST_YEARS = (2015, 2017)
+SPLITS = {
+    # Training labels for 2014 entries close in 2019, so a fund deciding on 2019 entries
+    # could have built exactly this model: the train/test gap equals HORIZON.
+    "within": {"train": (2005, 2014), "test": (2019, 2020)},
+    "ever":   {"train": (2005, 2014), "test": (2015, 2017)},
+}
+TRAIN_YEARS = SPLITS[OUTCOME]["train"]
+TEST_YEARS = SPLITS[OUTCOME]["test"]
 
 # Rolling-origin validation inside the training window (Lecture 4 cross-validation,
 # made temporal): for each year t below, fit on entries before t, validate on t.

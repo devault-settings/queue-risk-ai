@@ -121,6 +121,27 @@ def test_metrics_and_impact():
     check("... spread over the 200 MW that got built", np.isclose(r["wasted_per_built_mw"], 1e4))
 
 
+def test_built_within_label():
+    print("\nFixed-horizon label: built within N years")
+    from queue_risk import data
+    t = pd.Timestamp
+    q = pd.DataFrame({
+        "project_id": list("ABCDEF"), "type_1": ["Solar"] * 6, "region": ["PJM"] * 5 + ["ISO-NE"],
+        "q_year": [2010, 2010, 2010, 2010, 2022, 2010],
+        "q_date": [t("2010-01-01")] * 4 + [t("2022-01-01"), t("2010-01-01")],
+        "q_status": ["operational", "operational", "active", "operational", "operational", "operational"],
+        "on_date": [t("2013-01-01"), t("2016-06-01"), pd.NaT, pd.NaT, t("2024-01-01"), t("2012-01-01")],
+        "prop_date": [pd.NaT, pd.NaT, pd.NaT, t("2012-01-01"), pd.NaT, pd.NaT],
+    })
+    lab = data.built_within(q, horizon=5, cutoff="2025-12-31").set_index("project_id")["built"]
+    check("built in year 3 -> 1", lab.get("A") == 1)
+    check("built in year 6 -> 0 for a 5-year horizon", lab.get("B") == 0)
+    check("still active when the window closed -> 0, not dropped", lab.get("C") == 0)
+    check("built, no operation date: proposed date stands in", lab.get("D") == 1)
+    check("window not closed by the cutoff -> excluded", "E" not in lab.index)
+    check("regions that don't report dates -> excluded", "F" not in lab.index)
+
+
 def test_real_data_checkpoints():
     print("\nReal data checkpoints (the numbers the README quotes)")
     if not config.QUEUE_XLSX.exists():
@@ -133,15 +154,24 @@ def test_real_data_checkpoints():
     check("project_id is unique", raw["project_id"].is_unique)
     check("every FIPS key is a 5-character string",
           raw["fips"].dropna().map(lambda s: isinstance(s, str) and len(s) == 5).all())
-    train, test = temporal_split(res["q_year"])
-    check("5,872 training projects, 2005-2014", train.sum() == 5872, f"got {train.sum():,}")
-    check("3,559 test projects, 2015-2017", test.sum() == 3559, f"got {test.sum():,}")
+    ever = config.SPLITS["ever"]
+    train, test = temporal_split(res["q_year"], ever["train"], ever["test"])
+    check("ever built: 5,872 training projects, 2005-2014", train.sum() == 5872, f"got {train.sum():,}")
+    check("ever built: 3,559 test projects, 2015-2017", test.sum() == 3559, f"got {test.sum():,}")
+    w = data.built_within(raw, config.HORIZON)
+    within = config.SPLITS["within"]
+    train, test = temporal_split(w["q_year"], within["train"], within["test"])
+    check("within 5y: 4,039 training projects, 2005-2014", train.sum() == 4039, f"got {train.sum():,}")
+    check("within 5y: 3,188 test projects, 2019-2020", test.sum() == 3188, f"got {test.sum():,}")
+    check("within 5y: train/test gap is at least the horizon",
+          within["test"][0] - within["train"][1] >= config.HORIZON)
     check("only resolved outcomes are labeled", set(res["q_status"]) <= set(config.RESOLVED_STATUSES))
 
 
 def main():
     for t in [test_lag_features_see_only_the_past, test_opposition_join, test_split,
-              test_benchmarks, test_metrics_and_impact, test_real_data_checkpoints]:
+              test_benchmarks, test_metrics_and_impact, test_built_within_label,
+              test_real_data_checkpoints]:
         t()
     print(f"\n{'All checks passed.' if not FAILURES else f'{len(FAILURES)} FAILED: ' + '; '.join(FAILURES)}")
     sys.exit(1 if FAILURES else 0)
