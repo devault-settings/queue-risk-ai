@@ -1,0 +1,33 @@
+# Private team material: never commit (contains phone numbers and emails)
+chats/
+project_context.md
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+.ipynb_checkpoints/
+.env
+
+# Generated data and models (rebuild them with the code in src/)
+data/interim/*
+data/processed/*
+data/external/*
+models/*
+!**/.gitkeep
+
+# Fine-tuned transformer checkpoints and caches
+*.pt
+*.safetensors
+*.bin
+wandb/
+runs/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+~$*.xlsx
