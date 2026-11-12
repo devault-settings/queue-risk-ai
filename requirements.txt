@@ -3,8 +3,7 @@ pandas>=2.2
 numpy>=1.26
 openpyxl>=3.1
 scikit-learn>=1.5
-lightgbm>=4.3
-xgboost>=2.0
+# optional: lightgbm, xgboost (the pipeline uses scikit-learn's HistGradientBoosting)
 shap>=0.45
 
 # Text model (fine-tuning is easiest in Colab with a GPU)

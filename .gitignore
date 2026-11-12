@@ -31,3 +31,6 @@ Thumbs.db
 .vscode/
 .idea/
 ~$*.xlsx
+
+# Generated results tables (rebuild with python -m queue_risk.pipeline)
+reports/results_*.csv
