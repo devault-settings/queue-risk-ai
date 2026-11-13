@@ -61,10 +61,10 @@ The Sabin Center's annual *Opposition to Renewable Energy Facilities in the Unit
 - **Restrictions:** about 450 jurisdictions in 42 states (429 counties, 9 municipalities, 13 state laws). They are dated only by the first edition that lists them (2021 onward), so they can't inform older cohorts.
 
 **Does it add signal?** ([stack.py](src/queue_risk/stack.py), validation on 2015–2018 entries only.) The test is two-stage, as in Lecture 7: the frozen tabular model's score, plus the opposition flag, fit and scored leave-one-year-out.
-- **Effect size:** a county with an earlier contested project has **about half the odds** of a 5-year build (coefficient −0.65) at the same tabular score.
-- **Ranking gain:** AUC +0.015, 95% CI [−0.003, +0.031]. It's positive in every year, but the interval touches zero, so it's **suggestive, not conclusive.**
+- **Effect size:** a county with an earlier contested project has **about 0.57 times the odds** of a 5-year build (coefficient −0.56) at the same tabular score.
+- **Ranking gain:** AUC +0.009, 95% CI [−0.002, +0.020]. It's positive in every year, but the interval touches zero, so it's **suggestive, not conclusive.**
 - **Caveat on the list itself:** Sabin compiles its list after the fact, so a 2015 controversy is in it partly because researchers looked back later. That was knowable in 2015, but it isn't a record collected in 2015.
-- **Warning for the test run:** the tabular model alone ranks the 2017 and 2018 cohorts barely better than chance (AUC about 0.50). The queue changed enough that 2005–2014 history transfers poorly.
+- **Warning for the test run:** even with the point-of-interconnection features, the tabular model ranks the 2017 and 2018 cohorts only at AUC 0.55–0.56 (overall 0.626 on 2015–2018). The queue changed enough that 2005–2014 history transfers poorly.
 
 **The NLP step (needs labels):** label 300 paragraphs for outcome and concerns ([guidelines](docs/labeling_guidelines.md)), then compare keyword rules, TF-IDF, frozen DistilBERT and fine-tuned DistilBERT, all on a CPU. The question is whether *successful* opposition (blocked projects) carries more signal than any opposition.
 
@@ -118,7 +118,7 @@ python -m queue_risk.pipeline --models "Gradient,TabPFN" --ablation   # with vs.
 |---|---|---|
 | Load, de-duplicate, label: within N years (default) or ever built | [data.py](src/queue_risk/data.py) | — |
 | Time-to-build curve: one model per horizon, each trained only on cohorts whose window had closed | [timeline.py](src/queue_risk/timeline.py) | 6 |
-| Entry-time features: project attributes plus county and region track records as of the entry date | [features.py](src/queue_risk/features.py) | 2, 8 |
+| Entry-time features: project attributes; county, region and **point-of-interconnection** track records as of entry; voltage and line-tap vs. substation parsed from the POI name | [features.py](src/queue_risk/features.py) | 2, 8 |
 | Temporal split; rolling-origin validation (fit on years before t, validate on t) | [split.py](src/queue_risk/split.py) | 4, 6 |
 | Benchmark ladder: flat rate → historical rate → logistic → LASSO → CART → random forest → gradient boosting | [models.py](src/queue_risk/models.py) | 3–6 |
 | AUC, PR-AUC, Brier, precision@K (ties scored pro rata), calibration, bootstrap CIs | [evaluate.py](src/queue_risk/evaluate.py) | 3, 5 |
@@ -139,16 +139,16 @@ python -m queue_risk.pipeline --models "Gradient,TabPFN" --ablation   # with vs.
 | Training cohort (2005–2014 entries) | 4,029 projects, 11.1% built | 5,862 projects, 17.7% built |
 | Test cohort, not yet scored | 2019–2020: 3,184 projects, 3.7% built | 2015–2017: 3,557 projects, 19.7% built |
 
-**Validation results (Nov 12, after the data-quality fixes):** rolling folds over 2010–2014, 18 features, no text score yet. The "ever built" column predates the fixes.
+**Validation results (Nov 12, evening):** rolling folds over 2010–2014, 26 features, including the point-of-interconnection track record and voltage. The "ever built" column predates the data-quality fixes and the new features. Every experiment, including the failed ones, is in [docs/model_log.md](docs/model_log.md).
 
 | Model | AUC, within 5 years | AUC, ever built |
 |---|---|---|
 | Flat rate (rule of thumb) | 0.500 | 0.500 |
 | Historical rate, region × technology | 0.620 | 0.554 |
-| CART | 0.611 | 0.588 |
-| Logistic regression / LASSO | 0.617 / 0.636 | 0.631 / 0.632 |
-| Random forest | 0.626 | 0.633 |
-| **Gradient boosting** | **0.652** | **0.667** |
+| CART | 0.662 | 0.588 |
+| Logistic regression / LASSO | 0.660 / 0.678 | 0.631 / 0.632 |
+| Random forest | 0.695 | 0.633 |
+| **Gradient boosting** | **0.701** | **0.667** |
 
 **Time-to-build curve, validated by deciding on 2013–2014 entries.** Each horizon trains only on cohorts whose window had closed by 2013.
 

@@ -37,10 +37,10 @@ Every result so far is on **validation data only**. The test cohort (2019–2020
 |---|---|
 | Flat rate | 0.500 |
 | Historical rate | 0.620 |
-| CART | 0.611 |
-| Logistic / LASSO | 0.617 / 0.636 |
-| Random forest | 0.626 |
-| **Gradient boosting** | **0.652** |
+| CART | 0.662 |
+| Logistic / LASSO | 0.660 / 0.678 |
+| Random forest | 0.695 |
+| **Gradient boosting** | **0.701** |
 
 - **Time-to-build curve** ([timeline.py](../src/queue_risk/timeline.py)): one model per horizon, each trained only on cohorts whose window had closed. It ranks well at 2 years (AUC 0.73) but runs short of training data at 5–7 years (about 0.55). Its probabilities come out too low because build rates drift between cohorts.
 
@@ -64,6 +64,8 @@ Every result so far is on **validation data only**. The test cohort (2019–2020
 - **GPU work:** a [Colab notebook](../notebooks/tabpfn_colab.ipynb) runs TabPFN vs. gradient boosting, each with and without the text features (`--ablation`).
 
 ---
+
+**Update, Nov 12 evening:** adding the point-of-interconnection (POI) track record, plus the voltage and line-vs-substation type parsed from the POI name, raised validation AUC from 0.652 to **0.701**. Census density, EIA prices, tuning, ensembles and recency weighting didn't help. Everything tried is in [model_log.md](model_log.md).
 
 ## 3. What remains, in priority order
 

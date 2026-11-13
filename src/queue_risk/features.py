@@ -14,6 +14,8 @@ q_year is deliberately NOT a feature. The split is temporal, and Lecture 5 warns
 trees cannot extrapolate: every test year would fall in the last training bin.
 Time trends enter through the lag variables instead.
 """
+import re
+
 import numpy as np
 import pandas as pd
 
@@ -88,8 +90,59 @@ def add_opposition(df: pd.DataFrame, scores: pd.DataFrame) -> pd.DataFrame:
     return out.drop(columns="score_year")
 
 
-def build_features(raw: pd.DataFrame, projects: pd.DataFrame, opposition: pd.DataFrame | None = None):
-    """Return (X, y) for `projects` (a subset of `raw`, e.g. resolved clean-energy rows)."""
+# ------------------------------------------------------------------ point of interconnection
+# The POI name is filed with the request ("Dotson 69kV Substation", "Lugo-Pisgah No. 2 230 kV
+# tran line"). Its text gives the voltage and whether the project taps a line or connects at
+# a substation; its value groups projects that share a connection point, whose track record
+# (as of entry) is the finest-grained lag variable we have.
+
+def poi_key(names: pd.Series, entity: pd.Series) -> pd.Series:
+    k = names.astype(str).str.lower().str.replace(r"\d{2,3}\s*-?\s*kv", "", regex=True)
+    k = k.str.replace(r"[^a-z]", "", regex=True)
+    k = k.where(~k.isin(["", "nan", "none"]))
+    return (k + "|" + entity.astype(str)).where(k.notna())
+
+
+def poi_text_features(df: pd.DataFrame) -> pd.DataFrame:
+    t = df["poi_name"].astype(str)
+    kv = t.str.extract(r"(\d{2,3})\s*-?\s*kv", flags=re.IGNORECASE)[0].astype(float)
+    sub = t.str.contains(r"substation|switching|station|\bsub\b", case=False)
+    line = t.str.contains(r"-|\bline\b|\btap\b|\bto\b", case=False) & ~sub
+    return pd.DataFrame({"poi_kv": kv, "poi_is_line": line.astype(int), "poi_is_sub": sub.astype(int)},
+                        index=df.index)
+
+
+# ------------------------------------------------------------------ county context (Census)
+CENSUS_URL = "https://www2.census.gov/geo/docs/maps-data/data/gazetteer/Gaz_counties_national.zip"
+
+
+def census_counties() -> pd.DataFrame:
+    """2010 Census county gazetteer: log population density, log land area, centroid lat/lon.
+    Slow-moving county facts; 2010 values are used for every cohort (a mild anachronism for
+    2005-2009 entries, noted in the README). Downloaded once to data/external/census/."""
+    path = config.EXTERNAL / "census" / "Gaz_counties_national.txt"
+    if not path.exists():
+        import io, urllib.request, zipfile
+        path.parent.mkdir(parents=True, exist_ok=True)
+        zipfile.ZipFile(io.BytesIO(urllib.request.urlopen(CENSUS_URL).read())).extractall(path.parent)
+    g = pd.read_csv(path, sep="\t", dtype={"GEOID": str}, encoding="latin-1")
+    g.columns = g.columns.str.strip()
+    return pd.DataFrame({"log_density": np.log1p(g["POP10"] / g["ALAND_SQMI"]),
+                         "log_land": np.log(g["ALAND_SQMI"]),
+                         "lat": g["INTPTLAT"], "lon": g["INTPTLONG"]}).set_index(g["GEOID"])
+
+
+DEFAULT_EXTRAS = ("poi",)   # census: mixed out-of-time, see docs/model_log.md
+
+
+def build_features(raw: pd.DataFrame, projects: pd.DataFrame, opposition: pd.DataFrame | None = None,
+                   extras=DEFAULT_EXTRAS):
+    """Return (X, y) for `projects` (a subset of `raw`, e.g. resolved clean-energy rows).
+
+    extras: optional feature groups, kept switchable so their value can be measured
+      "poi"     POI text (voltage, line tap vs. substation) + POI track record as of entry
+      "census"  county density, land area, centroid lat/lon
+    """
     p = projects.copy()
     p["log_mw"] = np.log1p(p["mw_total"])
     p["q_month"] = p["q_date"].dt.month
@@ -100,8 +153,14 @@ def build_features(raw: pd.DataFrame, projects: pd.DataFrame, opposition: pd.Dat
     parts = [p[CATEGORICAL + NUMERIC_BASE],
              _asof_group_stats(ref, p, "fips", "county"),
              _asof_group_stats(ref, p, "region_tech", "region_tech")]
+    if "poi" in extras and "poi_name" in p.columns:
+        p["poi_key"] = poi_key(p["poi_name"], p["entity"])
+        ref = ref.assign(poi_key=poi_key(raw["poi_name"], raw["entity"]))
+        parts += [poi_text_features(p), _asof_group_stats(ref, p, "poi_key", "poi")]
     X = pd.concat(parts, axis=1)
     X["county_has_history"] = X["county_built_share_before"].notna().astype(int)
+    if "census" in extras:
+        X = X.join(p[["fips"]].join(census_counties(), on="fips").drop(columns="fips"))
 
     if opposition is not None:
         opp = add_opposition(p[["fips", "q_year"]], opposition)
