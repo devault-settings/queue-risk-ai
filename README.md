@@ -53,6 +53,21 @@ The 5-year model, refit on all closed cohorts (2005–2020), scores a *planned* 
 
 Use it to decide where to look harder, not where to build.
 
+## Local opposition, from text (Sabin Center reports)
+
+The Sabin Center's annual *Opposition to Renewable Energy Facilities in the United States* (editions 2022–2026, cumulative) is parsed by [sabin.py](src/queue_risk/sabin.py). The PDFs come from the Internet Archive, because the archive's own links sit behind a bot check; they are saved to `data/external/sabin/` and gitignored.
+
+- **Contested projects:** 572 narrative paragraphs in 48 states, 98% matched to a county. Each is dated by the earliest year in its text, which reaches back to 2000.
+- **Restrictions:** about 450 jurisdictions in 42 states (429 counties, 9 municipalities, 13 state laws). They are dated only by the first edition that lists them (2021 onward), so they can't inform older cohorts.
+
+**Does it add signal?** ([stack.py](src/queue_risk/stack.py), validation on 2015–2018 entries only.) The test is two-stage, as in Lecture 7: the frozen tabular model's score, plus the opposition flag, fit and scored leave-one-year-out.
+- **Effect size:** a county with an earlier contested project has **about half the odds** of a 5-year build (coefficient −0.65) at the same tabular score.
+- **Ranking gain:** AUC +0.015, 95% CI [−0.003, +0.031]. It's positive in every year, but the interval touches zero, so it's **suggestive, not conclusive.**
+- **Caveat on the list itself:** Sabin compiles its list after the fact, so a 2015 controversy is in it partly because researchers looked back later. That was knowable in 2015, but it isn't a record collected in 2015.
+- **Warning for the test run:** the tabular model alone ranks the 2017 and 2018 cohorts barely better than chance (AUC about 0.50). The queue changed enough that 2005–2014 history transfers poorly.
+
+**The NLP step (needs labels):** label 300 paragraphs for outcome and concerns ([guidelines](docs/labeling_guidelines.md)), then compare keyword rules, TF-IDF, frozen DistilBERT and fine-tuned DistilBERT, all on a CPU. The question is whether *successful* opposition (blocked projects) carries more signal than any opposition.
+
 ## On schedule? Before, on, or after the projected date
 
 `python -m queue_risk.schedule`. This is a descriptive metric for both audiences, not a model feature, because the proposed date gets revised after entry.
@@ -124,7 +139,7 @@ python -m queue_risk.pipeline --models "Gradient,TabPFN" --ablation   # with vs.
 | Training cohort (2005–2014 entries) | 4,029 projects, 11.1% built | 5,862 projects, 17.7% built |
 | Test cohort, not yet scored | 2019–2020: 3,184 projects, 3.7% built | 2015–2017: 3,557 projects, 19.7% built |
 
-**Validation results (Nov 13, after the data-quality fixes):** rolling folds over 2010–2014, 18 features, no text score yet. The "ever built" column predates the fixes.
+**Validation results (Nov 12, after the data-quality fixes):** rolling folds over 2010–2014, 18 features, no text score yet. The "ever built" column predates the fixes.
 
 | Model | AUC, within 5 years | AUC, ever built |
 |---|---|---|

@@ -122,6 +122,28 @@ def test_metrics_and_impact():
     check("... spread over the 200 MW that got built", np.isclose(r["wasted_per_built_mw"], 1e4))
 
 
+def test_sabin_parsing():
+    print("\nSabin Center opposition text")
+    from queue_risk import sabin
+    lookup = {("IN", "henry"): "18065", ("CA", "kern"): "06029", ("CA", "kings"): "06031"}
+    check("'Henry County' -> its FIPS", sabin.counties_in("Henry County", "IN", lookup) == ["18065"])
+    check("'Kern and Kings Counties' -> both", sabin.counties_in("Kern and Kings Counties", "CA", lookup) == ["06029", "06031"])
+    check("a county in another state is not matched", sabin.counties_in("Henry County", "OH", lookup) == [])
+    lines = ["14.3 Contested Projects",
+             "     Big Blue Wind Farm (Henry County): The Henry County Planning Commission rejected a",
+             "         proposal in 2019 amidst community opposition.166",
+             "     Other Solar (Henry County): Approved in 2021."]
+    e = sabin.parse_contested("IN", lines)
+    check("contested entries are split and continuation lines joined", len(e) == 2 and "amidst community" in e[0]["text"])
+    check("footnote markers are stripped", not e[0]["text"].endswith("166"))
+    check("the earliest year in the paragraph is extracted", e[0]["first_year"] == 2019)
+    check("keyword baseline: 'rejected' -> blocked", sabin.rule_outcome(e[0]["text"]) == "blocked")
+    events = pd.DataFrame({"fips": ["18065", "18065"], "year": [2019, 2021]})
+    P = pd.DataFrame({"fips": ["18065", "18065", "18065", pd.NA], "q_year": [2019, 2020, 2022, 2020]})
+    o = sabin.prior_opposition(P, events)["prior_contested"].tolist()
+    check("only events strictly before the entry year count (no look-ahead)", o == [0, 1, 2, 0], f"got {o}")
+
+
 def test_schedule():
     print("\nSchedule: before, on, or after the projected date")
     from queue_risk import schedule
@@ -206,7 +228,8 @@ def test_real_data_checkpoints():
 
 def main():
     for t in [test_lag_features_see_only_the_past, test_opposition_join, test_split,
-              test_benchmarks, test_metrics_and_impact, test_schedule, test_strategy_arithmetic,
+              test_benchmarks, test_metrics_and_impact, test_sabin_parsing, test_schedule,
+              test_strategy_arithmetic,
               test_built_within_label,
               test_real_data_checkpoints]:
         t()

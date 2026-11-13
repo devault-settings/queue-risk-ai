@@ -1,29 +1,28 @@
-"""Text workstream (NLP lead): local news -> county-year opposition score.
+"""Text workstream: local opposition, from unstructured text to a county-level signal.
 
-This module fixes the INTERFACE the modeling workstream builds against. The implementation
-follows Lectures 10-12 and the Lecture 12 demo ("The Overnight Desk"), which compares three
-readers of the same labeled sentences. We do the same with three readers of local news:
+STATUS (Nov 12). Source chosen: the Sabin Center's opposition reports (sabin.py), not
+GDELT news (whose free API returns article lists only for recent months; the historical
+archive needs BigQuery). Parsed: 572 contested-project paragraphs and ~450 restricted
+jurisdictions, matched to counties. Validated (stack.py): a county with an earlier
+contested project has about half the odds of a 5-year build, beyond the tabular model;
+AUC gain +0.015, 95% CI [-0.003, +0.031]. Suggestive, not conclusive.
 
-  1. Counting words      TF-IDF + logistic regression          (Lecture 10: the baseline to beat)
-  2. General English     DistilBERT, frozen, + small head       (Lecture 12: transfer learning)
-  3. Domain English      DistilBERT, fine-tuned on our labels  (Lecture 12: fine-tuning;
-                                                                small learning rate, few epochs)
+NEXT, once the labeling sheet is done (docs/labeling_guidelines.md): read each paragraph
+for its OUTCOME (blocked / delayed / proceeded / unresolved) and CONCERNS, comparing four
+readers on held-out labeled paragraphs, as in the Lecture 12 demo:
 
-Lecture 12's lesson to plan for: the frozen model may buy nothing over counting words;
-the gain comes from fine-tuning, and it concentrates in the rare class (there, bad news;
-here, opposition). So report per-class recall, not just accuracy.
+  0. Keyword rules              sabin.rule_outcome()      (Lecture 10: the baseline to beat)
+  1. Counting words             TF-IDF + logistic regression
+  2. General English            DistilBERT, frozen, + small head      (Lecture 12)
+  3. Domain English             DistilBERT, fine-tuned (small learning rate, few epochs)
 
-Deep models are selected on a single validation set, not cross-validation (Lecture 8/9:
-too expensive). Fine-tune in Colab; never commit weights (.pt) - only the score table.
+All four run on a laptop CPU: ~300 labeled paragraphs fine-tune in minutes. Report
+macro-F1 and per-class recall, especially for `blocked`, the class that matters.
+The chosen reader then labels all 572 paragraphs, and stack.py tests whether
+"opposition that succeeded" (prior blocked projects) predicts better than any opposition.
 
-Pipeline:
-  pull_articles()     GDELT, solar/wind/storage project news, tagged to a county FIPS
-  label set           300-500 snippets: opposition / support / neutral, with written guidelines
-                      and a second-labeler agreement check (LLM drafts allowed if a person checks)
-  train readers       60/20/20 split, the three readers above, per-class recall on test
-  score_counties()    apply the chosen reader, aggregate to (fips, year)
-
-Compliance: publish article URLs and derived scores only, never article text.
+The interface below is kept for a later news source (GDELT via BigQuery, or Media Cloud).
+Compliance: publish derived scores only, never the report's or articles' text.
 """
 import pandas as pd
 
