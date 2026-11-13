@@ -4,6 +4,8 @@
     python -m queue_risk.pipeline --final    # + one-time test-set "showtime" (Lecture 4)
     python -m queue_risk.pipeline --fast     # small grids, for a quick end-to-end check
     python -m queue_risk.pipeline --outcome ever   # the "ever built" definition instead
+    python -m queue_risk.pipeline --models "Gradient,TabPFN" --ablation
+        # selected models only, each with and without the news-opposition features
 
 Model selection never touches the test cohort. --final refits each model's selected
 settings on the whole training window and scores the test cohort once, with bootstrap
@@ -20,12 +22,17 @@ from . import config, data, evaluate, features, impact, text
 from .models import model_zoo
 from .split import rolling_folds, temporal_split
 
+TEXT_COLS = ["n_articles", "share_opposition", "news_coverage"]
+
 
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--final", action="store_true", help="score the held-out test cohort")
     ap.add_argument("--fast", action="store_true", help="first value of every grid only")
     ap.add_argument("--outcome", choices=["within", "ever"], default=config.OUTCOME)
+    ap.add_argument("--models", default="", help="comma-separated name fragments, e.g. 'Gradient,TabPFN'")
+    ap.add_argument("--ablation", action="store_true",
+                    help="also run every model WITHOUT the text features (what does the text model add?)")
     args = ap.parse_args()
     split = config.SPLITS[args.outcome]
 
@@ -40,23 +47,38 @@ def main():
           f"test {split['test']}: {len(yte):,} projects, {yte.mean():.1%} | "
           f"{X.shape[1]} features, {len(folds)} rolling folds")
 
+    feature_sets = {"all features": list(X.columns)}
+    if args.ablation:
+        if not set(TEXT_COLS) & set(X.columns):
+            print("--ablation: no opposition score table yet (data/processed/opposition_scores.csv); "
+                  "running without text features only")
+        else:
+            feature_sets["without text"] = [c for c in X.columns if c not in TEXT_COLS]
+    wanted = [m.strip().lower() for m in args.models.split(",") if m.strip()]
+
+    jobs = [(fs, cols, name, est, grid)
+            for fs, cols in feature_sets.items()
+            for name, (est, grid) in model_zoo(Xtr[cols]).items()
+            if not wanted or any(w in name.lower() for w in wanted)]
+
     rows, test_scores = [], {}
-    for name, (est, grid) in model_zoo(Xtr).items():
+    for fs, cols, name, est, grid in jobs:
         if args.fast:
             grid = {k: v[:1] for k, v in grid.items()}
         t0 = time.time()
-        search = GridSearchCV(est, grid or {}, cv=folds, scoring="roc_auc", n_jobs=1).fit(Xtr, ytr)
-        row = {"model": name, "CV AUC": search.best_score_,
+        search = GridSearchCV(est, grid or {}, cv=folds, scoring="roc_auc", n_jobs=1).fit(Xtr[cols], ytr)
+        label = name if len(feature_sets) == 1 else f"{name} [{fs}]"
+        row = {"model": label, "CV AUC": search.best_score_,
                "settings": {k.replace("clf__", ""): v for k, v in search.best_params_.items()},
                "secs": round(time.time() - t0, 1)}
         if args.final:
-            p = search.best_estimator_.predict_proba(Xte)[:, 1]
-            test_scores[name] = p
+            p = search.best_estimator_.predict_proba(Xte[cols])[:, 1]
+            test_scores[label] = p
             row.update({f"test {k}": v for k, v in evaluate.scorecard(yte, p, config.TOP_K).items()})
             lo, hi = evaluate.bootstrap_ci(yte.to_numpy(), p, evaluate.roc_auc_score, n=300)
             row["test AUC 95% CI"] = f"[{lo:.3f}, {hi:.3f}]"
         rows.append(row)
-        print(f"  {name:32s} CV AUC {search.best_score_:.3f}  ({row['secs']}s)")
+        print(f"  {label:48s} CV AUC {search.best_score_:.3f}  ({row['secs']}s)")
 
     table = pd.DataFrame(rows)
     config.FIGURES.parent.mkdir(parents=True, exist_ok=True)

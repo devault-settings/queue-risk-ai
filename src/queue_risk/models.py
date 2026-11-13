@@ -107,4 +107,31 @@ def model_zoo(X: pd.DataFrame) -> dict:
                       ("clf", HistGradientBoostingClassifier(random_state=rs))]),
             {"clf__learning_rate": [0.03, 0.1], "clf__max_depth": [2, 4, None],
              "clf__max_iter": [200, 500]}),
+        **_tabpfn(X),
     }
+
+
+def _tabpfn(X: pd.DataFrame) -> dict:
+    """TabPFN: a transformer pre-trained on millions of synthetic tables, which predicts a
+    new table "in context" with no training and no tuning (Hollmann et al., Nature 2025).
+
+    Course framing: Lecture 12's pre-trained-transformer idea applied to tabular data, and
+    a direct test of Lecture 8's finding that neural nets rarely beat tuned tree ensembles
+    on tables. Optional: included only when `tabpfn` is installed. Needs a GPU for our
+    ~4,000 training rows (run it in Colab: notebooks/tabpfn_colab.ipynb). The weights are
+    gated and licensed for non-commercial use; accept the license and set TABPFN_TOKEN.
+    """
+    try:
+        from tabpfn import TabPFNClassifier
+    except ImportError:
+        return {}
+    from sklearn.preprocessing import OrdinalEncoder
+    numeric = [c for c in X.columns if c not in CATEGORICAL]
+    prep = ColumnTransformer([
+        ("cat", OrdinalEncoder(handle_unknown="use_encoded_value", unknown_value=np.nan,
+                               encoded_missing_value=np.nan), CATEGORICAL),
+        ("num", "passthrough", numeric),          # TabPFN handles missing values itself
+    ])
+    clf = TabPFNClassifier(categorical_features_indices=list(range(len(CATEGORICAL))),
+                           random_state=config.SEED)
+    return {"TabPFN (pre-trained transformer)": (Pipeline([("prep", prep), ("clf", clf)]), {})}

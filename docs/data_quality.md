@@ -18,6 +18,7 @@ Scope: 29,848 clean-energy projects (solar, wind, storage) entering 2005 or late
 | Operational, no operation date (six operators) | 60 | 5-year label unknown | Proposed date stands in (label only; 90% agreement) |
 | Withdrawn, no withdrawal date | 6,642 | Track-record features undercount past withdrawals | Documented; lag features treat as unknown |
 | IA executed, no IA date (not yet operational) | 2,303 | Post-IA build rate rests on a subset | Post-IA rates reported as a range |
+| Proposed online date exactly equals operation date (overwritten; MISO 100%, SPP 88%) | 641 | Projection replaced by the outcome | Schedule metric limited to CAISO, ERCOT, PJM; never a feature |
 | County FIPS missing | 1,270 | No county features | Left missing; trees use a missing branch |
 | Service type missing | 7,703 | One feature incomplete | Missing kept as its own category |
 | Capacity missing or zero | 6 | Size feature and MW-weighted metrics | Left missing; excluded from MW sums |

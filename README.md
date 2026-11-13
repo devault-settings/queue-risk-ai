@@ -53,6 +53,27 @@ The 5-year model, refit on all closed cohorts (2005–2020), scores a *planned* 
 
 Use it to decide where to look harder, not where to build.
 
+## On schedule? Before, on, or after the projected date
+
+`python -m queue_risk.schedule`. This is a descriptive metric for both audiences, not a model feature, because the proposed date gets revised after entry.
+
+| | CAISO | ERCOT | PJM |
+|---|---|---|---|
+| Completed projects measured | 166 | 293 | 495 |
+| Early / on time (±90 days) / late | 2% / 2% / 96% | 13% / 84% / 2% | 22% / 62% / 16% |
+| Median slip | 2.9 years | 0 | 0 |
+
+**Read this table with care.** The file stores only the *latest* proposed date, so it mostly measures how often each operator revises that date, not real differences in delay:
+- ERCOT republishes projected dates monthly, so they converge on the actual date.
+- CAISO's dates look like the original filings.
+- In MISO (100%) and SPP (88%), the proposed date was overwritten with the actual one, so they are excluded.
+
+Every figure is a lower bound on real delay.
+
+The sturdier measure is **active projects already past their proposed date** at end-2025: 37–38% in MISO and PJM, 4–7% in CAISO, ERCOT and SPP. That's also a lower bound, because postponed projects don't count.
+
+Measuring delay against the *original* projection needs earlier snapshots of the queue: the previous Queued Up edition, older editions via the Wayback Machine, or the operators' monthly queue reports.
+
 ## Two outcomes, and why we lead with "within 5 years"
 
 - **Within N years** (default). Every project is labeled once N years have passed since it entered: built in time = 1; still active, suspended or withdrawn = 0. Nothing is censored, so we can test on the most recent cohorts whose window has closed (2019–2020 entries). Training uses 2005–2014 entries, whose 5-year outcomes were known by 2019, so a fund could really have built this model at decision time.
@@ -71,6 +92,9 @@ python -m queue_risk.pipeline --final     # one-time test-set run. Don't run unt
 python -m queue_risk.timeline             # time-to-build curve, validated on 2013-2014 entries
 python -m queue_risk.strategy             # investors: back early vs. wait for the IA
 python -m queue_risk.sponsor --region ERCOT --tech Solar --mw 200   # sponsors: siting screen, what-if
+python -m queue_risk.schedule             # before / on / after the projected online date
+python -m queue_risk.quality              # data-quality audit -> docs/data_quality.md
+python -m queue_risk.pipeline --models "Gradient,TabPFN" --ablation   # with vs. without text features
 ```
 
 ## The pipeline
@@ -85,6 +109,9 @@ python -m queue_risk.sponsor --region ERCOT --tech Solar --mw 200   # sponsors: 
 | AUC, PR-AUC, Brier, precision@K (ties scored pro rata), calibration, bootstrap CIs | [evaluate.py](src/queue_risk/evaluate.py) | 3, 5 |
 | Back the top K; wasted spend per built MW, swept over K and cost per project | [impact.py](src/queue_risk/impact.py) | 2, 3, 5 |
 | News → county-year opposition score: TF-IDF vs. frozen vs. fine-tuned DistilBERT | [text.py](src/queue_risk/text.py) (interface only so far) | 10–12 |
+| TabPFN, a pre-trained tabular transformer (optional; GPU; [Colab notebook](notebooks/tabpfn_colab.ipynb)) | [models.py](src/queue_risk/models.py) | 8, 12 |
+| Ablation: every model with and without the news-opposition features | `--ablation` in [pipeline.py](src/queue_risk/pipeline.py) | 7, 12 |
+| Schedule: before, on, or after the projected online date | [schedule.py](src/queue_risk/schedule.py) | — |
 | Interactive pitch page | [demo/](demo/README.md) (planned) | 5, 6 demos |
 
 ## Where the numbers come from

@@ -122,6 +122,25 @@ def test_metrics_and_impact():
     check("... spread over the 200 MW that got built", np.isclose(r["wasted_per_built_mw"], 1e4))
 
 
+def test_schedule():
+    print("\nSchedule: before, on, or after the projected date")
+    from queue_risk import schedule
+    t = pd.Timestamp
+    q = pd.DataFrame({
+        "region": ["PJM", "PJM", "PJM", "MISO", "PJM", "PJM"],
+        "q_status": ["operational"] * 4 + ["active", "active"],
+        "prop_date": [t("2020-06-01")] * 4 + [t("2024-01-01"), t("2027-01-01")],
+        "on_date": [t("2020-01-01"), t("2020-07-01"), t("2022-06-01"), t("2022-06-01"), pd.NaT, pd.NaT],
+    })
+    s = schedule.slip(q).reset_index(drop=True)
+    check("5 months early -> early", s.loc[0, "schedule"] == "early")
+    check("1 month late -> on time (within 90 days)", s.loc[1, "schedule"] == "on time")
+    check("2 years late -> late, slip 2.0 years", s.loc[2, "schedule"] == "late" and round(s.loc[2, "slip_years"], 1) == 2.0)
+    check("operators that overwrite the proposed date are left out", len(s) == 3)
+    o = schedule.overdue(q, cutoff="2025-12-31").reset_index(drop=True)
+    check("active past its proposed date -> overdue; future date -> not", list(o["overdue"]) == [True, False])
+
+
 def test_strategy_arithmetic():
     print("\nBack early vs. wait for the IA")
     from queue_risk import strategy
@@ -187,7 +206,7 @@ def test_real_data_checkpoints():
 
 def main():
     for t in [test_lag_features_see_only_the_past, test_opposition_join, test_split,
-              test_benchmarks, test_metrics_and_impact, test_strategy_arithmetic,
+              test_benchmarks, test_metrics_and_impact, test_schedule, test_strategy_arithmetic,
               test_built_within_label,
               test_real_data_checkpoints]:
         t()
