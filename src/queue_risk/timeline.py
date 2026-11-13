@@ -42,7 +42,7 @@ def curve(raw, decide_years, horizons=config.CURVE_HORIZONS):
     rate wherever the horizon's window has closed by the data cutoff.
     """
     first, last = decide_years
-    cohort = raw[raw["type_1"].isin(config.CLEAN_TYPES) & raw["region"].isin(config.DATE_REGIONS)
+    cohort = raw[data.in_scope(raw) & raw["region"].isin(config.DATE_REGIONS)
                  & raw["q_year"].between(first, last)]
     opp = text.load_scores()
     Xc, _ = features.build_features(raw, cohort.assign(built=0), opposition=opp)

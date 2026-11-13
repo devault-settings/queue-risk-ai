@@ -22,18 +22,18 @@ What we can measure, and how confident we are in each input:
 
 | Input | Value | Confidence |
 |---|---|---|
-| Built within 5 years of IA, IA signed 2015–2020, MW-weighted | low 44%, pooled 63%, high 80% | **Low to medium.** Only 48% of IAs have a recorded date (CAISO and ERCOT mostly; PJM 10%, SPP 0%), and the rate swings by signing year |
-| Built within 5 years of entry, backing every 2015–2020 entry | 6.9% of MW | Medium. Six operators, labels fully observed |
+| Built within 5 years of IA, IA signed 2015–2020, MW-weighted | low 36%, pooled 58%, high 74% | **Low to medium.** Only 48% of IAs have a recorded date (CAISO and ERCOT mostly; PJM 10%, SPP 0%), and the rate swings by signing year |
+| Built within 5 years of entry, backing every 2015–2020 entry | 5.9% of MW | Medium. Six operators, labels fully observed |
 | Median time from entry to IA | 2.6 years | Medium, same coverage caveat as the first row |
 | Price of rights, early vs. late stage | $0.02–0.05/W vs. $0.07–0.20/W | **Low.** Published industry ranges, not observed trades ([Ascend Analytics](https://www.ascendanalytics.com/blog/increasing-early-stage-project-success-in-a-highly-competitive-renewable-energy-m-a-landscape)) |
-| Development spend to IA; cost of capital | $0–2M per project; 0–15% a year | **Placeholders**, not sourced |
+| Development spend to IA; cost of capital | $0–2M per project; 0–15% a year | **Placeholders**; sourcing plan in [docs/assumptions.md](docs/assumptions.md) |
 
 **Break-even hit rate** across all 243 combinations of these ranges:
-- 25th to 75th percentile: **15% to 37%**; median 23%.
+- 25th to 75th percentile: **13% to 34%**; median 21%.
 - Extremes: 4% to over 100%.
-- Price difference alone, at mid prices: 11–21%.
+- Price difference alone, at mid prices: 9–19%.
 
-**Where the model stands (validation only, not yet tested):** the 25 top-ranked projects in each cohort got 11–59% of their MW built within 5 years, against base rates of 4–24%. That's a 2.5–7× lift. It clears the median break-even bar in the 2012–2014 cohorts, **but not in 2010–2011, where base rates were as low as they are today.**
+**Where the model stands (validation only, not yet tested):** the 25 top-ranked projects in each cohort got 8–56% of their MW built within 5 years, against base rates of 4–23%. That's a 2–7× lift. It clears the median break-even bar in four of five cohorts, **but not in 2011, a year whose base rate (4%) was as low as today's.**
 
 The honest claim for now: the model makes early backing *competitive* under some assumptions, not reliably profitable. The 2019–2020 test run will say which side of the band it lands on.
 
@@ -94,34 +94,40 @@ python -m queue_risk.sponsor --region ERCOT --tech Solar --mw 200   # sponsors: 
 | Checkpoint | Within 5 years (default) | Ever built |
 |---|---|---|
 | Rows after de-duplication | 38,066 (135 repeated IDs removed) | same |
-| Training cohort (2005–2014 entries) | 4,039 projects, 11.7% built | 5,872 projects, 17.9% built |
-| Test cohort, not yet scored | 2019–2020: 3,188 projects, 4.4% built | 2015–2017: 3,559 projects, 19.7% built |
+| Training cohort (2005–2014 entries) | 4,029 projects, 11.1% built | 5,862 projects, 17.7% built |
+| Test cohort, not yet scored | 2019–2020: 3,184 projects, 3.7% built | 2015–2017: 3,557 projects, 19.7% built |
 
-**Validation results (Nov 12):** rolling folds over 2010–2014, 18 features, no text score yet.
+**Validation results (Nov 13, after the data-quality fixes):** rolling folds over 2010–2014, 18 features, no text score yet. The "ever built" column predates the fixes.
 
 | Model | AUC, within 5 years | AUC, ever built |
 |---|---|---|
 | Flat rate (rule of thumb) | 0.500 | 0.500 |
-| Historical rate, region × technology | 0.613 | 0.554 |
-| CART | 0.612 | 0.588 |
-| Logistic regression / LASSO | 0.622 / 0.627 | 0.631 / 0.632 |
-| Random forest | 0.613 | 0.633 |
-| **Gradient boosting** | **0.655** | **0.667** |
+| Historical rate, region × technology | 0.620 | 0.554 |
+| CART | 0.611 | 0.588 |
+| Logistic regression / LASSO | 0.617 / 0.636 | 0.631 / 0.632 |
+| Random forest | 0.626 | 0.633 |
+| **Gradient boosting** | **0.652** | **0.667** |
 
 **Time-to-build curve, validated by deciding on 2013–2014 entries.** Each horizon trains only on cohorts whose window had closed by 2013.
 
 | Horizon | Trained on | AUC | Predicted rate | Actual rate |
 |---|---|---|---|---|
-| 2 years | 2005–2011 (3,220) | 0.735 | 1.4% | 6.4% |
-| 3 years | 2005–2010 (2,631) | 0.715 | 3.5% | 12.5% |
-| 5 years | 2005–2008 (1,524) | 0.564 | 10.0% | 21.1% |
-| 7 years | 2005–2006 (539) | 0.534 | 16.9% | 24.8% |
+| 2 years | 2005–2011 (3,215) | 0.732 | 1.2% | 5.5% |
+| 3 years | 2005–2010 (2,626) | 0.655 | 3.5% | 11.5% |
+| 5 years | 2005–2008 (1,523) | 0.550 | 6.9% | 19.6% |
+| 7 years | 2005–2006 (539) | 0.531 | 18.8% | 22.7% |
 
 There are two lessons:
 - **Data runs short at long horizons.** The honest training window shrinks as the horizon grows. A discrete-time hazard model, which reuses partial histories, is the fix if there's time.
 - **Rates drift between cohorts.** Ranking (AUC) carries over; calibrated rates do not, so they need recalibrating on the latest closed cohort.
 
 ## Things worth knowing about the data
+
+The full audit, with every issue, its row count and what we do about it, is generated from the file by `python -m queue_risk.quality` and written to [docs/data_quality.md](docs/data_quality.md). The essentials:
+
+- **Status decides whether a project was built, never a date field.** 222 withdrawn and 133 active or suspended projects carry an operation date.
+- **Excluded rows.** 97 requests modify an existing plant rather than propose a new one, and 18 rows have an operation date before their queue date.
+- **Future dates.** 52 dates fall after the file's end-2025 as-of date; they are treated as missing.
 
 - **Right-censoring (the "ever built" outcome only).** Withdrawals resolve faster than builds, so once active projects are dropped, recent cohorts look worse than they are. The fixed-horizon outcome avoids this.
 - **A real decline, not an artifact.** Even with fully observed 5-year labels, the build rate falls from 21% for 2014 entries to 3.9% for 2020 entries. The queue is flooding with speculative requests. Ranking still works under this drift, but probabilities need recalibrating.

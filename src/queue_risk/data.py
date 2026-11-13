@@ -26,14 +26,33 @@ def load_raw_queue() -> pd.DataFrame:
             .sort_index())
     df["mw_total"] = df[["mw_1", "mw_2", "mw_3"]].sum(axis=1, min_count=1)
     df["is_hybrid"] = df["type_2"].notna()
+    # Dates later than the file's as-of date are planned, not observed (52 clean-energy rows).
+    end = pd.Timestamp(config.DATA_CUTOFF)
+    for col in ["on_date", "wd_date", "ia_date"]:
+        df.loc[df[col] > end, col] = pd.NaT
     return df
+
+
+# Requests that modify an existing plant rather than propose a new one.
+NOT_NEW = ["Surplus", "Replacement", "Upgrade"]
+
+
+def in_scope(df: pd.DataFrame) -> pd.Series:
+    """New clean-energy projects entering since FIRST_YEAR, with usable timing.
+
+    Drops: requests for existing plants (project_type Surplus/Replacement/Upgrade, 97 rows)
+    and the 18 rows whose operation date precedes their queue date (timing unusable).
+    See `python -m queue_risk.quality` for every rule and its count.
+    """
+    return (df["type_1"].isin(config.CLEAN_TYPES)
+            & (df["q_year"] >= config.FIRST_YEAR)
+            & ~df["project_type"].isin(NOT_NEW)
+            & ~(df["on_date"] < df["q_date"]))
 
 
 def resolved_clean_energy(df: pd.DataFrame) -> pd.DataFrame:
     """Clean-energy projects with a final outcome since FIRST_YEAR, plus the label `built`."""
-    keep = (df["type_1"].isin(config.CLEAN_TYPES)
-            & df["q_status"].isin(config.RESOLVED_STATUSES)
-            & (df["q_year"] >= config.FIRST_YEAR))
+    keep = in_scope(df) & df["q_status"].isin(config.RESOLVED_STATUSES)
     out = df[keep].copy()
     out["built"] = (out["q_status"] == "operational").astype(int)
     return out
@@ -45,6 +64,8 @@ def built_within(df: pd.DataFrame, horizon: int, cutoff=config.DATA_CUTOFF) -> p
 
     Every status is kept: a project still active, suspended or withdrawn when its window
     closed is labeled 0. That is what removes the censoring of the "ever built" outcome.
+    The STATUS decides whether a project was built; a date alone never does (222 withdrawn
+    and 131 active projects carry an operation date, which cannot mean they operate).
 
     The 4% of built projects without an operation date take the proposed online date
     instead (flagged `on_date_imputed`); on projects with both dates, that stand-in gives
@@ -52,18 +73,24 @@ def built_within(df: pd.DataFrame, horizon: int, cutoff=config.DATA_CUTOFF) -> p
     Built projects with neither date are dropped (their label is unknown).
     """
     end = pd.Timestamp(cutoff)
-    keep = (df["type_1"].isin(config.CLEAN_TYPES)
+    keep = (in_scope(df)
             & df["region"].isin(config.DATE_REGIONS)
-            & (df["q_year"] >= config.FIRST_YEAR)
             & (df["q_date"] + pd.DateOffset(years=horizon) <= end))
     out = df[keep].copy()
     is_op = out["q_status"] == "operational"
     out["on_date_imputed"] = is_op & out["on_date"].isna() & out["prop_date"].notna()
-    done = out["on_date"].where(out["on_date"].notna(), out["prop_date"].where(is_op))
+    done = completion_date(out)
     out = out[~(is_op & done.isna())]
     done = done.loc[out.index]
     out["built"] = (done.notna() & (done <= out["q_date"] + pd.DateOffset(years=horizon))).astype(int)
     return out
+
+
+def completion_date(df: pd.DataFrame) -> pd.Series:
+    """Operation date for OPERATIONAL projects only (proposed date as the stand-in when
+    the operation date is missing); NaT for every other status, whatever its date fields say."""
+    is_op = df["q_status"] == "operational"
+    return df["on_date"].where(df["on_date"].notna(), df["prop_date"]).where(is_op)
 
 
 def modeling_table(raw: pd.DataFrame, outcome: str = config.OUTCOME) -> pd.DataFrame:

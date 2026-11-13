@@ -50,6 +50,7 @@ def tiny_queue():
         "q_year": [2010, 2011, 2014, 2014],
         "mw_total": [100.0, 50.0, 20.0, 10.0], "is_hybrid": [False] * 4,
         "q_status": ["operational", "withdrawn", "withdrawn", "withdrawn"],
+        "project_type": ["Generation"] * 4,
         "built": [1, 0, 0, 0],
     })
 
@@ -138,12 +139,15 @@ def test_built_within_label():
     from queue_risk import data
     t = pd.Timestamp
     q = pd.DataFrame({
-        "project_id": list("ABCDEF"), "type_1": ["Solar"] * 6, "region": ["PJM"] * 5 + ["ISO-NE"],
-        "q_year": [2010, 2010, 2010, 2010, 2022, 2010],
-        "q_date": [t("2010-01-01")] * 4 + [t("2022-01-01"), t("2010-01-01")],
-        "q_status": ["operational", "operational", "active", "operational", "operational", "operational"],
-        "on_date": [t("2013-01-01"), t("2016-06-01"), pd.NaT, pd.NaT, t("2024-01-01"), t("2012-01-01")],
-        "prop_date": [pd.NaT, pd.NaT, pd.NaT, t("2012-01-01"), pd.NaT, pd.NaT],
+        "project_id": list("ABCDEFG"), "type_1": ["Solar"] * 7,
+        "region": ["PJM"] * 5 + ["ISO-NE", "PJM"], "project_type": ["Generation"] * 7,
+        "q_year": [2010, 2010, 2010, 2010, 2022, 2010, 2010],
+        "q_date": [t("2010-01-01")] * 4 + [t("2022-01-01"), t("2010-01-01"), t("2010-01-01")],
+        "q_status": ["operational", "operational", "active", "operational", "operational",
+                     "operational", "withdrawn"],
+        "on_date": [t("2013-01-01"), t("2016-06-01"), pd.NaT, pd.NaT, t("2024-01-01"),
+                    t("2012-01-01"), t("2012-01-01")],
+        "prop_date": [pd.NaT, pd.NaT, pd.NaT, t("2012-01-01"), pd.NaT, pd.NaT, pd.NaT],
     })
     lab = data.built_within(q, horizon=5, cutoff="2025-12-31").set_index("project_id")["built"]
     check("built in year 3 -> 1", lab.get("A") == 1)
@@ -152,6 +156,7 @@ def test_built_within_label():
     check("built, no operation date: proposed date stands in", lab.get("D") == 1)
     check("window not closed by the cutoff -> excluded", "E" not in lab.index)
     check("regions that don't report dates -> excluded", "F" not in lab.index)
+    check("withdrawn with an operation date -> 0 (status decides, not the date)", lab.get("G") == 0)
 
 
 def test_real_data_checkpoints():
@@ -168,13 +173,13 @@ def test_real_data_checkpoints():
           raw["fips"].dropna().map(lambda s: isinstance(s, str) and len(s) == 5).all())
     ever = config.SPLITS["ever"]
     train, test = temporal_split(res["q_year"], ever["train"], ever["test"])
-    check("ever built: 5,872 training projects, 2005-2014", train.sum() == 5872, f"got {train.sum():,}")
-    check("ever built: 3,559 test projects, 2015-2017", test.sum() == 3559, f"got {test.sum():,}")
+    check("ever built: 5,862 training projects, 2005-2014", train.sum() == 5862, f"got {train.sum():,}")
+    check("ever built: 3,557 test projects, 2015-2017", test.sum() == 3557, f"got {test.sum():,}")
     w = data.built_within(raw, config.HORIZON)
     within = config.SPLITS["within"]
     train, test = temporal_split(w["q_year"], within["train"], within["test"])
-    check("within 5y: 4,039 training projects, 2005-2014", train.sum() == 4039, f"got {train.sum():,}")
-    check("within 5y: 3,188 test projects, 2019-2020", test.sum() == 3188, f"got {test.sum():,}")
+    check("within 5y: 4,029 training projects, 2005-2014", train.sum() == 4029, f"got {train.sum():,}")
+    check("within 5y: 3,184 test projects, 2019-2020", test.sum() == 3184, f"got {test.sum():,}")
     check("within 5y: train/test gap is at least the horizon",
           within["test"][0] - within["train"][1] >= config.HORIZON)
     check("only resolved outcomes are labeled", set(res["q_status"]) <= set(config.RESOLVED_STATUSES))

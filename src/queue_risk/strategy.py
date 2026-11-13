@@ -37,10 +37,9 @@ def post_ia_build_rates(raw: pd.DataFrame, horizon=config.HORIZON, cutoff=config
     """MW-weighted share of projects built within `horizon` years of IA signing, by
     signing year, for clean-energy projects in the date-reporting operators."""
     end = pd.Timestamp(cutoff)
-    c = raw[raw["type_1"].isin(config.CLEAN_TYPES) & raw["region"].isin(config.DATE_REGIONS)
+    c = raw[data.in_scope(raw) & raw["region"].isin(config.DATE_REGIONS)
             & raw["ia_date"].notna() & (raw["ia_date"] + pd.DateOffset(years=horizon) <= end)].copy()
-    is_op = c["q_status"] == "operational"
-    done = c["on_date"].where(c["on_date"].notna(), c["prop_date"].where(is_op))
+    done = data.completion_date(c)
     c["built"] = (done.notna() & (done <= c["ia_date"] + pd.DateOffset(years=horizon))).astype(int)
     c["mw_built"] = c["mw_total"] * c["built"]
     g = c.groupby(c["ia_date"].dt.year).agg(n=("built", "size"), share=("built", "mean"),
