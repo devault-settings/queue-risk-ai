@@ -284,7 +284,12 @@ def rule_outcome(text: str) -> str:
 
 def write_label_sheet(c: pd.DataFrame, n=300, seed=config.SEED):
     """A labeling sheet of n contested-project paragraphs, sampled across years.
-    Stays in data/interim (gitignored): the paragraphs are the report's text."""
+    Stays in data/interim (gitignored): the paragraphs are the report's text.
+    Never overwrites an existing sheet, which may hold hand labels; delete it to rebuild."""
+    out = config.INTERIM / "sabin_label_sheet.csv"
+    if out.exists():
+        print(f"{out.name} already exists; kept as is (delete it to rebuild)")
+        return out
     s = c.sample(n=min(n, len(c)), random_state=seed).sort_values(["state", "project"])
     sheet = s[["state", "project", "location", "first_year", "text"]].copy()
     sheet.insert(0, "id", s.index)
@@ -292,7 +297,6 @@ def write_label_sheet(c: pd.DataFrame, n=300, seed=config.SEED):
     sheet["outcome"] = ""          # blocked / delayed / proceeded / unresolved
     sheet["concerns"] = ""         # semicolon list from the guidelines
     sheet["notes"] = ""
-    out = config.INTERIM / "sabin_label_sheet.csv"
     sheet.to_csv(out, index=False, encoding="utf-8-sig")   # utf-8-sig opens cleanly in Excel
     return out
 

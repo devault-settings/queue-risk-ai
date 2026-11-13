@@ -5,6 +5,33 @@
 
 ---
 
+## ▶ Pick up here (Audrey, Fri Nov 13)
+
+**State at end of Thu Nov 12:**
+- Everything is pushed; the last commit is "Add point-of-interconnection features; log CPU model experiments."
+- `python tests/selftest.py` passes.
+- Validation AUC is **0.701** with gradient boosting, and **0.626** out-of-time on 2015–2018.
+- The 2019–2020 test cohort has **not** been scored.
+
+**First things tomorrow:**
+1. **TabPFN in Colab.** The reminder set in the Claude session (9:47am) only fires if that session is still open, so this line is the backup. Decide first how opposition enters the comparison: (a) export the Sabin county-year signal to `data/processed/opposition_scores.csv` so the notebook's `--ablation` compares with and without it, or (b) add TabPFN as an alternative first stage in `stack.py` (more consistent with how the text signal is tested now). Then: accept the license at ux.priorlabs.ai → add `GITHUB_TOKEN` and `TABPFN_TOKEN` to Colab Secrets → T4 GPU → run `notebooks/tabpfn_colab.ipynb`.
+2. **Start labeling.** Open `data/interim/sabin_label_sheet.csv` in Excel and label the first 50 following [labeling_guidelines.md](labeling_guidelines.md), then review them with Claude before doing the other 250. Target: all 300 by Mon Nov 16.
+3. **Optional, CPU:** try the 3-year-horizon idea from [model_log.md](model_log.md), which lets training include cohorts closer to the test years.
+
+**Files that live only on this laptop** (gitignored; all can be regenerated):
+
+| Path | What | How to regenerate |
+|---|---|---|
+| `data/external/sabin/` | Sabin report PDFs and extracted text | `python -m queue_risk.sabin` (downloads from the Internet Archive) |
+| `data/interim/sabin_*.csv` | Parsed paragraphs, restrictions, **the labeling sheet** | Same command. It never overwrites an existing label sheet, but the file isn't in git, so **back it up** (OneDrive or similar) once you start labeling |
+| `data/external/census/` | 2010 county gazetteer | Downloaded automatically when the Census feature switch is used |
+| `data/external/eia/` | State electricity prices | Not used (dropped in the experiments); safe to delete |
+| `reports/results_*.csv` | Pipeline result tables | `python -m queue_risk.pipeline` |
+
+**Still open for the team** (sections 3 and 4 below): owners for each task, GitHub usernames so Audrey can add collaborators, investor vs. sponsor framing, sourcing the cost ranges, and agreeing before anyone runs `--final`.
+
+---
+
 ## 1. The project in three sentences
 
 On the day a solar, wind or storage project enters a US interconnection queue, we predict **whether it will be operating within 5 years** (plus a time-to-build curve), using Berkeley Lab's public *Queued Up* data and local-opposition text from the Sabin Center's annual reports.
