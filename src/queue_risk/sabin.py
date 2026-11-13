@@ -1,6 +1,6 @@
 """Parse the Sabin Center's "Opposition to Renewable Energy Facilities in the United States".
 
-    python -m queue_risk.sabin          # parse, match to counties, print the spot-check
+    python -m queue_risk.sabin          # download if missing, parse, match, write label sheet
 
 Source: the annual editions (2022-03 ... 2026-09), downloaded as PDFs to
 data/external/sabin/ (gitignored) from the Internet Archive's copies of
@@ -27,6 +27,30 @@ from . import config
 SABIN = config.EXTERNAL / "sabin"
 EDITIONS = {"2022-03": 2021, "2023-05": 2022, "2024-06": 2023, "2025-06": 2024, "2026-09": 2025}
 # edition -> last calendar year it covers
+
+# Internet Archive copies (raw file, "id_" suffix) of the Columbia scholarship archive PDFs,
+# whose own links sit behind a bot check. edition -> (timestamp, article number).
+WAYBACK = {"2022-03": ("20250702231136", 1186), "2023-05": ("20230629063110", 1201),
+           "2024-06": ("20260708024633", 1227), "2025-06": ("20260910175436", 1252),
+           "2026-09": ("20260910070217", 1281)}
+
+
+def download():
+    """Fetch any missing edition PDFs into data/external/sabin/."""
+    import urllib.request
+    SABIN.mkdir(parents=True, exist_ok=True)
+    for ed, (ts, art) in WAYBACK.items():
+        out = SABIN / f"sabin_{ed}.pdf"
+        if out.exists():
+            continue
+        url = (f"https://web.archive.org/web/{ts}id_/https://scholarship.law.columbia.edu/"
+               f"cgi/viewcontent.cgi?article={art}&context=sabin_climate_change")
+        urllib.request.urlretrieve(url, out)
+        if not out.read_bytes()[:5] == b"%PDF-":
+            out.unlink()
+            raise RuntimeError(f"{ed}: the archive returned something other than a PDF")
+        print(f"downloaded {out.name}")
+
 
 STATES = {"ALABAMA": "AL", "ALASKA": "AK", "ARIZONA": "AZ", "ARKANSAS": "AR", "CALIFORNIA": "CA",
           "COLORADO": "CO", "CONNECTICUT": "CT", "DELAWARE": "DE", "FLORIDA": "FL", "GEORGIA": "GA",
@@ -202,6 +226,7 @@ def county_year_signal(r: pd.DataFrame, c: pd.DataFrame) -> pd.DataFrame:
 
 def main():
     from . import data
+    download()
     raw = data.load_raw_queue()
     r, c = build(raw)
     config.INTERIM.mkdir(parents=True, exist_ok=True)
