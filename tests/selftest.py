@@ -121,6 +121,18 @@ def test_metrics_and_impact():
     check("... spread over the 200 MW that got built", np.isclose(r["wasted_per_built_mw"], 1e4))
 
 
+def test_strategy_arithmetic():
+    print("\nBack early vs. wait for the IA")
+    from queue_risk import strategy
+    s = strategy.breakeven_hit_rate(s_wait=0.5, price_early=0.03, price_late=0.12)
+    check("price ratio 1/4 and a 50% post-IA rate -> break-even 12.5%", np.isclose(s, 0.125))
+    early = strategy.cost_per_built_mw(0.03, hit_rate=s)
+    wait = strategy.cost_per_built_mw(0.12, hit_rate=0.5)
+    check("at the break-even hit rate both strategies cost the same per built MW", np.isclose(early, wait))
+    s2 = strategy.breakeven_hit_rate(0.5, 0.03, 0.12, spend_to_ia=1e6, avg_mw=100, r=0.1, years_to_ia=2)
+    check("spend before the IA and carrying cost raise the bar", s2 > s)
+
+
 def test_built_within_label():
     print("\nFixed-horizon label: built within N years")
     from queue_risk import data
@@ -170,7 +182,8 @@ def test_real_data_checkpoints():
 
 def main():
     for t in [test_lag_features_see_only_the_past, test_opposition_join, test_split,
-              test_benchmarks, test_metrics_and_impact, test_built_within_label,
+              test_benchmarks, test_metrics_and_impact, test_strategy_arithmetic,
+              test_built_within_label,
               test_real_data_checkpoints]:
         t()
     print(f"\n{'All checks passed.' if not FAILURES else f'{len(FAILURES)} FAILED: ' + '; '.join(FAILURES)}")

@@ -85,3 +85,18 @@ TOP_K = [25, 50, 100]
 # PLACEHOLDER RANGE, NOT SOURCED. The impact lead replaces these with cited figures;
 # every chart is drawn across the range, never at one number.
 DEV_COST_RANGE_USD = (1_000_000, 3_000_000, 10_000_000)
+
+# ------------------------------------------------------------------ back early vs. wait
+# Indicative prices for development rights, USD per watt (low, mid, high). Industry
+# benchmarks, not observed trades: Ascend Analytics, "Increasing Early-Stage Project
+# Success in a Highly Competitive Renewable Energy M&A Landscape" (solar+storage, US ISOs):
+# early stage $0.02-0.05/W, late stage $0.07-0.20/W. Cross-check (unsourced banker guide):
+# <$50k/MW early, $80-150k/MW in interconnection, $150-350k/MW with IA + PPA.
+PRICE_EARLY_USD_PER_W = (0.02, 0.035, 0.05)
+PRICE_LATE_USD_PER_W = (0.07, 0.135, 0.20)
+# Development spend the early backer funds between entry and the IA (studies, deposits),
+# per project. PLACEHOLDER, NOT SOURCED: 0 isolates the price effect.
+SPEND_TO_IA_USD = (0, 500_000, 2_000_000)
+# Annual cost of capital, to carry the early outlay to the IA date (median 2.6 years
+# after entry in our six operators). PLACEHOLDER RANGE.
+COST_OF_CAPITAL = (0.0, 0.08, 0.15)

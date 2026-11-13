@@ -12,6 +12,47 @@ Only about 13% of the capacity that entered US interconnection queues from 2000 
 
 On the day a solar, wind or storage project enters the queue, we predict **whether it will be operating within 5 years**, plus a time-to-build curve (the chance of operating within 2, 3, 4, 5 and 7 years). The fund backs the top **K** projects, and we measure the result as **wasted development spend per built MW**, compared against the rules of thumb investors use today.
 
+## Two audiences (both kept for now)
+
+**1. Investors buying development rights: back early, or wait for the agreement?** ([strategy.py](src/queue_risk/strategy.py))
+
+Today's rule is to ignore queue projects until they sign an interconnection agreement (IA). Waiting is safer but pays a late-stage price. Backing at entry is cheaper, but many more projects fail. The yardstick is **cost per MW that actually gets built**, and backing early wins when the model's hit rate clears a break-even bar.
+
+What we can measure, and how confident we are in each input:
+
+| Input | Value | Confidence |
+|---|---|---|
+| Built within 5 years of IA, IA signed 2015–2020, MW-weighted | low 44%, pooled 63%, high 80% | **Low to medium.** Only 48% of IAs have a recorded date (CAISO and ERCOT mostly; PJM 10%, SPP 0%), and the rate swings by signing year |
+| Built within 5 years of entry, backing every 2015–2020 entry | 6.9% of MW | Medium. Six operators, labels fully observed |
+| Median time from entry to IA | 2.6 years | Medium, same coverage caveat as the first row |
+| Price of rights, early vs. late stage | $0.02–0.05/W vs. $0.07–0.20/W | **Low.** Published industry ranges, not observed trades ([Ascend Analytics](https://www.ascendanalytics.com/blog/increasing-early-stage-project-success-in-a-highly-competitive-renewable-energy-m-a-landscape)) |
+| Development spend to IA; cost of capital | $0–2M per project; 0–15% a year | **Placeholders**, not sourced |
+
+**Break-even hit rate** across all 243 combinations of these ranges:
+- 25th to 75th percentile: **15% to 37%**; median 23%.
+- Extremes: 4% to over 100%.
+- Price difference alone, at mid prices: 11–21%.
+
+**Where the model stands (validation only, not yet tested):** the 25 top-ranked projects in each cohort got 11–59% of their MW built within 5 years, against base rates of 4–24%. That's a 2.5–7× lift. It clears the median break-even bar in the 2012–2014 cohorts, **but not in 2010–2011, where base rates were as low as they are today.**
+
+The honest claim for now: the model makes early backing *competitive* under some assumptions, not reliably profitable. The 2019–2020 test run will say which side of the band it lands on.
+
+Caveats:
+- The comparison is conservative for backing early: built within 5 years of *entry* is stricter than within 5 years of the *IA*, which can be up to ~7.6 years after entry.
+- It ignores what a built project is worth beyond the late-stage price.
+
+**2. Project sponsors: what choices are associated with better odds?** ([sponsor.py](src/queue_risk/sponsor.py))
+
+The 5-year model, refit on all closed cohorts (2005–2020), scores a *planned* project:
+- `siting_screen()` places it in every county of a region with queue history and ranks the counties.
+- `what_if()` changes one choice at a time (size, battery pairing, service type).
+
+**These are associations, not causal effects.** A county where past projects got built may differ in transmission headroom, land or permitting in ways the model never sees, and moving a project there doesn't bring those conditions with it. Two more limits:
+- **Only rankings mean anything.** The probability levels drift between cohorts and aren't calibrated.
+- **The size curve is lumpy.** The model scores a 200 MW project higher than both 50 MW and 400 MW. That's a tree artifact, not an optimal size.
+
+Use it to decide where to look harder, not where to build.
+
 ## Two outcomes, and why we lead with "within 5 years"
 
 - **Within N years** (default). Every project is labeled once N years have passed since it entered: built in time = 1; still active, suspended or withdrawn = 0. Nothing is censored, so we can test on the most recent cohorts whose window has closed (2019–2020 entries). Training uses 2005–2014 entries, whose 5-year outcomes were known by 2019, so a fund could really have built this model at decision time.
@@ -28,6 +69,8 @@ python tests/selftest.py                  # checks leakage, splits, metrics and 
 python -m queue_risk.pipeline             # model selection on rolling validation (~3 min)
 python -m queue_risk.pipeline --final     # one-time test-set run. Don't run until the team agrees.
 python -m queue_risk.timeline             # time-to-build curve, validated on 2013-2014 entries
+python -m queue_risk.strategy             # investors: back early vs. wait for the IA
+python -m queue_risk.sponsor --region ERCOT --tech Solar --mw 200   # sponsors: siting screen, what-if
 ```
 
 ## The pipeline
