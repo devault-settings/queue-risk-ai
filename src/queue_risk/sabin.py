@@ -78,7 +78,13 @@ def edition_text(edition: str) -> list[str]:
     if not txt.exists():
         import subprocess
         subprocess.run(["pdftotext", "-layout", str(pdf), str(txt)], check=True, capture_output=True)
-    return txt.read_text(encoding="utf-8", errors="replace").splitlines()
+    text = txt.read_text(encoding="utf-8", errors="replace")
+    # Some poppler builds keep the list bullets; blank them so the patterns see the same
+    # indented text either way (a space per bullet keeps the column positions).
+    return text.translate(BULLETS).splitlines()
+
+
+BULLETS = str.maketrans({"●": " ", "○": " ", "■": " ", "▪": " ", "•": " "})
 
 
 def state_sections(lines):
@@ -132,7 +138,7 @@ def parse_contested(state, lines):
     entries = []
     for line in _block(lines, r"^\s*\d+\.3\s+Contested"):
         m = ENTRY.match(line)
-        if m and len(line) - len(line.lstrip()) <= 8:
+        if m and len(line) - len(line.lstrip()) <= 10:  # 8 in most poppler builds; 10 in some sections of others
             entries.append({"state": state, "project": m.group(1).strip(" “\"”"),
                             "location": m.group(2).strip(), "text": m.group(3).strip()})
         elif entries and line.strip():
