@@ -42,6 +42,11 @@ def main():
     train, test = temporal_split(projects["q_year"], split["train"], split["test"])
     Xtr, ytr, Xte, yte = X[train], y[train], X[test], y[test]
     folds = rolling_folds(projects["q_year"][train])
+    # Out-of-time band between the training window and the test cohort (validation, not test):
+    # each SELECTED model is refit on the training window and scored here, so the validation
+    # and out-of-time numbers always describe the same configuration.
+    oot = projects["q_year"].between(split["train"][1] + 1, split["test"][0] - 1).to_numpy()
+    Xoot, yoot = X[oot], y[oot]
     label = f"built within {config.HORIZON}y" if args.outcome == "within" else "ever built"
     print(f"outcome: {label} | train {split['train']}: {len(ytr):,} projects, {ytr.mean():.1%} | "
           f"test {split['test']}: {len(yte):,} projects, {yte.mean():.1%} | "
@@ -71,6 +76,9 @@ def main():
         row = {"model": label, "CV AUC": search.best_score_,
                "settings": {k.replace("clf__", ""): v for k, v in search.best_params_.items()},
                "secs": round(time.time() - t0, 1)}
+        if oot.any() and yoot.nunique() > 1:
+            p_oot = search.best_estimator_.predict_proba(Xoot[cols])[:, 1]
+            row[f"out-of-time AUC {split['train'][1] + 1}-{split['test'][0] - 1}"] = evaluate.roc_auc_score(yoot, p_oot)
         if args.final:
             p = search.best_estimator_.predict_proba(Xte[cols])[:, 1]
             test_scores[label] = p
@@ -78,7 +86,8 @@ def main():
             lo, hi = evaluate.bootstrap_ci(yte.to_numpy(), p, evaluate.roc_auc_score, n=300)
             row["test AUC 95% CI"] = f"[{lo:.3f}, {hi:.3f}]"
         rows.append(row)
-        print(f"  {label:48s} CV AUC {search.best_score_:.3f}  ({row['secs']}s)")
+        oot_txt = next((f" | out-of-time {v:.3f}" for k, v in row.items() if k.startswith("out-of-time")), "")
+        print(f"  {label:48s} CV AUC {search.best_score_:.3f}{oot_txt}  ({row['secs']}s)")
 
     table = pd.DataFrame(rows)
     config.FIGURES.parent.mkdir(parents=True, exist_ok=True)

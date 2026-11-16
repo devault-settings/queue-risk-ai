@@ -21,7 +21,8 @@ import pandas as pd
 
 from . import config
 
-CATEGORICAL = ["region", "type_clean", "service", "state"]
+# "service" (ERIS/NRIS) was dropped: its blanks leak the outcome in CAISO and MISO (_hide_missingness).
+CATEGORICAL = ["region", "type_clean", "state"]
 NUMERIC_BASE = ["log_mw", "is_hybrid", "q_month"]
 WINDOW_YEARS = 3
 
@@ -132,6 +133,27 @@ def census_counties() -> pd.DataFrame:
                          "lat": g["INTPTLAT"], "lon": g["INTPTLONG"]}).set_index(g["GEOID"])
 
 
+def _hide_missingness(X: pd.DataFrame, p: pd.DataFrame) -> pd.DataFrame:
+    """Keep blank fields from telling the model the outcome.
+
+    In the end-2025 snapshot, RESOLVED projects have sparser records than active ones:
+    in SPP the POI name is missing only for withdrawn projects (14%, 0% for every other
+    status); in ERCOT the county code is missing for 0.6% of active, 36% of operational
+    and 59% of withdrawn projects. A blank field is therefore written after the outcome,
+    i.e. leakage (caught by C. Loriot's SHAP check). So every feature of a blank field is
+    left missing, and the model pipeline imputes it WITHOUT a missing-value indicator.
+    The one legitimate missingness signal, a county with no resolved projects before
+    entry (cold start), keeps its explicit flag, but only where the county is known.
+    """
+    X = X.copy()
+    no_county = p["fips"].isna().to_numpy()
+    X.loc[no_county, "county_has_history"] = np.nan
+    if "poi_is_line" in X:
+        no_poi = p["poi_name"].isna().to_numpy()
+        X.loc[no_poi, ["poi_is_line", "poi_is_sub"]] = np.nan
+    return X
+
+
 DEFAULT_EXTRAS = ("poi",)   # census: mixed out-of-time, see docs/model_log.md
 
 
@@ -159,6 +181,7 @@ def build_features(raw: pd.DataFrame, projects: pd.DataFrame, opposition: pd.Dat
         parts += [poi_text_features(p), _asof_group_stats(ref, p, "poi_key", "poi")]
     X = pd.concat(parts, axis=1)
     X["county_has_history"] = X["county_built_share_before"].notna().astype(int)
+    X = _hide_missingness(X, p)
     if "census" in extras:
         X = X.join(p[["fips"]].join(census_counties(), on="fips").drop(columns="fips"))
 

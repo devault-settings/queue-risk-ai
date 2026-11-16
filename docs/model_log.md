@@ -6,6 +6,39 @@ All results are on the **5-year outcome** with **validation data only**, using t
 - **Rolling CV:** mean AUC over the yearly folds 2010–2014, fitting on earlier years each time.
 - **Out-of-time:** train on 2005–2014, score 2015–2018. This is the harder check, because the queue changed. Neither check touches the 2019–2020 test cohort.
 
+## Nov 15: blank-field leakage fixed; consistent out-of-time reporting
+
+**Found by Charles Loriot** (notebooks/01_charles_tabular_models.ipynb): the "missing" flags were top SHAP drivers. Verified:
+- **POI name blanks are outcome-dependent.** In SPP the name is missing for 14% of withdrawn projects and 0% of every other status; ERCOT shows 0% active, 7.5% operational, 29% withdrawn.
+- **County blanks too.** ERCOT: 0.6% of active, 36% of operational and 59% of withdrawn projects; CAISO withdrawn 17% vs. about 1% otherwise.
+- **Service-type blanks too.** CAISO: 0% active vs. 26% withdrawn; MISO is uneven as well.
+
+The blanks are written *after* the outcome, so they leak it.
+
+**Fix** ([features._hide_missingness](../src/queue_risk/features.py)):
+- No missing-value indicators in the model pipelines.
+- POI and county-history features left missing, then imputed without a flag.
+- ERCOT's missing state set to TX.
+- `service` dropped.
+
+**He also caught** that the README paired the selected model's validation AUC (gradient boosting, depth 4) with an out-of-time AUC from a *different* configuration. The pipeline now scores every **selected** model on 2015–2018 as well, and `stack.py` reuses the selected settings (`models.selected()`).
+
+| Model (selected settings) | Rolling CV, before → after fix | Out-of-time 2015–18, before → after |
+|---|---|---|
+| Logistic regression | 0.660 → 0.615 | — → 0.641 |
+| LASSO (C = 0.1) | 0.678 → 0.631 | 0.647 → **0.686** |
+| CART | 0.662 → 0.593 | — → 0.610 |
+| Random forest | 0.695 → 0.629 | 0.551 → 0.588 |
+| Gradient boosting (depth 4) | **0.701 → 0.663** | 0.594 → 0.633 |
+
+**Reading it:** validation fell and out-of-time rose. That's the signature of a leak that lived in old resolved records and didn't transfer.
+- LASSO by year, 2015–2018: 0.627 / 0.637 / 0.668 / 0.737. The "2017–2018 breakdown" was mostly the leak.
+- The POI features still help without it. Gradient boosting: rolling CV 0.631 → 0.663, out-of-time 0.607 → 0.633. LASSO out-of-time: 0.668 → 0.686.
+- **Opposition, second stage:** odds ×0.55 (LASSO stage 1) or ×0.58 (gradient boosting). AUC gain +0.005 with either, interval includes zero.
+- **Recommendation:** LASSO as the headline model, since it transfers best, with gradient boosting as the comparison.
+
+**Superseded:** the Nov 12 numbers below include the leak. They're kept as a record.
+
 ## Nov 12 (evening): CPU-only push on validation AUC
 
 | Change | Rolling CV | Out-of-time 2015–18 | Verdict |

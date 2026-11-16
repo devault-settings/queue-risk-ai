@@ -19,7 +19,10 @@ Scope: 29,848 clean-energy projects (solar, wind, storage) entering 2005 or late
 | Withdrawn, no withdrawal date | 6,642 | Track-record features undercount past withdrawals | Documented; lag features treat as unknown |
 | IA executed, no IA date (not yet operational) | 2,303 | Post-IA build rate rests on a subset | Post-IA rates reported as a range |
 | Proposed online date exactly equals operation date (overwritten; MISO 100%, SPP 88%) | 641 | Projection replaced by the outcome | Schedule metric limited to CAISO, ERCOT, PJM; never a feature |
-| County FIPS missing | 1,270 | No county features | Left missing; trees use a missing branch |
-| Service type missing | 7,703 | One feature incomplete | Missing kept as its own category |
+| County FIPS missing | 1,270 | No county features | Left missing; imputed with no missing flag (see the ERCOT row) |
+| Service type missing | 7,703 | Blanks track the outcome in CAISO and MISO; ERCOT/NYISO never report it | Feature dropped |
+| POI name missing, withdrawn vs. other statuses (SPP: 14% vs 0%) | 1,351 | A blank is written after the outcome (leakage) | POI features left missing; imputed with no missing flag |
+| County missing, ERCOT resolved projects (36-59% vs 0.6% active) | 618 | A blank is written after the outcome (leakage) | County features left missing; imputed with no missing flag |
+| State missing in ERCOT (raw file) | 628 | Same blank-record pattern | Filled with TX (ERCOT lies entirely within Texas) |
 | Capacity missing or zero | 6 | Size feature and MW-weighted metrics | Left missing; excluded from MW sums |
 | Capacity above 2,000 MW | 57 | Outliers in MW-weighted metrics | Kept (real large wind/offshore); size enters as log |

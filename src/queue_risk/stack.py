@@ -1,13 +1,15 @@
 """Does local opposition add anything beyond the tabular model? A two-stage (stacked) test.
 
-    python -m queue_risk.stack            # validation: cohorts 2015-2018
-    python -m queue_risk.stack --final    # test: fit stage 2 on 2015-2018, score 2019-2020 (once)
+    python -m queue_risk.stack                       # validation: cohorts 2015-2018, both stage-1 models
+    python -m queue_risk.stack --stage1 lasso        # one stage-1 model only
+    python -m queue_risk.stack --final               # test: fit stage 2 on 2015-2018, score 2019-2020 (once)
 
 Why two stages: the Sabin opposition record reaches back to ~2010 only thinly, so it can't
 be a feature of the stage-1 model trained on 2005-2014 entries. Instead (Lecture 7,
 stacking with out-of-fold predictions):
 
-  stage 1  gradient boosting on 2005-2014 entries, tabular features only (frozen)
+  stage 1  a tabular model at its pipeline-selected settings (LASSO or gradient boosting),
+           fit on 2005-2014 entries, tabular features only (frozen)
   stage 2  logistic regression on [stage-1 log-odds, opposition features], fit on the
            2015-2018 cohorts, scored leave-one-year-out so every validation prediction
            comes from a stage-2 model that never saw that year
@@ -23,17 +25,19 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import roc_auc_score
 
 from . import config, data, features, sabin
-from .models import model_zoo
+from .models import selected
 
 STAGE2_YEARS = (2015, 2018)
 OPP_COLS = ["any_prior_contested"]
 
 
-def _stage1(raw, projects):
+STAGE1 = {"lasso": "LASSO logistic", "gb": "Gradient boosting"}
+
+
+def _stage1(raw, projects, model="gb"):
     X, y = features.build_features(raw, projects)
     tr = projects["q_year"].between(*config.SPLITS["within"]["train"]).to_numpy()
-    est, _ = model_zoo(X[tr])["Gradient boosting"]
-    est.set_params(clf__learning_rate=0.03, clf__max_iter=200)
+    est = selected(STAGE1[model], X[tr])
     est.fit(X[tr], y[tr])
     p = np.clip(est.predict_proba(X)[:, 1], 1e-6, 1 - 1e-6)
     return pd.Series(np.log(p / (1 - p)), index=projects.index), y
@@ -61,40 +65,42 @@ def bootstrap_gain(y, a, b, n=1000, seed=0):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--final", action="store_true")
+    ap.add_argument("--stage1", choices=["lasso", "gb", "both"], default="both")
     args = ap.parse_args()
     raw = data.load_raw_queue()
     P = data.built_within(raw, config.HORIZON)
-    logit, y = _stage1(raw, P)
     c = pd.read_csv(config.INTERIM / "sabin_contested.csv", dtype={"fips_list": str})
     opp = sabin.prior_opposition(P, sabin.contested_events(c))
-    V = P[["q_year", "fips"]].assign(logit=logit, y=y).join(opp)
-    fit = V[V["q_year"].between(*STAGE2_YEARS)]
-
-    if not args.final:
-        a, b = leave_one_year_out(fit, ["logit"]), leave_one_year_out(fit, ["logit"] + OPP_COLS)
-        yy = fit["y"].to_numpy()
-        coef = LogisticRegression(max_iter=1000).fit(fit[["logit"] + OPP_COLS], fit["y"]).coef_[0]
-        print(f"Validation, cohorts {STAGE2_YEARS[0]}-{STAGE2_YEARS[1]} ({len(fit):,} projects, "
-              f"{fit['any_prior_contested'].mean():.0%} in a county with earlier contested projects)")
-        print(f"  stage-1 tabular model alone, AUC {roc_auc_score(yy, fit['logit']):.3f}")
-        print(f"  stage 2 out-of-fold AUC: tabular only {roc_auc_score(yy, a):.3f} | + opposition {roc_auc_score(yy, b):.3f}")
-        print("  stage-2 coefficients:", dict(zip(["logit"] + OPP_COLS, coef.round(2))),
-              f"-> odds x{np.exp(coef[1]):.2f} for a county with earlier contested projects")
-        g = bootstrap_gain(yy, a, b)
-        print(f"  AUC gain {g[0]:+.3f}, 95% CI [{g[1]:+.3f}, {g[2]:+.3f}], positive in {g[3]:.0%} of draws")
-        for yr in range(STAGE2_YEARS[0], STAGE2_YEARS[1] + 1):
-            m = (fit["q_year"] == yr).to_numpy()
-            print(f"  {yr}: AUC {roc_auc_score(yy[m], a[m]):.3f} -> {roc_auc_score(yy[m], b[m]):.3f}")
-    else:
-        test = V[V["q_year"].between(*config.SPLITS["within"]["test"])]
-        out = {}
-        for name, cols in [("tabular only", ["logit"]), ("+ opposition", ["logit"] + OPP_COLS)]:
-            m = LogisticRegression(max_iter=1000).fit(fit[cols], fit["y"])
-            out[name] = m.predict_proba(test[cols])[:, 1]
-        yy = test["y"].to_numpy()
-        g = bootstrap_gain(yy, out["tabular only"], out["+ opposition"])
-        print({k: round(roc_auc_score(yy, v), 3) for k, v in out.items()},
-              f"gain {g[0]:+.3f} [{g[1]:+.3f}, {g[2]:+.3f}]")
+    for s1 in (["lasso", "gb"] if args.stage1 == "both" else [args.stage1]):
+        logit, y = _stage1(raw, P, s1)
+        V = P[["q_year", "fips"]].assign(logit=logit, y=y).join(opp)
+        fit = V[V["q_year"].between(*STAGE2_YEARS)]
+        print(f"\n=== stage 1: {STAGE1[s1]} (pipeline-selected settings)")
+        if not args.final:
+            a, b = leave_one_year_out(fit, ["logit"]), leave_one_year_out(fit, ["logit"] + OPP_COLS)
+            yy = fit["y"].to_numpy()
+            coef = LogisticRegression(max_iter=1000).fit(fit[["logit"] + OPP_COLS], fit["y"]).coef_[0]
+            print(f"Validation, cohorts {STAGE2_YEARS[0]}-{STAGE2_YEARS[1]} ({len(fit):,} projects, "
+                  f"{fit['any_prior_contested'].mean():.0%} in a county with earlier contested projects)")
+            print(f"  stage-1 model alone, AUC {roc_auc_score(yy, fit['logit']):.3f}")
+            print(f"  stage 2 out-of-fold AUC: tabular only {roc_auc_score(yy, a):.3f} | + opposition {roc_auc_score(yy, b):.3f}")
+            print("  stage-2 coefficients:", dict(zip(["logit"] + OPP_COLS, coef.round(2))),
+                  f"-> odds x{np.exp(coef[1]):.2f} for a county with earlier contested projects")
+            g = bootstrap_gain(yy, a, b)
+            print(f"  AUC gain {g[0]:+.3f}, 95% CI [{g[1]:+.3f}, {g[2]:+.3f}], positive in {g[3]:.0%} of draws")
+            print("  by year:", {yr: (round(roc_auc_score(yy[m], a[m]), 3), round(roc_auc_score(yy[m], b[m]), 3))
+                                 for yr in range(STAGE2_YEARS[0], STAGE2_YEARS[1] + 1)
+                                 for m in [(fit["q_year"] == yr).to_numpy()]})
+        else:
+            test = V[V["q_year"].between(*config.SPLITS["within"]["test"])]
+            out = {}
+            for name, cols in [("tabular only", ["logit"]), ("+ opposition", ["logit"] + OPP_COLS)]:
+                m = LogisticRegression(max_iter=1000).fit(fit[cols], fit["y"])
+                out[name] = m.predict_proba(test[cols])[:, 1]
+            yy = test["y"].to_numpy()
+            g = bootstrap_gain(yy, out["tabular only"], out["+ opposition"])
+            print({k: round(roc_auc_score(yy, v), 3) for k, v in out.items()},
+                  f"gain {g[0]:+.3f} [{g[1]:+.3f}, {g[2]:+.3f}]")
 
 
 if __name__ == "__main__":

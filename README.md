@@ -33,7 +33,7 @@ What we can measure, and how confident we are in each input:
 - Extremes: 4% to over 100%.
 - Price difference alone, at mid prices: 9–19%.
 
-**Where the model stands (validation only, not yet tested):** the 25 top-ranked projects in each cohort got 8–56% of their MW built within 5 years, against base rates of 4–23%. That's a 2–7× lift. It clears the median break-even bar in four of five cohorts, **but not in 2011, a year whose base rate (4%) was as low as today's.**
+**Where the model stands (validation only, not yet tested):** the 25 projects gradient boosting ranks highest in each validation year got 17–84% of their MW built within 5 years, against base rates of 4–23%. That clears the median break-even bar in four of five years, and sits at it (21%) in 2010. LASSO's top 25 got 7–41% and clear the bar in three of five.
 
 The honest claim for now: the model makes early backing *competitive* under some assumptions, not reliably profitable. The 2019–2020 test run will say which side of the band it lands on.
 
@@ -61,10 +61,10 @@ The Sabin Center's annual *Opposition to Renewable Energy Facilities in the Unit
 - **Restrictions:** about 450 jurisdictions in 42 states (429 counties, 9 municipalities, 13 state laws). They are dated only by the first edition that lists them (2021 onward), so they can't inform older cohorts.
 
 **Does it add signal?** ([stack.py](src/queue_risk/stack.py), validation on 2015–2018 entries only.) The test is two-stage, as in Lecture 7: the frozen tabular model's score, plus the opposition flag, fit and scored leave-one-year-out.
-- **Effect size:** a county with an earlier contested project has **about 0.57 times the odds** of a 5-year build (coefficient −0.56) at the same tabular score.
-- **Ranking gain:** AUC +0.009, 95% CI [−0.002, +0.020]. It's positive in every year, but the interval touches zero, so it's **suggestive, not conclusive.**
+- **Effect size:** a county with an earlier contested project has **about 0.55 times the odds** of a 5-year build at the same tabular score (LASSO first stage; ×0.58 with gradient boosting).
+- **Ranking gain:** AUC +0.005, 95% CI [−0.003, +0.014] with LASSO (positive in 88% of bootstrap draws), and +0.005 [−0.005, +0.016] with gradient boosting. The effect size is stable, but the ranking gain is small and **not conclusive.**
 - **Caveat on the list itself:** Sabin compiles its list after the fact, so a 2015 controversy is in it partly because researchers looked back later. That was knowable in 2015, but it isn't a record collected in 2015.
-- **Warning for the test run:** even with the point-of-interconnection features, the tabular model ranks the 2017 and 2018 cohorts only at AUC 0.55–0.56 (overall 0.626 on 2015–2018). The queue changed enough that 2005–2014 history transfers poorly.
+- **Drift, revisited:** the earlier "2017–2018 breakdown" (AUC about 0.55) was largely the blank-field leak, which held in old resolved records but not newer ones. Without it, LASSO scores 0.668 and 0.737 on those years.
 
 **The NLP step (needs labels):** label 300 paragraphs for outcome and concerns ([guidelines](docs/labeling_guidelines.md)), then compare keyword rules, TF-IDF, frozen DistilBERT and fine-tuned DistilBERT, all on a CPU. The question is whether *successful* opposition (blocked projects) carries more signal than any opposition.
 
@@ -139,16 +139,23 @@ python -m queue_risk.pipeline --models "Gradient,TabPFN" --ablation   # with vs.
 | Training cohort (2005–2014 entries) | 4,029 projects, 11.1% built | 5,862 projects, 17.7% built |
 | Test cohort, not yet scored | 2019–2020: 3,184 projects, 3.7% built | 2015–2017: 3,557 projects, 19.7% built |
 
-**Validation results (Nov 12, evening):** rolling folds over 2010–2014, 26 features, including the point-of-interconnection track record and voltage. The "ever built" column predates the data-quality fixes and the new features. Every experiment, including the failed ones, is in [docs/model_log.md](docs/model_log.md).
+**Validation results (Nov 15, after the blank-field leakage fix):** 25 features, including the point-of-interconnection track record and voltage; no missing-value flags. Two numbers per model, both for the *same* selected configuration:
+- **Rolling CV:** fit on earlier years, validate on each of 2010–2014.
+- **Out-of-time:** fit on 2005–2014, score 2015–2018. These cohorts sit between training and test, so this check is the closest to how the model would be used.
 
-| Model | AUC, within 5 years | AUC, ever built |
-|---|---|---|
-| Flat rate (rule of thumb) | 0.500 | 0.500 |
-| Historical rate, region × technology | 0.620 | 0.554 |
-| CART | 0.662 | 0.588 |
-| Logistic regression / LASSO | 0.660 / 0.678 | 0.631 / 0.632 |
-| Random forest | 0.695 | 0.633 |
-| **Gradient boosting** | **0.701** | **0.667** |
+The "ever built" column predates the data-quality fixes and the new features. Every experiment is in [docs/model_log.md](docs/model_log.md).
+
+| Model | Within 5 years: rolling CV | Within 5 years: out-of-time | Ever built: rolling CV |
+|---|---|---|---|
+| Flat rate (rule of thumb) | 0.500 | 0.500 | 0.500 |
+| Historical rate, region × technology | 0.620 | 0.593 | 0.554 |
+| CART | 0.593 | 0.610 | 0.588 |
+| Logistic regression | 0.615 | 0.641 | 0.631 |
+| **LASSO** (C = 0.1) | 0.631 | **0.686** | 0.632 |
+| Random forest | 0.629 | 0.588 | 0.633 |
+| **Gradient boosting** | **0.663** | 0.633 | 0.667 |
+
+**Which model?** Gradient boosting wins on rolling CV, but **LASSO transfers best to the later cohorts**: 0.686 overall, and 0.668 and 0.737 in 2017 and 2018. That's Lecture 4's case for regularization under a shifting environment, and it is the closer stand-in for the 2019–2020 test. Recommendation: LASSO as the headline model, gradient boosting as the comparison.
 
 **Time-to-build curve, validated by deciding on 2013–2014 entries.** Each horizon trains only on cohorts whose window had closed by 2013.
 
@@ -164,6 +171,9 @@ There are two lessons:
 - **Rates drift between cohorts.** Ranking (AUC) carries over; calibrated rates do not, so they need recalibrating on the latest closed cohort.
 
 ## Things worth knowing about the data
+
+- **Blank fields leak the outcome (found Nov 15 by Charles Loriot's SHAP check).** In this snapshot, resolved projects have sparser records than active ones. In SPP, the connection-point name is missing *only* for withdrawn projects; in ERCOT, the county is missing for 0.6% of active projects but 36–59% of resolved ones. The model therefore never sees whether a field was blank: no missing-value flags, ERCOT's missing state filled as Texas, and the service-type feature dropped. Validation scores fell (gradient boosting 0.701 → 0.663) but out-of-time scores rose (LASSO 0.647 → 0.686), which is the signature of a leak that doesn't transfer.
+- **Residual risk, untested:** capacity and battery pairing come from the latest record, and projects are sometimes resized or hybridized as they advance.
 
 The full audit, with every issue, its row count and what we do about it, is generated from the file by `python -m queue_risk.quality` and written to [docs/data_quality.md](docs/data_quality.md). The essentials:
 

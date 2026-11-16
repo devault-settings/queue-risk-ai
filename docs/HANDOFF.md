@@ -5,12 +5,23 @@
 
 ---
 
+## ▶ Update, Sun Nov 15
+
+- **Charles added** a walkthrough notebook (`notebooks/01_charles_tabular_models.ipynb`), which runs the existing pipeline in the lecture style, plus six slide-ready figures in `reports/figures/`. He also fixed a `sabin.py` parsing difference that shows up with newer PDF tools; the output is identical on Audrey's machine. Nothing existing was removed, and the test cohort is still unscored.
+- **His SHAP check exposed a leak:** blank fields (connection point, county, service type) are recorded after the outcome. It's fixed. The validation and out-of-time numbers are now reported for the same selected models. See [model_log.md](model_log.md#nov-15-blank-field-leakage-fixed-consistent-out-of-time-reporting).
+- **Current numbers:**
+  - Rolling validation: gradient boosting 0.663 (best), LASSO 0.631.
+  - Out-of-time 2015–2018: **LASSO 0.686 (best)**, gradient boosting 0.633.
+  - **Recommendation:** LASSO as the headline model.
+  - The opposition flag: odds about ×0.55, small ranking gain (+0.005, not conclusive).
+- **Small follow-up for the notebook:** cell 67 pools build rates over all years, including 2019–2020. Limit it to the training years. Its SHAP section should be rerun after this fix, since the missing-value flags it found are gone.
+
 ## ▶ Pick up here (Audrey, Fri Nov 13)
 
 **State at end of Thu Nov 12:**
 - Everything is pushed; the last commit is "Add point-of-interconnection features; log CPU model experiments."
 - `python tests/selftest.py` passes.
-- Validation AUC is **0.701** with gradient boosting, and **0.626** out-of-time on 2015–2018.
+- *Superseded Nov 15; see the update below.* Validation AUC was 0.701 with gradient boosting and 0.626 out-of-time on 2015–2018.
 - The 2019–2020 test cohort has **not** been scored.
 
 **First things tomorrow:**
@@ -64,17 +75,17 @@ Every result so far is on **validation data only**. The test cohort (2019–2020
 |---|---|
 | Flat rate | 0.500 |
 | Historical rate | 0.620 |
-| CART | 0.662 |
-| Logistic / LASSO | 0.660 / 0.678 |
-| Random forest | 0.695 |
-| **Gradient boosting** | **0.701** |
+| CART | 0.593 |
+| Logistic / LASSO | 0.615 / 0.631 (out-of-time 0.641 / **0.686**) |
+| Random forest | 0.629 |
+| **Gradient boosting** | **0.663** (out-of-time 0.633) |
 
 - **Time-to-build curve** ([timeline.py](../src/queue_risk/timeline.py)): one model per horizon, each trained only on cohorts whose window had closed. It ranks well at 2 years (AUC 0.73) but runs short of training data at 5–7 years (about 0.55). Its probabilities come out too low because build rates drift between cohorts.
 
 ### Impact and decision tools
 - **Back early vs. wait for the IA** ([strategy.py](../src/queue_risk/strategy.py)): cost per built MW, plus a break-even hit rate across 243 assumption combinations.
   - The break-even rate is **13–34%** (middle half; median 21%). Backing every project blindly gets 5.9% of capacity built within 5 years.
-  - On validation, the model's top 25 projects per year got **8–56%** built, clearing the median bar in 4 of 5 years.
+  - On validation, gradient boosting's top 25 projects per year got **17–84%** built, clearing the median bar in 4 of 5 years. LASSO's got 7–41%, clearing it in 3 of 5.
   - **Honest claim:** early backing becomes *competitive under some assumptions*, not reliably profitable.
 - **Sponsor tools** ([sponsor.py](../src/queue_risk/sponsor.py)): a county siting screen and one-change-at-a-time what-ifs. These are associations, not causes, and only the rankings mean anything.
 - **Schedule metric** ([schedule.py](../src/queue_risk/schedule.py)): before / on / after the projected date. It's mostly a measure of how often each operator revises its projected dates, so read it with care. "Active and already past the projected date" is the sturdier measure: 37–38% in MISO and PJM vs. 4–7% elsewhere.

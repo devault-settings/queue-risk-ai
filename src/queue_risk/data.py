@@ -26,6 +26,9 @@ def load_raw_queue() -> pd.DataFrame:
             .sort_index())
     df["mw_total"] = df[["mw_1", "mw_2", "mw_3"]].sum(axis=1, min_count=1)
     df["is_hybrid"] = df["type_2"].notna()
+    # ERCOT lies entirely within Texas; 628 in-scope ERCOT rows have no state recorded, and
+    # the blank is concentrated in resolved projects (see features._hide_missingness).
+    df.loc[(df["region"] == "ERCOT") & df["state"].isna(), "state"] = "TX"
     # Dates later than the file's as-of date are planned, not observed (52 clean-energy rows).
     end = pd.Timestamp(config.DATA_CUTOFF)
     for col in ["on_date", "wd_date", "ia_date"]:

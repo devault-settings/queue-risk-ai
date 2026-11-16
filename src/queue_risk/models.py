@@ -72,7 +72,8 @@ class HistoricalRate(ClassifierMixin, BaseEstimator):
 
 def _preprocess(X: pd.DataFrame, scale: bool) -> ColumnTransformer:
     numeric = [c for c in X.columns if c not in CATEGORICAL]
-    num_steps = [SimpleImputer(strategy="median", add_indicator=True)]
+    # No missing-value indicators: blank fields leak the outcome (features._hide_missingness).
+    num_steps = [SimpleImputer(strategy="median", add_indicator=False)]
     if scale:
         num_steps.append(StandardScaler())
     return ColumnTransformer([
@@ -135,3 +136,19 @@ def _tabpfn(X: pd.DataFrame) -> dict:
     clf = TabPFNClassifier(categorical_features_indices=list(range(len(CATEGORICAL))),
                            random_state=config.SEED)
     return {"TabPFN (pre-trained transformer)": (Pipeline([("prep", prep), ("clf", clf)]), {})}
+
+
+def selected(name: str, X: pd.DataFrame, outcome: str = "within"):
+    """The model `name` at the settings the last pipeline run selected (read from
+    reports/results_<outcome>_validation.csv), so downstream scripts (stack.py, sponsor.py)
+    use the same configuration the README reports. Falls back to defaults if not run yet."""
+    import ast
+    est, _ = model_zoo(X)[name]
+    path = config.ROOT / "reports" / f"results_{outcome}_validation.csv"
+    if path.exists():
+        res = pd.read_csv(path)
+        row = res[res["model"] == name]
+        if len(row):
+            settings = ast.literal_eval(row["settings"].iloc[0])
+            est.set_params(**{f"clf__{k}": v for k, v in settings.items()})
+    return est

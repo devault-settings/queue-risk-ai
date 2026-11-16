@@ -5,7 +5,7 @@
 Two tools for a developer planning a new queue request:
 
 - what_if(): one planned project, varied one choice at a time (size, technology,
-  hybrid pairing, service type), each scored by the 5-year model.
+  hybrid pairing), each scored by the 5-year model.
 - siting_screen(): the same planned project placed in every county of a region,
   ranked by predicted P(operating within 5 years). County effects enter only through
   the track-record features (past queue activity and outcomes there, as of the entry date).
@@ -91,8 +91,7 @@ def main():
         top = screen.iloc[0]
         base = _planned(args.region, args.tech, args.mw, top.fips, top.state, config.DATA_CUTOFF)
         print("\nWhat-if, in the top county:")
-        print(what_if(raw, model, base, {"mw_total": [50, 100, 400], "is_hybrid": [True],
-                                         "service": ["ERIS"]}).to_string(index=False))
+        print(what_if(raw, model, base, {"mw_total": [50, 100, 400], "is_hybrid": [True]}).to_string(index=False))
 
 
 if __name__ == "__main__":

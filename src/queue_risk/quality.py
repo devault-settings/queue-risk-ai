@@ -16,7 +16,7 @@ OUT = config.ROOT / "docs" / "data_quality.md"
 
 def audit(raw: pd.DataFrame) -> pd.DataFrame:
     raw_file = pd.read_excel(config.QUEUE_XLSX, sheet_name=config.QUEUE_SHEET, header=1,
-                             usecols=["on_date", "wd_date", "ia_date", "type_1", "q_year"])
+                             usecols=["on_date", "wd_date", "ia_date", "type_1", "q_year", "state", "region"])
     end = pd.Timestamp(config.DATA_CUTOFF)
     f = raw_file[raw_file["type_1"].isin(config.CLEAN_TYPES) & (raw_file["q_year"] >= config.FIRST_YEAR)]
     c = raw[raw["type_1"].isin(config.CLEAN_TYPES) & (raw["q_year"] >= config.FIRST_YEAR)]
@@ -56,9 +56,17 @@ def audit(raw: pd.DataFrame) -> pd.DataFrame:
          op & c["on_date"].notna() & (c["on_date"] == c["prop_date"]),
          "Projection replaced by the outcome", "Schedule metric limited to CAISO, ERCOT, PJM; never a feature"),
         ("County FIPS missing", c["fips"].isna(),
-         "No county features", "Left missing; trees use a missing branch"),
+         "No county features", "Left missing; imputed with no missing flag (see the ERCOT row)"),
         ("Service type missing", c["service"].isna(),
-         "One feature incomplete", "Missing kept as its own category"),
+         "Blanks track the outcome in CAISO and MISO; ERCOT/NYISO never report it", "Feature dropped"),
+        ("POI name missing, withdrawn vs. other statuses (SPP: 14% vs 0%)",
+         c["poi_name"].isna() & (c["q_status"] == "withdrawn"),
+         "A blank is written after the outcome (leakage)", "POI features left missing; imputed with no missing flag"),
+        ("County missing, ERCOT resolved projects (36-59% vs 0.6% active)",
+         c["fips"].isna() & (c["region"] == "ERCOT") & c["q_status"].isin(["operational", "withdrawn"]),
+         "A blank is written after the outcome (leakage)", "County features left missing; imputed with no missing flag"),
+        ("State missing in ERCOT (raw file)", int((f["state"].isna() & (f["region"] == "ERCOT")).sum()),
+         "Same blank-record pattern", "Filled with TX (ERCOT lies entirely within Texas)"),
         ("Capacity missing or zero", ~(c["mw_total"] > 0),
          "Size feature and MW-weighted metrics", "Left missing; excluded from MW sums"),
         ("Capacity above 2,000 MW", c["mw_total"] > 2000,
