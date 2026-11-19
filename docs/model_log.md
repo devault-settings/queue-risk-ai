@@ -6,6 +6,36 @@ All results are on the **5-year outcome** with **validation data only**, using t
 - **Rolling CV:** mean AUC over the yearly folds 2010–2014, fitting on earlier years each time.
 - **Out-of-time:** train on 2005–2014, score 2015–2018. This is the harder check, because the queue changed. Neither check touches the 2019–2020 test cohort.
 
+## Nov 18: text-only model for late fusion ([02_paul_text_models.ipynb](../notebooks/02_paul_text_models.ipynb))
+
+**Stage 1, the reader** (paragraph → proceeded vs. blocked/delayed). Trained on Claude's 425 resolved labels, tested once on the 90 resolved human labels. The numbers below come from a CPU quick-mode run; the DistilBERT rows need the Colab GPU run (512 tokens, early-stopped, 3 seeds) before they count.
+
+| Reader | CV AUC (silver) | Gold AUC [95% CI] |
+|---|---|---|
+| Keyword rules (`sabin.rule_outcome`) | 0.802 | 0.754 [0.64, 0.86] |
+| TF-IDF + logistic regression | 0.815 | 0.840 [0.75, 0.92] |
+| Frozen DistilBERT / MiniLM + logistic regression | *Colab* | *Colab* |
+| Fine-tuned DistilBERT | *Colab* | *Colab* |
+
+**Stage 2, county text history → built within 5 years**, rolling origin 2015–2018, mean within-year AUC:
+
+| Model | Mean within-year AUC |
+|---|---|
+| Any earlier contested project | 0.525 |
+| + counts, reader outcomes, concerns | 0.525–0.526 |
+| + state fallback | 0.511 (hurts) |
+| Oracle (labels instead of the reader) | 0.526 |
+
+**Reading it:**
+- Only 10% of 2015–2018 projects have county text.
+- Where a county has an earlier contested project, 5-year build rates are 4% vs. 10% elsewhere (2010–2018).
+- Whether that earlier opposition *succeeded* doesn't matter detectably: "mostly blocked" and "mostly proceeded" counties both build at 4%. So a better reader won't help stage 2. The value of the text is in the fusion.
+
+**Dating fix:**
+- The labeling sheet's cleaned text drops footnote citations that `sabin_contested.csv` had glued onto paragraphs.
+- `text.load_paragraphs()` re-dates from the cleaned text, which changes `first_year` for 123 paragraphs and `last_year` for 114.
+- `stack.py` still uses the old dates.
+
 ## Nov 15: blank-field leakage fixed; consistent out-of-time reporting
 
 **Found by Charles Loriot** (notebooks/01_charles_tabular_models.ipynb): the "missing" flags were top SHAP drivers. Verified:

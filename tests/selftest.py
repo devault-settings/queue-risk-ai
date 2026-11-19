@@ -144,6 +144,33 @@ def test_sabin_parsing():
     check("only events strictly before the entry year count (no look-ahead)", o == [0, 1, 2, 0], f"got {o}")
 
 
+def test_text_features():
+    print("\nText features for late fusion (Lecture 8: past paragraphs only)")
+    from queue_risk import text
+    # Two paragraphs in county 18065: one contested 2016 and resolved 2018 (reader: 20%
+    # proceeded), one contested 2019 and still open in 2022. Plus one wind paragraph elsewhere in IN.
+    paras = pd.DataFrame({
+        "fips_list": ["18065", "18065", "18001"], "state": ["IN", "IN", "IN"],
+        "first_year": [2016, 2019, 2015], "last_year": [2018, 2022, 2015],
+        "tech_solar": [1, 0, 0], "tech_wind": [0, 1, 1], "tech_battery": [0, 0, 0],
+        **{f"concern_{k}": [int(k == "farmland"), 0, 0] for k in text.CONCERNS},
+    })
+    P = pd.DataFrame({"fips": ["18065"] * 4 + [pd.NA], "state": ["IN"] * 5,
+                      "q_year": [2016, 2017, 2019, 2020, 2020],
+                      "type_1": ["Solar", "Solar", "Solar", "Wind", "Solar"]})
+    f = text.county_text_features(P, paras, p_reader=[0.2, 0.9, 0.5])
+    check("a paragraph from the entry year itself does not count", f["c_contested"].tolist()[:2] == [0, 1],
+          f"got {f['c_contested'].tolist()}")
+    check("an outcome counts only once its last year is before entry",
+          f["c_known"].tolist()[:4] == [0, 0, 1, 1] and f["c_pending"].tolist()[1] == 1)
+    check("the reader's P(proceeded) becomes expected blocked/proceeded counts",
+          np.isclose(f.loc[2, "c_blocked"], 0.8) and np.isclose(f.loc[2, "c_proceeded"], 0.2))
+    check("same-technology count matches the project's type", f["c_same_tech"].tolist()[3] == 1)
+    check("concerns are counted from earlier paragraphs only", f["c_concern_farmland"].tolist()[:3] == [0, 1, 1])
+    check("a project with no county still gets the state fallback",
+          f.loc[4, "c_contested"] == 0 and f.loc[4, "s_contested"] == 3)
+
+
 def test_schedule():
     print("\nSchedule: before, on, or after the projected date")
     from queue_risk import schedule
@@ -228,7 +255,7 @@ def test_real_data_checkpoints():
 
 def main():
     for t in [test_lag_features_see_only_the_past, test_opposition_join, test_split,
-              test_benchmarks, test_metrics_and_impact, test_sabin_parsing, test_schedule,
+              test_benchmarks, test_metrics_and_impact, test_sabin_parsing, test_text_features, test_schedule,
               test_strategy_arithmetic,
               test_built_within_label,
               test_real_data_checkpoints]:
