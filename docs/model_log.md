@@ -6,6 +6,40 @@ All results are on the **5-year outcome** with **validation data only**, using t
 - **Rolling CV:** mean AUC over the yearly folds 2010–2014, fitting on earlier years each time.
 - **Out-of-time:** train on 2005–2014, score 2015–2018. This is the harder check, because the queue changed. Neither check touches the 2019–2020 test cohort.
 
+## Nov 20: late fusion of tabular + text ([03_merged_late_fusion.ipynb](../notebooks/03_merged_late_fusion.ipynb))
+
+**Setup:**
+- **Tabular input:** `stack._stage1`, i.e. LASSO / gradient boosting at their selected settings, fit on 2005–2014, scored out of time.
+- **Text input:** `text_scores.csv` (`p_text`, `has_text`). All 3,490 projects from 2015–2018 join, and their outcomes agree.
+- **Second stage:** logistic regression on the log-odds, fit leave-one-year-out.
+- **Metric:** mean within-year AUC.
+
+| Row | LASSO stage 1 | GB stage 1 |
+|---|---|---|
+| Tabular only | 0.632 | 0.605 |
+| Text only | 0.526 | 0.526 |
+| Tabular + opposition flag (re-dated) | 0.642 | 0.608 |
+| **Late fusion** (tabular + text log-odds), selected | **0.643** | **0.611** |
+| + coverage interaction | 0.642 | 0.608 |
+| Rank average (no fitting) | 0.640 | 0.612 |
+
+**Size of the gain:**
+- **LASSO, late fusion:** +0.011 within-year, 95% CI [+0.002, +0.019], positive in 99% of bootstrap draws. It is up in every year.
+- **Strictly rolling second stage** (2016–2018): +0.006 with LASSO, +0.001 with GB.
+- **The flag alone gives most of it.** The reader's richer score adds about 0.001.
+- **The re-dated flag gains less than `stack.py`'s old-date flag** (+0.007 vs. +0.014 pooled), so part of the earlier gain came from the footnote dates.
+
+**Where the gain comes from:**
+- **Across groups:** the fusion lowers contested-county projects as a group (5.2% built vs. 9.2% elsewhere; mean P 8.7% → 5.4%).
+- **Inside that group, ranking gets slightly worse:** 0.670 → 0.654.
+
+**At the top of the list it hurts:**
+- In the four top-25 shortlists, the fusion swaps 10 projects. All 10 dropped ones come from contested counties, and 4 of them were built. None of the 10 added ones were built.
+- Built projects in the shortlists: 20 → 16.
+- **Reading:** use the text as a portfolio prior and a diligence flag, not as an automatic downgrade.
+
+**Calibration** is unchanged (Brier 0.079 for both).
+
 ## Nov 18: text-only model for late fusion ([02_paul_text_models.ipynb](../notebooks/02_paul_text_models.ipynb))
 
 **Stage 1, the reader** (paragraph → proceeded vs. blocked/delayed). Trained on Claude's 425 resolved labels, tested once on the 90 resolved human labels. Numbers are from the Colab T4 run on Nov 19 (512 tokens, early stopping, 3 seeds averaged).
