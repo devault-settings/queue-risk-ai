@@ -6,6 +6,20 @@ All results are on the **5-year outcome** with **validation data only**, using t
 - **Rolling CV:** mean AUC over the yearly folds 2010–2014, fitting on earlier years each time.
 - **Out-of-time:** train on 2005–2014, score 2015–2018. This is the harder check, because the queue changed. Neither check touches the 2019–2020 test cohort.
 
+## Nov 20: how lucky is one demo sample? ([demo/export_data.py](../demo/export_data.py))
+
+The demo page shows 50 random 2015–2018 projects and asks how many of the model's top 10 were built. With only about 4–5 builds per sample, one draw can mislead, so `export_data.py` redraws 50 projects 20,000 times from the same scored cohort (LASSO, fit on 2005–2014, scored out of time):
+
+| | Model's top 10 | Random 10 (expected) |
+|---|---|---|
+| Average over 20,000 draws | 1.7 builds | 0.9 |
+| Draw on the page (seed 15072) | 3 | 1.0 (luckier than 85% of draws) |
+| First draw (seed 15071), not used | 4 | 1.2 (luckier than 95% of draws) |
+
+- **Distribution of top-10 builds:** 0 in 15% of draws, 1 in 32%, 2 in 29%, 3 in 16%, 4 or more in 7%.
+- **The full-cohort number is the one to quote:** the model's top 20% (698 projects) held 123 builds vs. 61.6 at random (17.6% vs. 8.8% built), about 2×.
+- **Seed rule:** after seeing the first draw was unusually lucky, we committed to the next seed before looking and kept it. Re-picking until a draw "looks right" would be hand-picking.
+
 ## Nov 20: late fusion of tabular + text ([03_merged_late_fusion.ipynb](../notebooks/03_merged_late_fusion.ipynb))
 
 **Setup:**

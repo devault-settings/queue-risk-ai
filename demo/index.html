@@ -1,0 +1,340 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Queue Risk Demo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    color-scheme: light;
+    --paper: #F3F5F7;
+    --surface: #FFFFFF;
+    --ink: #17202B;
+    --muted: #5E6B78;
+    --rule: #D5DCE3;
+    --cobalt: #2B4EDB;
+    --cobalt-tint: #E8EDFD;
+    --green: #17875A;
+    --green-tint: #E2F3EA;
+    --ease: cubic-bezier(.2, .7, .2, 1);
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0; background: var(--paper); color: var(--ink);
+    font-family: "Archivo", system-ui, -apple-system, "Segoe UI", sans-serif;
+    font-size: 16px; line-height: 1.45;
+    font-variant-numeric: tabular-nums;
+  }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 40px 24px 56px; }
+
+  /* ---------- header */
+  h1 {
+    font-stretch: 125%; font-weight: 800; letter-spacing: -0.01em;
+    font-size: clamp(28px, 5.2vw, 46px); line-height: 1.02; margin: 0 0 14px;
+    max-width: 16ch;
+  }
+  .lede { color: var(--muted); max-width: 62ch; margin: 0 0 22px; font-size: 17px; }
+  .facts { display: flex; flex-wrap: wrap; gap: 10px; align-items: stretch; margin-bottom: 28px; }
+  .badge {
+    background: var(--ink); color: #fff; border-radius: 6px; padding: 8px 12px;
+    font-weight: 600; font-size: 15px;
+  }
+  .badge span { font-weight: 400; opacity: .78; }
+  .fact {
+    border: 1px solid var(--rule); background: var(--surface); border-radius: 6px;
+    padding: 8px 12px; font-size: 15px;
+  }
+  .fact b { font-weight: 700; }
+  .aucnote { flex-basis: 100%; color: var(--muted); font-size: 13.5px; margin: 0; }
+
+  /* ---------- controls */
+  .controls { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-bottom: 18px; }
+  button {
+    font: inherit; font-weight: 650; font-size: 16px; cursor: pointer;
+    border-radius: 8px; padding: 11px 18px; border: 2px solid var(--ink);
+    background: var(--ink); color: #fff;
+    transition: background .15s, color .15s, border-color .15s, opacity .15s;
+  }
+  button .n { display: inline-block; font-stretch: 125%; margin-right: 8px; opacity: .6; }
+  button:hover:not(:disabled) { background: #2A3747; border-color: #2A3747; }
+  button:disabled { cursor: default; background: transparent; color: var(--muted); border-color: var(--rule); }
+  button:focus-visible { outline: 3px solid var(--cobalt); outline-offset: 2px; }
+  button.reset {
+    background: transparent; color: var(--muted); border-color: transparent;
+    font-weight: 500; padding: 11px 8px; margin-left: auto;
+  }
+  button.reset:hover:not(:disabled) { background: transparent; color: var(--ink); border-color: transparent; text-decoration: underline; }
+  button.reset[hidden] { display: none; }
+
+  /* ---------- scoreboard */
+  .score { display: none; margin: 0 0 22px; }
+  .score.on { display: block; }
+  .tiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .tile { background: var(--surface); border: 1px solid var(--rule); border-radius: 8px; padding: 14px 16px; }
+  .tile .v { font-stretch: 125%; font-weight: 800; font-size: 40px; line-height: 1; }
+  .tile .l { color: var(--muted); font-size: 14.5px; margin-top: 6px; }
+  .tile.model { border-color: var(--cobalt); box-shadow: inset 4px 0 0 var(--cobalt); }
+  .tile.model .v { color: var(--cobalt); }
+  .cohort { margin: 12px 2px 0; font-size: 15px; max-width: 75ch; }
+  .cohort b { font-weight: 700; }
+
+  /* ---------- list */
+  .list { background: var(--surface); border: 1px solid var(--rule); border-radius: 10px; overflow: hidden; }
+  .row {
+    display: grid; align-items: center; column-gap: 12px;
+    grid-template-columns: 2rem 5.8rem minmax(0, 1fr) 3.8rem 2.4rem 7rem 3.6rem 8.5rem 6.6rem;
+    grid-template-areas: "rank date proj op st tech mw p out";
+    padding: 8px 16px; border-top: 1px solid var(--rule); position: relative; background: var(--surface);
+  }
+  .row.head {
+    border-top: 0; background: var(--paper); color: var(--muted); font-size: 13.5px; font-weight: 600;
+    padding-top: 10px; padding-bottom: 10px;
+  }
+  ol { list-style: none; margin: 0; padding: 0; }
+  .rank { grid-area: rank; color: var(--muted); font-weight: 600; font-size: 14px; }
+  .date { grid-area: date; color: var(--muted); font-size: 14px; }
+  .proj { grid-area: proj; min-width: 0; display: flex; align-items: baseline; gap: 8px; white-space: nowrap; }
+  .proj .nm { font-weight: 600; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+  .proj .id { color: var(--muted); font-size: 13.5px; flex-shrink: 0; }
+  .op { grid-area: op; } .st { grid-area: st; } .tech { grid-area: tech; }
+  .mw { grid-area: mw; text-align: right; }
+  .p { grid-area: p; display: flex; align-items: center; gap: 8px; }
+  .out { grid-area: out; font-size: 14.5px; }
+  .head .mw { text-align: right; }
+
+  .bar { flex: 1; height: 8px; border-radius: 4px; background: var(--paper); overflow: hidden; }
+  .bar i { display: block; height: 100%; width: 0; background: #9AA8B6; border-radius: 4px; transition: width .6s var(--ease); }
+  .pv { width: 3em; text-align: right; font-weight: 600; opacity: 0; transition: opacity .3s; }
+  .scored .pv { opacity: 1; }
+  .scored .row.top { background: var(--cobalt-tint); }
+  .scored .row.top::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: var(--cobalt); }
+  .scored .row.top .bar i { background: var(--cobalt); }
+  .scored .row.top .rank { color: var(--cobalt); }
+  .row.cut { border-bottom: 2px solid var(--cobalt); }
+  .cutlabel {
+    position: absolute; right: 16px; bottom: -11px; z-index: 2; background: var(--cobalt); color: #fff;
+    font-size: 12.5px; font-weight: 600; padding: 2px 8px; border-radius: 4px;
+  }
+  .out .yes { color: var(--green); font-weight: 700; white-space: nowrap; }
+  .out .no { color: #9AA6B2; }
+  .revealed .row.built { background: var(--green-tint); }
+  .revealed .row.built.top { background: linear-gradient(90deg, var(--cobalt-tint), var(--green-tint) 55%); }
+  .hidden-col { visibility: hidden; }
+
+  /* ---------- footer */
+  footer { margin-top: 28px; color: var(--muted); font-size: 14px; max-width: 78ch; }
+  footer p { margin: 0 0 8px; }
+  footer b { color: var(--ink); font-weight: 600; }
+
+  /* ---------- narrow windows: two-line rows */
+  @media (max-width: 760px) {
+    .wrap { padding: 24px 16px 40px; }
+    .row {
+      grid-template-columns: 2rem minmax(0, 1fr) 7.4rem;
+      grid-template-areas: "rank proj p" "rank meta out";
+      row-gap: 2px; padding: 10px 12px;
+    }
+    .row.head { display: none; }
+    .date, .op, .st, .tech, .mw { display: none; }
+    .proj .id { display: none; }
+    .meta { grid-area: meta; display: block !important; color: var(--muted); font-size: 13.5px; min-width: 0;
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .out { text-align: right; }
+    .tiles { grid-template-columns: 1fr; }
+    .tile { display: flex; align-items: baseline; gap: 12px; padding: 10px 14px; }
+    .tile .v { font-size: 30px; min-width: 1.6em; }
+    .tile .l { margin: 0; }
+    .cutlabel { right: 12px; }
+    button.reset { margin-left: 0; }
+  }
+  .meta { display: none; }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { transition: none !important; animation: none !important; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Which queue projects get built?</h1>
+    <p class="lede" id="lede"></p>
+    <div class="facts" id="facts"></div>
+  </header>
+
+  <div class="controls">
+    <button id="run"><span class="n">1</span>Run the model</button>
+    <button id="reveal" disabled><span class="n">2</span>Show what actually happened</button>
+    <button id="reset" class="reset" hidden>Start over</button>
+  </div>
+
+  <section class="score" id="score" aria-live="polite"></section>
+
+  <div class="list" id="list">
+    <div class="row head" aria-hidden="true">
+      <span class="rank">#</span><span class="date">Entered</span><span class="proj">Project</span>
+      <span class="op">Operator</span><span class="st">State</span><span class="tech">Technology</span>
+      <span class="mw">MW</span><span class="p">Chance built in 5 yrs</span><span class="out">Outcome</span>
+    </div>
+    <ol id="rows"></ol>
+  </div>
+
+  <footer id="footer"></footer>
+</div>
+
+<script src="data.js"></script>
+<script>
+(function () {
+  const D = window.DEMO;
+  const $ = (id) => document.getElementById(id);
+  if (!D) {
+    $("lede").textContent = "data.js is missing. Run python demo/export_data.py, then reload.";
+    return;
+  }
+  const M = D.meta, S = D.sample, F = D.full;
+  const pct = (x, d = 0) => (x * 100).toFixed(d) + "%";
+  const fmt = (x) => x.toLocaleString("en-US");
+  const yrs = (a) => a[0] + "–" + String(a[1]).slice(2);
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  // ---------- header and footer (all numbers from data.js)
+  $("lede").textContent = `${S.n} solar, wind and storage projects that entered US interconnection queues in ` +
+    `${M.score_years[0]}–${M.score_years[1]}, drawn at random. On the day each one entered, which would you back?`;
+  $("facts").innerHTML =
+    `<div class="badge">${M.model} · AUC ${M.auc.toFixed(2)} <span>[95% CI ${M.auc_lo.toFixed(2)}–${M.auc_hi.toFixed(2)}]</span> on ${yrs(M.score_years)} entries</div>` +
+    `<div class="fact">Base rate, all ${fmt(F.n)} entries in ${yrs(M.score_years)}: <b>${pct(M.base_rate, 1)}</b> built within ${M.horizon} years</div>` +
+    `<p class="aucnote">AUC is the chance the model ranks a project that got built above one that didn't (0.5 = coin flip). ` +
+    `It measures ranking, not the error on any one project.</p>`;
+  $("footer").innerHTML =
+    `<p><b>Sample.</b> ${S.n} projects drawn at random (seed ${M.seed}) from all ${fmt(F.n)} entries of ` +
+    `${M.score_years[0]}–${M.score_years[1]} in ${M.regions.join(", ")}. Nothing was hand-picked.</p>` +
+    `<p><b>Outcome.</b> Operating within ${M.horizon} years of entering the queue.</p>` +
+    `<p><b>Model.</b> LASSO logistic regression (C = ${M.C}) trained only on ${M.train_years[0]}–${M.train_years[1]} entries, ` +
+    `using what was known on entry day. Every score here is out of time.</p>` +
+    `<p><b>Limit.</b> The model ranks how likely a project is to be built. It doesn't say why a project fails.</p>` +
+    `<p>Data: Berkeley Lab, Queued Up. Generated ${M.generated} by demo/export_data.py.</p>`;
+
+  // ---------- rows, in queue order
+  const maxP = Math.max(...D.projects.map((r) => r.p));
+  const rowsEl = $("rows"), listEl = $("list");
+  const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  const els = D.projects.map((r, i) => {
+    const li = document.createElement("li");
+    li.className = "row" + (r.built ? " built" : "");
+    li.dataset.i = i;
+    const name = esc(r.name || r.id);
+    const mw = r.mw == null ? "–" : fmt(r.mw);
+    const p = r.p < 0.01 ? "<1%" : pct(r.p);
+    li.innerHTML =
+      `<span class="rank"></span>` +
+      `<span class="date">${r.entered}</span>` +
+      `<span class="proj"><span class="nm">${name}</span><span class="id">${r.name ? esc(r.id) : ""}</span></span>` +
+      `<span class="meta">${r.entered.slice(0, 7)}, ${esc(r.operator)}, ${esc(r.state || "–")}, ${esc(r.tech)}, ${mw} MW</span>` +
+      `<span class="op">${esc(r.operator)}</span><span class="st">${esc(r.state || "–")}</span>` +
+      `<span class="tech">${esc(r.tech)}</span><span class="mw">${mw}</span>` +
+      `<span class="p hidden-col"><span class="bar"><i></i></span><span class="pv">${p}</span></span>` +
+      `<span class="out"></span>`;
+    rowsEl.appendChild(li);
+    return li;
+  });
+  const queueOrder = els.slice();
+
+  function place(order) {
+    // FLIP: remember where each row was, move it, then animate from old to new spot
+    const before = new Map(order.map((el) => [el, el.getBoundingClientRect().top]));
+    order.forEach((el) => rowsEl.appendChild(el));
+    if (reduce) return;
+    order.forEach((el) => {
+      const dy = before.get(el) - el.getBoundingClientRect().top;
+      if (!dy) return;
+      el.style.transition = "none";
+      el.style.transform = `translateY(${dy}px)`;
+      el.style.zIndex = 1;
+    });
+    void rowsEl.offsetHeight;
+    order.forEach((el) => {
+      el.style.transition = "transform .9s var(--ease)";
+      el.style.transform = "";
+      el.addEventListener("transitionend", () => { el.style.zIndex = ""; el.style.transition = ""; }, { once: true });
+    });
+  }
+
+  // ---------- step 1: score, re-sort, mark the top 10
+  $("run").addEventListener("click", () => {
+    $("run").disabled = true;
+    els.forEach((el) => {
+      const r = D.projects[el.dataset.i];
+      el.querySelector(".p").classList.remove("hidden-col");
+      el.querySelector(".bar i").style.width = (100 * r.p / maxP).toFixed(1) + "%";
+    });
+    listEl.classList.add("scored");
+    const ranked = els.slice().sort((a, b) => D.projects[b.dataset.i].p - D.projects[a.dataset.i].p);
+    setTimeout(() => {
+      place(ranked);
+      ranked.forEach((el, k) => {
+        el.querySelector(".rank").textContent = k + 1;
+        el.classList.toggle("top", k < S.top);
+        el.classList.toggle("cut", k === S.top - 1);
+      });
+      const cut = ranked[S.top - 1];
+      const tag = document.createElement("span");
+      tag.className = "cutlabel";
+      tag.textContent = `Model's top ${S.top}`;
+      cut.appendChild(tag);
+      setTimeout(() => { $("reveal").disabled = false; $("reset").hidden = false; $("reveal").focus(); }, reduce ? 0 : 900);
+    }, reduce ? 0 : 650);
+  });
+
+  // ---------- step 2: what actually happened, and the scoreboard
+  $("reveal").addEventListener("click", () => {
+    $("reveal").disabled = true;
+    els.forEach((el) => {
+      const r = D.projects[el.dataset.i];
+      el.querySelector(".out").innerHTML = r.built
+        ? `<span class="yes">✓ Built</span>`
+        : `<span class="no">Not by year ${M.horizon}</span>`;
+    });
+    listEl.classList.add("revealed");
+    const share = Math.round(100 * S.top / S.n);
+    let inTop = 0;
+    els.forEach((el) => { if (el.classList.contains("top")) inTop += D.projects[el.dataset.i].built; });
+    $("score").innerHTML =
+      `<div class="tiles">` +
+      `<div class="tile model"><div class="v">${inTop}</div><div class="l">built among the model's top ${S.top}</div></div>` +
+      `<div class="tile"><div class="v">${S.random_expected.toFixed(1)}</div><div class="l">expected from a random ${S.top} (${S.top} × ${S.built} of ${S.n} built)</div></div>` +
+      `<div class="tile"><div class="v">${S.perfect}</div><div class="l">with perfect hindsight</div></div>` +
+      `</div>` +
+      `<p class="cohort">${S.n} projects hold only ${S.built} builds, so one sample can look lucky or unlucky. ` +
+      `Across <b>all ${fmt(F.n)} entries</b> in ${yrs(M.score_years)}, the model's top ${share}% (${fmt(F.k)} projects) held ` +
+      `<b>${fmt(F.top_built)} builds</b>, against ${fmt(F.random_expected)} expected from a random ${share}% and ` +
+      `${fmt(F.perfect)} with perfect hindsight.</p>` +
+      `<p class="cohort">Across ${fmt(D.sim.draws)} random ${S.n}-project draws, the model's top ${S.top} averaged ` +
+      `<b>${D.sim.mean_top.toFixed(1)} builds</b> vs. ${D.sim.mean_random.toFixed(1)} at random. ` +
+      `This draw is luckier than ${Math.round(100 * D.sim.luckier_than)}% of them.</p>`;
+    $("score").classList.add("on");
+  });
+
+  // ---------- start over (handy between video takes)
+  $("reset").addEventListener("click", () => {
+    $("run").disabled = false; $("reveal").disabled = true; $("reset").hidden = true;
+    $("score").classList.remove("on"); $("score").innerHTML = "";
+    listEl.classList.remove("scored", "revealed");
+    els.forEach((el) => {
+      el.classList.remove("top", "cut");
+      el.querySelector(".rank").textContent = "";
+      el.querySelector(".out").innerHTML = "";
+      el.querySelector(".p").classList.add("hidden-col");
+      el.querySelector(".bar i").style.width = "0";
+      const tag = el.querySelector(".cutlabel"); if (tag) tag.remove();
+    });
+    place(queueOrder);
+    $("run").focus();
+  });
+})();
+</script>
+</body>
+</html>

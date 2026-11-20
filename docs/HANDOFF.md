@@ -5,6 +5,21 @@
 
 ---
 
+## ▶ Update, Fri Nov 20 (demo page)
+
+- **Charles built the demo page** for the video, a simpler version of the Deal Desk ([demo/README.md](../demo/README.md)). Run `python demo/export_data.py`, then `python demo/serve.py`.
+  - 50 random projects from 2015–2018, scored by the out-of-time LASSO, with three states: entry-day list → **Run the model** → **Show what actually happened**.
+  - **Tabular model only:** no opposition flag or Sabin text on the page.
+  - `export_data.py` refuses to write unless LASSO's out-of-time AUC is still 0.686. It never loads or scores the 2019–2020 test cohort. `--final` has still not been run.
+- **Numbers on the page:**
+  - Header: AUC 0.69 [95% CI 0.66–0.71] on 2015–18 entries; base rate 8.8% (308 of 3,490 built within 5 years).
+  - This sample: 3 builds in the model's top 10, against 1.0 expected at random and 5 with perfect hindsight.
+  - Full cohort: the model's top 20% (698 projects) held 123 builds, against 61.6 at random, so **about 2×**. This is the claim to quote.
+- **The sample is luckier than typical, and the page says so.** Across 20,000 random 50-project draws, the top 10 averaged 1.7 builds vs. 0.9 at random. This draw is luckier than 85% of them. The first draw (seed 15071) was luckier than 95%, so we moved to the next seed, committed to before looking (details in the demo README). **Don't re-pick the seed.**
+- **For the video:** say "about twice as often," not "three times." Don't call AUC "accuracy."
+- **Notebook 01's saved outputs are stale.** They predate the Nov 15 leak fix and show LASSO at 0.647 out of time. The current code gives 0.686. Rerun the notebook before quoting anything from it.
+- **Data question for the team:** some in-scope projects look odd. AB1-042 (PJM battery) is listed at 0 MW and ranks 2nd in the demo; R101 (MISO) is a 4.6 MW "Wind+Gas" project and ranks 1st. Both are as listed in Queued Up. Decide whether 0 MW rows should be filtered in `data.in_scope` (that would change the modeling table, so rerun the checkpoints).
+
 ## ▶ Update, Sun Nov 15
 
 - **Charles added** a walkthrough notebook (`notebooks/01_charles_tabular_models.ipynb`), which runs the existing pipeline in the lecture style, plus six slide-ready figures in `reports/figures/`. He also fixed a `sabin.py` parsing difference that shows up with newer PDF tools; the output is identical on Audrey's machine. Nothing existing was removed, and the test cohort is still unscored.
@@ -117,7 +132,7 @@ Every result so far is on **validation data only**. The test cohort (2019–2020
 | 6 | **Agree, then run the one-time test:** `pipeline --final`, `timeline --final`, `stack --final`. Settle the outcome definition, features and models *before* running | Whole team | Tue Nov 17 |
 | 7 | **SHAP driver chart** (`pip install shap`) for the best model | Anyone | Wed |
 | 8 | **Impact visuals:** wasted spend per built MW vs. projects backed (rule vs. model vs. hindsight); break-even band chart; county map of opposition vs. build rates | Anyone | Wed Nov 18 |
-| 9 | **Demo page** ([demo/README.md](../demo/README.md), the "Deal Desk") plus `export_data.py` with checkpoints. Optional, but it makes the video | Anyone | Wed–Thu |
+| 9 | ~~**Demo page** ([demo/README.md](../demo/README.md), the "Deal Desk") plus `export_data.py` with checkpoints~~ **Done Nov 20** (simple version: no map, cost dial or SHAP) | Charles | Wed–Thu |
 | 10 | **Deliverables:** 5–10 slides, 2-minute video, final one-page README | Whole team | Thu Nov 19 |
 | 11 | **Team logistics:** owners per row above; collect GitHub usernames so Audrey can add collaborators; pick the audience (investor vs. sponsor) | Whole team | Next meeting |
 

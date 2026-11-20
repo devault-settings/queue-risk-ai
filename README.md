@@ -127,7 +127,7 @@ python -m queue_risk.pipeline --models "Gradient,TabPFN" --ablation   # with vs.
 | TabPFN, a pre-trained tabular transformer (optional; GPU; [Colab notebook](notebooks/tabpfn_colab.ipynb)) | [models.py](src/queue_risk/models.py) | 8, 12 |
 | Ablation: every model with and without the news-opposition features | `--ablation` in [pipeline.py](src/queue_risk/pipeline.py) | 7, 12 |
 | Schedule: before, on, or after the projected online date | [schedule.py](src/queue_risk/schedule.py) | — |
-| Interactive pitch page | [demo/](demo/README.md) (planned) | 5, 6 demos |
+| Interactive pitch page | [demo/](demo/README.md) (simple version built Nov 20) | 5, 6 demos |
 
 ## Where the numbers come from
 
@@ -201,7 +201,7 @@ The full audit, with every issue, its row count and what we do about it, is gene
 ```
 src/queue_risk/   the pipeline (above)
 tests/            selftest.py: ok/FAIL checks, exits non-zero on failure
-demo/             the Deal Desk page for the pitch (planned; serve.py works)
+demo/             the demo page for the video (export_data.py, then serve.py)
 data/raw/         Berkeley Lab Queued Up file (committed, public)
 data/processed/   modeling and score tables (gitignored)
 notebooks/        exploration; name as NN_owner_topic.ipynb
