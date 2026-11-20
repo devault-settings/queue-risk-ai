@@ -8,14 +8,19 @@ All results are on the **5-year outcome** with **validation data only**, using t
 
 ## Nov 18: text-only model for late fusion ([02_paul_text_models.ipynb](../notebooks/02_paul_text_models.ipynb))
 
-**Stage 1, the reader** (paragraph → proceeded vs. blocked/delayed). Trained on Claude's 425 resolved labels, tested once on the 90 resolved human labels. The numbers below come from a CPU quick-mode run; the DistilBERT rows need the Colab GPU run (512 tokens, early-stopped, 3 seeds) before they count.
+**Stage 1, the reader** (paragraph → proceeded vs. blocked/delayed). Trained on Claude's 425 resolved labels, tested once on the 90 resolved human labels. Numbers are from the Colab T4 run on Nov 19 (512 tokens, early stopping, 3 seeds averaged).
 
 | Reader | CV AUC (silver) | Gold AUC [95% CI] |
 |---|---|---|
 | Keyword rules (`sabin.rule_outcome`) | 0.802 | 0.754 [0.64, 0.86] |
 | TF-IDF + logistic regression | 0.815 | 0.840 [0.75, 0.92] |
-| Frozen DistilBERT / MiniLM + logistic regression | *Colab* | *Colab* |
-| Fine-tuned DistilBERT | *Colab* | *Colab* |
+| Frozen MiniLM + logistic regression | 0.698 | 0.738 [0.62, 0.84] |
+| Frozen DistilBERT + logistic regression | 0.785 | 0.882 [0.81, 0.94] |
+| **Fine-tuned DistilBERT** (selected) | **0.916** | **0.962 [0.92, 0.99]** |
+
+- **Fine-tuned DistilBERT wins clearly.** On the gold set it beats the keyword rules by +0.209 AUC (95% CI [+0.094, +0.339]) and TF-IDF by +0.120 ([+0.036, +0.210]).
+- It recalls 93% of the blocked/delayed paragraphs and 79% of the proceeded ones. It gets 10 of 90 gold paragraphs wrong at a 0.5 cutoff: 6 proceeded paragraphs scored too low, and 4 delayed ones scored too high.
+- Out-of-fold over all 515 resolved paragraphs, its AUC is 0.938. These are the reader outcomes that stage 2 uses.
 
 **Stage 2, county text history → built within 5 years**, rolling origin 2015–2018, mean within-year AUC:
 
@@ -23,13 +28,13 @@ All results are on the **5-year outcome** with **validation data only**, using t
 |---|---|
 | Any earlier contested project | 0.525 |
 | + counts, reader outcomes, concerns | 0.525–0.526 |
-| + state fallback | 0.511 (hurts) |
+| + state fallback | 0.513 (hurts) |
 | Oracle (labels instead of the reader) | 0.526 |
 
 **Reading it:**
 - Only 10% of 2015–2018 projects have county text.
 - Where a county has an earlier contested project, 5-year build rates are 4% vs. 10% elsewhere (2010–2018).
-- Whether that earlier opposition *succeeded* doesn't matter detectably: "mostly blocked" and "mostly proceeded" counties both build at 4%. So a better reader won't help stage 2. The value of the text is in the fusion.
+- Whether that earlier opposition *succeeded* doesn't matter detectably: "mostly blocked" and "mostly proceeded" counties both build at 4%. So a better reader won't help stage 2: on the GPU run, swapping the reader for the human labels (oracle) gives the same 0.526. The value of the text is in the fusion.
 
 **Dating fix:**
 - The labeling sheet's cleaned text drops footnote citations that `sabin_contested.csv` had glued onto paragraphs.
