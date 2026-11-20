@@ -92,11 +92,25 @@ DEV_COST_RANGE_USD = (1_000_000, 3_000_000, 10_000_000)
 # Success in a Highly Competitive Renewable Energy M&A Landscape" (solar+storage, US ISOs):
 # early stage $0.02-0.05/W, late stage $0.07-0.20/W. Cross-check (unsourced banker guide):
 # <$50k/MW early, $80-150k/MW in interconnection, $150-350k/MW with IA + PPA.
+# Early floor (SEC filing): Bimergen Energy Corp, Form S-1/A (Aug 7, 2025), 2,425 MW of
+# greenfield solar sold at $5,000/MW + $3,000/MW milestone payments = $0.008/W.
+# Greenfield is earlier than queue entry, so this is a floor, below our low.
 PRICE_EARLY_USD_PER_W = (0.02, 0.035, 0.05)
+# Late support (SEC filings): a 2015 purchase agreement, 72.9 MW at $0.08/W; Dominion
+# Energy 2016 10-K, $32M for ~221 MW (~$0.145/W). Queue stage of both TO CONFIRM.
 PRICE_LATE_USD_PER_W = (0.07, 0.135, 0.20)
-# Development spend the early backer funds between entry and the IA (studies, deposits),
-# per project. PLACEHOLDER, NOT SOURCED: 0 isolates the price effect.
-SPEND_TO_IA_USD = (0, 500_000, 2_000_000)
+# Development spend the early backer funds between entry and the IA, per 100 MW project
+# (low, mid, high) = studies + permitting + land:
+#   studies ~$150k: FERC Order 2023 study deposit tier for 80-200 MW (LGIP 3.1.1.1);
+#   permitting $250k / $300k / $500k: NREL benchmarks 2016/2018; mid is NREL 2018:
+#     $295k, rounded (TO UPDATE from the 2025 Q1 benchmark); CA is 9.5% of 2015-2020
+#     projects;
+#   land $0 / ~$1M / $3M: low and mid are ASSUMPTIONS (mid = land option), high is
+#     NREL ($0.03/W).
+# Deposits (commercial readiness) are tied-up money, not spend, so they are excluded.
+SPEND_TO_IA_USD = (400_000, 1_450_000, 3_650_000)
 # Annual cost of capital, to carry the early outlay to the IA date (median 2.6 years
-# after entry in our six operators). PLACEHOLDER RANGE.
-COST_OF_CAPITAL = (0.0, 0.08, 0.15)
+# after entry in our six operators). NREL ATB 2025, Financial Cases & Methods: nominal
+# after-tax WACC 5.6-6.5% for renewables (low, 6%); construction equity return 10.0%
+# (mid). High (15%) is an ASSUMPTION for day-one queue risk, above both.
+COST_OF_CAPITAL = (0.06, 0.10, 0.15)
