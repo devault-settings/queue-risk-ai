@@ -119,7 +119,7 @@ Every result so far is on **validation data only**. The test cohort (2019–2020
 
 ### Data and labels
 - **Queued Up file, cleaned** ([data.py](../src/queue_risk/data.py)). A generated audit ([data_quality.md](data_quality.md)) lists every issue with its row count and the fix we applied. The biggest catch: 222 withdrawn and 133 active projects carry a completion date. A project's *status* decides whether it was built, never a date field.
-- **The outcome.** "Built within 5 years of entry" ([README](../README.md#two-outcomes-and-why-we-lead-with-within-5-years)). Once 5 years have passed, every project has an answer, so nothing is censored and we can test on recent cohorts:
+- **The outcome.** "Built within 5 years of entry" ([README](README_detailed.md#two-outcomes-and-why-we-lead-with-within-5-years)). Once 5 years have passed, every project has an answer, so nothing is censored and we can test on recent cohorts:
   - Training uses 2005–2014 entries, whose 5-year outcomes were known by 2019, the test-decision date.
   - It's limited to the six grid operators that report completion dates: CAISO, ERCOT, MISO, NYISO, PJM, SPP (66% of projects).
   - The old "ever built" outcome still runs with `--outcome ever`.
