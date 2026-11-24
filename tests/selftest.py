@@ -264,15 +264,20 @@ def test_real_data_checkpoints():
     check("project_id is unique", raw["project_id"].is_unique)
     check("every FIPS key is a 5-character string",
           raw["fips"].dropna().map(lambda s: isinstance(s, str) and len(s) == 5).all())
+    # Expected counts follow the team's odd-row decision (frozen.py, Nov 24: excluded).
+    from queue_risk.frozen import FROZEN
+    odd = bool(FROZEN["exclude_odd_rows"])
+    WITHIN = FROZEN["counts"][odd]
+    EVER = (5850, 3554) if odd else (5862, 3557)
     ever = config.SPLITS["ever"]
     train, test = temporal_split(res["q_year"], ever["train"], ever["test"])
-    check("ever built: 5,862 training projects, 2005-2014", train.sum() == 5862, f"got {train.sum():,}")
-    check("ever built: 3,557 test projects, 2015-2017", test.sum() == 3557, f"got {test.sum():,}")
+    check(f"ever built: {EVER[0]:,} training projects, 2005-2014", train.sum() == EVER[0], f"got {train.sum():,}")
+    check(f"ever built: {EVER[1]:,} test projects, 2015-2017", test.sum() == EVER[1], f"got {test.sum():,}")
     w = data.built_within(raw, config.HORIZON)
     within = config.SPLITS["within"]
     train, test = temporal_split(w["q_year"], within["train"], within["test"])
-    check("within 5y: 4,029 training projects, 2005-2014", train.sum() == 4029, f"got {train.sum():,}")
-    check("within 5y: 3,184 test projects, 2019-2020", test.sum() == 3184, f"got {test.sum():,}")
+    check(f"within 5y: {WITHIN['train']:,} training projects, 2005-2014", train.sum() == WITHIN["train"], f"got {train.sum():,}")
+    check(f"within 5y: {WITHIN['test']:,} test projects, 2019-2020", test.sum() == WITHIN["test"], f"got {test.sum():,}")
     check("within 5y: train/test gap is at least the horizon",
           within["test"][0] - within["train"][1] >= config.HORIZON)
     check("only resolved outcomes are labeled", set(res["q_status"]) <= set(config.RESOLVED_STATUSES))
