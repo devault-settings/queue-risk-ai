@@ -62,8 +62,8 @@ The Sabin Center's annual *Opposition to Renewable Energy Facilities in the Unit
 - **Restrictions:** about 450 jurisdictions in 42 states (429 counties, 9 municipalities, 13 state laws). They are dated only by the first edition that lists them (2021 onward), so they can't inform older cohorts.
 
 **Does it add signal?** ([stack.py](src/queue_risk/stack.py), validation on 2015–2018 entries only.) The test is two-stage, as in Lecture 7: the frozen tabular model's score, plus the opposition flag, fit and scored leave-one-year-out.
-- **Effect size:** a county with an earlier contested project has **about 0.55 times the odds** of a 5-year build at the same tabular score (LASSO first stage; ×0.58 with gradient boosting).
-- **Ranking gain:** AUC +0.005, 95% CI [−0.003, +0.014] with LASSO (positive in 88% of bootstrap draws), and +0.005 [−0.005, +0.016] with gradient boosting. The effect size is stable, but the ranking gain is small and **not conclusive.**
+- **Effect size** (with Paul's corrected paragraph dates, Nov 24): a county with an earlier contested project has **about 0.63 times the odds** of a 5-year build at the same tabular score (LASSO first stage; ×0.67 with gradient boosting).
+- **Ranking gain:** essentially none. AUC +0.001, 95% CI [−0.005, +0.008] with LASSO; +0.000 with gradient boosting. With the old footnote-inflated dates it was +0.005, so part of that came from the dating. Paul's late fusion reports +0.011 on a different metric; see [docs/model_log.md](docs/model_log.md) before quoting either.
 - **Caveat on the list itself:** Sabin compiles its list after the fact, so a 2015 controversy is in it partly because researchers looked back later. That was knowable in 2015, but it isn't a record collected in 2015.
 - **Drift, revisited:** the earlier "2017–2018 breakdown" (AUC about 0.55) was largely the blank-field leak, which held in old resolved records but not newer ones. Without it, LASSO scores 0.668 and 0.737 on those years.
 

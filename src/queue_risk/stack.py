@@ -78,8 +78,11 @@ def main():
         args.stage1 = {name: key for key, name in STAGE1.items()}[FROZEN["headline_model"]]
     raw = data.load_raw_queue()
     P = data.built_within(raw, config.HORIZON)
-    c = pd.read_csv(config.INTERIM / "sabin_contested.csv", dtype={"fips_list": str})
-    opp = sabin.prior_opposition(P, sabin.contested_events(c))
+    # Paragraph dates from text.load_paragraphs() (Paul, Nov 18): re-dated from the cleaned
+    # labeling text, without the footnote citations sabin_contested.csv had glued on
+    # (first_year changes for 123 paragraphs). Same county lists.
+    from . import text
+    opp = sabin.prior_opposition(P, sabin.contested_events(text.load_paragraphs()))
     for s1 in (["lasso", "gb"] if args.stage1 == "both" else [args.stage1]):
         logit, y = _stage1(raw, P, s1)
         V = P[["q_year", "fips"]].assign(logit=logit, y=y).join(opp)

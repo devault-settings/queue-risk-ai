@@ -6,6 +6,19 @@ All results are on the **5-year outcome** with **validation data only**, using t
 - **Rolling CV:** mean AUC over the yearly folds 2010–2014, fitting on earlier years each time.
 - **Out-of-time:** train on 2005–2014, score 2015–2018. This is the harder check, because the queue changed. Neither check touches the 2019–2020 test cohort.
 
+## Nov 24 (evening): opposition second stage with Paul's corrected paragraph dates
+
+`stack.py` now dates paragraphs with `text.load_paragraphs()`. These are re-dated from the cleaned labeling text, without the footnote citations that had added later years. Same 2015–2018 validation design, laptop:
+
+| First stage | Old dates: odds, AUC gain | Corrected dates: odds, AUC gain [95% CI] |
+|---|---|---|
+| LASSO | ×0.55, +0.005 | **×0.63, +0.001 [−0.005, +0.008]** (positive in 66% of draws) |
+| Gradient boosting | ×0.58, +0.005 | **×0.67, +0.000 [−0.008, +0.007]** |
+
+- The share of 2015–2018 projects in a county with an earlier contested project falls from 13% to 10%.
+- **Reading:** contested counties still build less often, but the flag **no longer improves the ranking** on top of the tabular model. Part of the earlier gain came from the footnote dates, as Paul suspected (Nov 18 entry).
+- **To reconcile with Paul:** his late fusion (Nov 20, below) reports +0.011 (95% CI +0.002 to +0.019) on mean within-year AUC with the re-dated flag plus the reader score. Here, the per-year gains are +0.008 / +0.006 / −0.001 / −0.003. The second-stage designs differ (his: mean within-year AUC; here: pooled AUC, leave-one-year-out). Agree on one before quoting either.
+
 ## Nov 24: TabPFN (Colab T4; [run 1](../notebooks/tabpfn_colab_ran_1.ipynb), [run 2](../notebooks/tabpfn_colab_ran_2.ipynb))
 
 TabPFN 3.5 (pre-trained tabular transformer), imputed before it sees the data, so no blank-field leak. Validation only. **All rows come from the same Colab environment.** Its library versions shift LASSO and gradient boosting slightly from the laptop numbers, and LASSO's selected C there was 0.01, not 0.1.

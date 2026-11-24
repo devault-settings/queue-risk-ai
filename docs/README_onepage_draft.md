@@ -33,7 +33,7 @@ Only about 13% of capacity entering US interconnection queues gets built. On the
 
 - **Ranking value:** LASSO's top 20% of 2015–2018 entries were built **17.6%** of the time, against an 8.8% base rate, i.e. **about 2×**.
 - **Text reader:** fine-tuned DistilBERT, AUC **0.962** [0.92, 0.99] on 100 human-labeled paragraphs (TF-IDF 0.840, keyword rules 0.754).
-- **Fusion:** +0.011 within-year AUC [+0.002, +0.019]. Projects in a contested county have **about 0.55× the odds** of being built. But it lowers the top-25 shortlists (20 → 16 built), so we use it as a **due-diligence flag**, not an automatic downgrade.
+- **Opposition:** projects in a county with earlier contested projects have **about 0.63× the odds** of being built (5.2% vs. 9.2%, 2015–18). But the ranking gain on top of the tabular model is near zero (+0.001 pooled AUC; Paul's fusion reports +0.011 within-year; *to reconcile*), and automatic downgrades lower the top-25 shortlists (20 → 16 built). So opposition is a **due-diligence flag**, not a model input.
 - **Back early vs. wait for the agreement:** the break-even hit rate is 18–43% (median 28%) across the sourced assumptions. Today's 2× lift makes early backing *competitive under some assumptions*, not reliably profitable.
 
 ## Reproduce
