@@ -12,9 +12,10 @@
 - **Filled in:** the README test table, the one-page draft, the video script, and the deck notes (slides 5–6).
 - **Still to do:**
   - Sara updates slides 4, 5, 6, 7 and 8 (see the deck notes).
-  - Decide the README swap and the Sabin-text question.
+  - Decide the README swap. (Sabin text in the repo: **decided Nov 24, keep it**; the reports are open access. Cite them, and swap copies for links if republication is ever questioned.)
   - Reconcile the opposition metric with Paul.
   - Ask Paul what `queue_with_costs.csv` is.
+  - **Post-hoc TabPFN test** (not part of the sign-off): `notebooks/tabpfn_posthoc_test.ipynb`, logged to `reports/posthoc_log.md`.
   - The demo's export checkpoints still expect 3,490 projects (now 3,484 with odd rows excluded). Rerun `demo/export_data.py` only if the demo needs regenerating, after updating its checkpoints.
 - **Do not re-run `--final`.** If a bug turns up, fix it and report both runs.
 

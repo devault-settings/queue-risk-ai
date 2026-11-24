@@ -231,4 +231,4 @@ docs/             project plan; course concepts map
 ## Data sources & compliance
 
 - Lawrence Berkeley National Laboratory, *Queued Up* project-level data file (data through end-2025), https://emp.lbl.gov/queues
-- Text data: we publish article URLs and derived scores only, never article text, and no personal contact fields.
+- Sabin Center reports (Columbia Law School, open access): the PDFs, parsed paragraphs and labels are versioned in the repo (team decision, Nov 24: freely available without a login). Cite the reports; if republication is ever questioned, replace the copies with links. No personal contact fields.
