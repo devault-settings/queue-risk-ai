@@ -5,6 +5,11 @@
 
 ---
 
+## ▶ Update, Tue Nov 24 (night): post-hoc TabPFN; Colab LASSO trap fixed
+
+- **Post-hoc TabPFN test** (not part of the sign-off): AUC **0.530** on 2019–20, against the LASSO's 0.613. LASSO was the right headline ([posthoc_log.md](../reports/posthoc_log.md)).
+- **Trap found and fixed:** scikit-learn before 1.8 ignores `l1_ratio=1.0`, so on Colab the "LASSO" was secretly an L2 model (0.566 test, 0.669 out of time). Every Colab "LASSO" number was L2. `models.L1_PENALTY` now works on any version, and the selftest checks for it. Notebook 01 uses the fix too. **Charles: pull before pushing** (notebook 01 and `demo/export_data.py` changed).
+
 ## ▶ Update, Tue Nov 24 (evening): THE TEST HAS BEEN RUN
 
 - **Signed off by all four**, run from the frozen spec (odd rows excluded; TabPFN validation-only). Results committed unchanged in [reports/final_run_log.md](../reports/final_run_log.md); summary in [model_log.md](model_log.md).

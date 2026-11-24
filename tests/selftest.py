@@ -219,6 +219,13 @@ def test_frozen_spec():
         X[c] = ["a", "b"]
     est = selected("LASSO logistic", X)
     check("selected() uses the frozen LASSO setting, on any machine", est.get_params()["clf__C"] == FROZEN["models"]["LASSO logistic"]["C"])
+    from sklearn.linear_model import LogisticRegression
+    from queue_risk.models import L1_PENALTY
+    rng = np.random.default_rng(0)
+    Z = rng.normal(size=(400, 10)); t = (Z[:, 0] + 0.5 * rng.normal(size=400) > 0).astype(int)
+    coef = LogisticRegression(**L1_PENALTY, solver="saga", C=0.05, max_iter=5000).fit(Z, t).coef_[0]
+    check("the 'LASSO' is really L1 on this scikit-learn (strong penalty zeroes coefficients)",
+          (np.abs(coef) < 1e-8).sum() >= 5, f"zero coefficients: {(np.abs(coef) < 1e-8).sum()} of 10")
     t = pd.Timestamp
     q = pd.DataFrame({"type_1": ["Solar"] * 3, "q_year": [2010] * 3, "project_type": ["Generation"] * 3,
                       "q_date": [t("2010-01-01")] * 3, "on_date": [pd.NaT] * 3,
