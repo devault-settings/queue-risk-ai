@@ -128,13 +128,20 @@ def _tabpfn(X: pd.DataFrame) -> dict:
         return {}
     from sklearn.preprocessing import OrdinalEncoder
     numeric = [c for c in X.columns if c not in CATEGORICAL]
+    # Impute BEFORE TabPFN, with no missing flag. TabPFN can read NaN natively, but blank
+    # fields leak the outcome in this snapshot (features._hide_missingness), so it must not
+    # see which values were blank, exactly like the other models.
     prep = ColumnTransformer([
-        ("cat", OrdinalEncoder(handle_unknown="use_encoded_value", unknown_value=np.nan,
-                               encoded_missing_value=np.nan), CATEGORICAL),
-        ("num", "passthrough", numeric),          # TabPFN handles missing values itself
+        ("cat", make_pipeline(SimpleImputer(strategy="most_frequent"),
+                              OrdinalEncoder(handle_unknown="use_encoded_value", unknown_value=-1)),
+         CATEGORICAL),
+        ("num", SimpleImputer(strategy="median", add_indicator=False), numeric),
     ])
-    clf = TabPFNClassifier(categorical_features_indices=list(range(len(CATEGORICAL))),
-                           random_state=config.SEED)
+    cat_idx = list(range(len(CATEGORICAL)))
+    try:
+        clf = TabPFNClassifier(categorical_features_indices=cat_idx, random_state=config.SEED)
+    except TypeError:            # parameter name differs across tabpfn releases
+        clf = TabPFNClassifier(random_state=config.SEED)
     return {"TabPFN (pre-trained transformer)": (Pipeline([("prep", prep), ("clf", clf)]), {})}
 
 

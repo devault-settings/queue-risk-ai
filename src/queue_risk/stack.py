@@ -1,7 +1,7 @@
 """Does local opposition add anything beyond the tabular model? A two-stage (stacked) test.
 
     python -m queue_risk.stack                       # validation: cohorts 2015-2018, both stage-1 models
-    python -m queue_risk.stack --stage1 lasso        # one stage-1 model only
+    python -m queue_risk.stack --stage1 lasso        # one stage-1 model only (lasso, gb, tabpfn)
     python -m queue_risk.stack --final               # test: fit stage 2 on 2015-2018, score 2019-2020 (once)
 
 Why two stages: the Sabin opposition record reaches back to ~2010 only thinly, so it can't
@@ -31,7 +31,8 @@ STAGE2_YEARS = (2015, 2018)
 OPP_COLS = ["any_prior_contested"]
 
 
-STAGE1 = {"lasso": "LASSO logistic", "gb": "Gradient boosting"}
+STAGE1 = {"lasso": "LASSO logistic", "gb": "Gradient boosting",
+          "tabpfn": "TabPFN (pre-trained transformer)"}   # tabpfn: GPU (Colab) only
 
 
 def _stage1(raw, projects, model="gb"):
@@ -65,7 +66,8 @@ def bootstrap_gain(y, a, b, n=1000, seed=0):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--final", action="store_true")
-    ap.add_argument("--stage1", choices=["lasso", "gb", "both"], default="both")
+    ap.add_argument("--stage1", choices=["lasso", "gb", "tabpfn", "both"], default="both",
+                    help="both = lasso and gb; tabpfn needs the tabpfn package and a GPU")
     args = ap.parse_args()
     raw = data.load_raw_queue()
     P = data.built_within(raw, config.HORIZON)
