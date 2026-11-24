@@ -5,6 +5,16 @@
 
 ---
 
+## ▶ Update, Tue Nov 24 (cost sourcing merged)
+
+- **Sara's `sara/cost-sourcing` branch is merged into `main`.**
+  - Development spend before the agreement: **$0.4M / $1.45M / $3.65M** per 100 MW project (FERC Order 2023 study deposits, NREL permitting, land).
+  - Cost of capital: **6% / 10% / 15%** (NREL ATB 2025).
+  - Price ranges are unchanged, now cross-checked against SEC filings.
+  - Sources and page references are in [assumptions.md](assumptions.md).
+- **Effect:** the break-even hit rate for backing early rose to **18–43%** (median 28%), from 13–34% (median 21%). At mid assumptions it's 17–35%. `strategy.py` now computes its "price alone" line directly, since the sourced ranges no longer include zero.
+- **Still a placeholder:** `DEV_COST_RANGE_USD` (spend lost per withdrawn project, used by `impact.py`).
+
 ## ▶ Update, Fri Nov 20 (demo page)
 
 - **Charles built the demo page** for the video, a simpler version of the Deal Desk ([demo/README.md](../demo/README.md)). Run `python demo/export_data.py`, then `python demo/serve.py`.

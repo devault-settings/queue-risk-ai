@@ -25,15 +25,16 @@ What we can measure, and how confident we are in each input:
 | Built within 5 years of IA, IA signed 2015–2020, MW-weighted | low 36%, pooled 58%, high 74% | **Low to medium.** Only 48% of IAs have a recorded date (CAISO and ERCOT mostly; PJM 10%, SPP 0%), and the rate swings by signing year |
 | Built within 5 years of entry, backing every 2015–2020 entry | 5.9% of MW | Medium. Six operators, labels fully observed |
 | Median time from entry to IA | 2.6 years | Medium, same coverage caveat as the first row |
-| Price of rights, early vs. late stage | $0.02–0.05/W vs. $0.07–0.20/W | **Low.** Published industry ranges, not observed trades ([Ascend Analytics](https://www.ascendanalytics.com/blog/increasing-early-stage-project-success-in-a-highly-competitive-renewable-energy-m-a-landscape)) |
-| Development spend to IA; cost of capital | $0–2M per project; 0–15% a year | **Placeholders**; sourcing plan in [docs/assumptions.md](docs/assumptions.md) |
+| Price of rights, early vs. late stage | $0.02–0.05/W vs. $0.07–0.20/W | **Low to medium.** Published industry ranges ([Ascend Analytics](https://www.ascendanalytics.com/blog/increasing-early-stage-project-success-in-a-highly-competitive-renewable-energy-m-a-landscape)), consistent with SEC filings: an $0.008/W greenfield floor, and late-stage sales at $0.08 and about $0.145/W (queue stage to confirm) |
+| Development spend to IA, per 100 MW project | $0.4M / $1.45M / $3.65M | **Medium.** Studies from FERC Order 2023 (verified against the order), permitting from NREL benchmarks; land low and mid are assumptions ([docs/assumptions.md](docs/assumptions.md)) |
+| Cost of capital | 6% / 10% / 15% a year | **Medium.** NREL ATB 2025 (renewables WACC; construction equity return); the 15% high is an assumption for early-stage risk |
 
 **Break-even hit rate** across all 243 combinations of these ranges:
-- 25th to 75th percentile: **13% to 34%**; median 21%.
-- Extremes: 4% to over 100%.
-- Price difference alone, at mid prices: 9–19%.
+- 25th to 75th percentile: **18% to 43%**; median 28%. Sourcing the costs raised the bar from 13–34%, median 21%, under the earlier placeholders.
+- Extremes: 5% to over 100%.
+- At mid-range assumptions (prices, spend and cost of capital): **17–35%**, depending on the post-IA build rate. Price difference alone: 9–19%.
 
-**Where the model stands (validation only, not yet tested):** the 25 projects gradient boosting ranks highest in each validation year got 17–84% of their MW built within 5 years, against base rates of 4–23%. That clears the median break-even bar in four of five years, and sits at it (21%) in 2010. LASSO's top 25 got 7–41% and clear the bar in three of five.
+**Where the model stands (validation only, not yet tested):** the 25 projects gradient boosting ranks highest in each validation year got 17–84% of their MW built within 5 years, against base rates of 4–23%. That clears the median break-even bar (28%) in three of five years (2012–2014) but not in 2010–2011, when base rates were as low as today's. LASSO's top 25 got 7–41% and clear it in two of five. On the 2015–2018 cohorts, the demo's full-cohort check finds LASSO's top 20% built 17.6% of the time, against 8.8% at random: about twice the base rate, but below the median bar. (That figure counts projects; the bar is weighted by MW, so the comparison is approximate.)
 
 The honest claim for now: the model makes early backing *competitive* under some assumptions, not reliably profitable. The 2019–2020 test run will say which side of the band it lands on.
 

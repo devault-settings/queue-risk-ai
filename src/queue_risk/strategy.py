@@ -113,10 +113,15 @@ def main():
     q = g["breakeven"].quantile([0, 0.25, 0.5, 0.75, 1])
     print(f"\nBreak-even early hit rate across {len(g)} assumption combinations:")
     print(f"  min {q[0]:.0%} | 25th pct {q[0.25]:.0%} | median {q[0.5]:.0%} | 75th pct {q[0.75]:.0%} | max {q[1]:.0%}")
-    mid = g[(g["price_early"] == config.PRICE_EARLY_USD_PER_W[1]) & (g["price_late"] == config.PRICE_LATE_USD_PER_W[1])
-            & (g["spend_to_ia"] == 0) & (g["r"] == 0)]
+    # Computed directly, not filtered from the grid: the sourced ranges no longer include
+    # zero spend or a zero cost of capital, so a "price only" row isn't in the grid.
+    pe, pl = config.PRICE_EARLY_USD_PER_W[1], config.PRICE_LATE_USD_PER_W[1]
+    sp, r = config.SPEND_TO_IA_USD[1], config.COST_OF_CAPITAL[1]
     print("  price effect alone (mid prices, no spend, no carry):",
-          ", ".join(f"s_wait {s:.0%} -> {b:.0%}" for s, b in zip(mid["s_wait"], mid["breakeven"])))
+          ", ".join(f"s_wait {s:.0%} -> {breakeven_hit_rate(s, pe, pl):.0%}" for s in s_wait_range))
+    print("  all mid assumptions (mid prices, mid spend, mid cost of capital):",
+          ", ".join(f"s_wait {s:.0%} -> {breakeven_hit_rate(s, pe, pl, sp, avg_mw, r, t):.0%}"
+                    for s in s_wait_range))
 
 
 if __name__ == "__main__":
