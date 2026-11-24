@@ -44,7 +44,15 @@ Further reading:
 
 ## 3. Development spend lost per withdrawn project (`DEV_COST_RANGE_USD`)
 
-For the investor, this is the price paid for the rights (section 1) plus the spend carried to the point of withdrawal (section 2), less any refunded deposits. **To build** from sections 1 and 2 once they're verified, replacing the current placeholder of $1M / $3M / $10M.
+For the investor, this is the price paid for the rights (section 1) plus the spend carried to the point of withdrawal (section 2), less any refunded deposits. **Built Nov 24** from those sourced components, for a 100 MW reference project (the median size), replacing the unsourced $1M / $3M / $10M placeholder:
+
+| | Price of rights at entry | + spend toward the IA | = lost per withdrawn project |
+|---|---|---|---|
+| Low | $0.02/W × 100 MW = $2.0M | $0.40M | **$2.40M** |
+| Mid | $0.035/W × 100 MW = $3.5M | $1.45M | **$4.95M** |
+| High | $0.05/W × 100 MW = $5.0M | $3.65M | **$8.65M** |
+
+This is an **upper bound**: many projects withdraw before spending everything up to the IA, and part of the price can be recovered by reselling the rights. It inherits the confidence of its parts: medium for the spend, low to medium for the price.
 
 ## 4. Cost of capital (`COST_OF_CAPITAL`)
 

@@ -81,10 +81,8 @@ OPPOSITION_COLS = ["fips", "year", "n_articles", "share_opposition"]
 # worklist). These K values are the ones the evaluation reports precision at.
 TOP_K = [25, 50, 100]
 
-# Pre-construction development spend per project that withdraws, in USD.
-# PLACEHOLDER RANGE, NOT SOURCED. The impact lead replaces these with cited figures;
-# every chart is drawn across the range, never at one number.
-DEV_COST_RANGE_USD = (1_000_000, 3_000_000, 10_000_000)
+# DEV_COST_RANGE_USD (spend lost per withdrawn project) is built from the sourced
+# cost components below, at the end of the next block.
 
 # ------------------------------------------------------------------ back early vs. wait
 # Indicative prices for development rights, USD per watt (low, mid, high). Industry
@@ -114,3 +112,16 @@ SPEND_TO_IA_USD = (400_000, 1_450_000, 3_650_000)
 # after-tax WACC 5.6-6.5% for renewables (low, 6%); construction equity return 10.0%
 # (mid). High (15%) is an ASSUMPTION for day-one queue risk, above both.
 COST_OF_CAPITAL = (0.06, 0.10, 0.15)
+
+# Spend lost per withdrawn project, USD, for a 100 MW reference project (the median
+# project size): the price paid for the rights at entry plus the development spend
+# carried toward the IA, at low / mid / high. Built from the sourced components above
+# (Nov 24; it replaces the unsourced $1M / $3M / $10M placeholder):
+#   low  $0.02/W  x 100 MW = $2.0M  + $0.40M  = $2.40M
+#   mid  $0.035/W x 100 MW = $3.5M  + $1.45M  = $4.95M
+#   high $0.05/W  x 100 MW = $5.0M  + $3.65M  = $8.65M
+# An UPPER BOUND: many projects withdraw before spending everything up to the IA, and
+# part of the price may be recovered by reselling the rights. Every chart sweeps the range.
+REFERENCE_MW = 100
+DEV_COST_RANGE_USD = tuple(round(p * REFERENCE_MW * 1e6 + s) for p, s in
+                           zip(PRICE_EARLY_USD_PER_W, SPEND_TO_IA_USD))
