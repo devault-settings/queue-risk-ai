@@ -6,6 +6,29 @@ All results are on the **5-year outcome** with **validation data only**, using t
 - **Rolling CV:** mean AUC over the yearly folds 2010–2014, fitting on earlier years each time.
 - **Out-of-time:** train on 2005–2014, score 2015–2018. This is the harder check, because the queue changed. Neither check touches the 2019–2020 test cohort.
 
+## Nov 24: TabPFN (Colab T4; [run 1](../notebooks/tabpfn_colab_ran_1.ipynb), [run 2](../notebooks/tabpfn_colab_ran_2.ipynb))
+
+TabPFN 3.5 (pre-trained tabular transformer), imputed before it sees the data, so no blank-field leak. Validation only. **All rows come from the same Colab environment.** Its library versions shift LASSO and gradient boosting slightly from the laptop numbers, and LASSO's selected C there was 0.01, not 0.1.
+
+| Model | Rolling CV | Out-of-time 2015–18 | 2015 / 2016 / 2017 / 2018 (stage 1 alone) |
+|---|---|---|---|
+| Historical rate | 0.620 | 0.593 | — |
+| **LASSO** | 0.635 | **0.682** | 0.635 / 0.634 / 0.646 / 0.717 |
+| Gradient boosting | 0.666 | 0.651 | 0.667 / 0.633 / 0.591 / 0.643 |
+| **TabPFN** | **0.677** | 0.646 | 0.696 / 0.670 / 0.566 / 0.564 |
+
+- **TabPFN fits the training years best but transfers worst to 2017–18.** Pre-training doesn't protect against the queue changing. LASSO remains the headline model. For the slides: Lecture 8's "trees usually win on tables" holds, and the simplest regularized model beats both.
+- **Opposition as a second stage, by first-stage model:**
+
+| First stage | AUC gain (95% CI) | Contested county: odds |
+|---|---|---|
+| LASSO | +0.007 [−0.001, +0.017] | ×0.52 |
+| Gradient boosting | +0.006 [−0.003, +0.015] | ×0.59 |
+| TabPFN | +0.005 [−0.002, +0.013] | ×0.61 |
+
+  The effect is consistent across all three; the ranking gain is small and every interval touches zero.
+- **Run 1** failed only at the Sabin step (`pdftotext` missing after a stale `apt` index). That's fixed in `tabpfn_colab.ipynb`.
+
 ## Nov 20: how lucky is one demo sample? ([demo/export_data.py](../demo/export_data.py))
 
 The demo page shows 50 random 2015–2018 projects and asks how many of the model's top 10 were built. With only about 4–5 builds per sample, one draw can mislead, so `export_data.py` redraws 50 projects 20,000 times from the same scored cohort (LASSO, fit on 2005–2014, scored out of time):
