@@ -5,6 +5,14 @@
 
 ---
 
+## ▶ Update, Tue Nov 24 (evening): test run frozen
+
+- **The final test now runs only from a frozen spec** ([frozen.py](../src/queue_risk/frozen.py)), with a checklist in [FINAL_RUN.md](FINAL_RUN.md). Model selection is environment-dependent (Colab picked LASSO C = 0.01, the laptop C = 0.1), so `--final` never re-selects anything.
+  - A preflight check reproduces the counts and LASSO's 0.686, and refuses to run while a team decision is pending or without `--signoff`.
+  - Dry run: `python -m queue_risk.final`.
+- **TabPFN is done** (Colab run 2): best rolling CV (0.677), but it transfers worst to 2017–18. The opposition effect holds with every first-stage model ([model_log.md](model_log.md)).
+- **Paul committed** the Sabin PDFs, the parsed paragraphs, the labels and `text_scores.csv`. `sabin.py` now keeps the committed parse unless run with `--rebuild`, because the labels are keyed to it and other machines' PDF tools produce slightly different text (curly vs. straight quotes).
+
 ## ▶ Update, Tue Nov 24 (TabPFN, costs, odd rows)
 
 - **TabPFN, first Colab run** (`notebooks/tabpfn_colab_ran_1.ipynb`, validation only). Same environment, rolling CV / out-of-time 2015–18:

@@ -40,17 +40,30 @@ def load_raw_queue() -> pd.DataFrame:
 NOT_NEW = ["Surplus", "Replacement", "Upgrade"]
 
 
-def in_scope(df: pd.DataFrame) -> pd.Series:
+FOSSIL = "Gas|Coal|Oil|Diesel"
+
+
+def in_scope(df: pd.DataFrame, exclude_odd: bool | None = None) -> pd.Series:
     """New clean-energy projects entering since FIRST_YEAR, with usable timing.
 
     Drops: requests for existing plants (project_type Surplus/Replacement/Upgrade, 97 rows)
     and the 18 rows whose operation date precedes their queue date (timing unusable).
     See `python -m queue_risk.quality` for every rule and its count.
+
+    exclude_odd: also drop projects with 0 or missing capacity and solar/wind projects
+    paired with fossil units (e.g. "Wind+Gas"). Defaults to the team decision recorded in
+    frozen.FROZEN["exclude_odd_rows"] (pending = not dropped).
     """
-    return (df["type_1"].isin(config.CLEAN_TYPES)
+    if exclude_odd is None:
+        from .frozen import FROZEN
+        exclude_odd = bool(FROZEN["exclude_odd_rows"])
+    keep = (df["type_1"].isin(config.CLEAN_TYPES)
             & (df["q_year"] >= config.FIRST_YEAR)
             & ~df["project_type"].isin(NOT_NEW)
             & ~(df["on_date"] < df["q_date"]))
+    if exclude_odd and "mw_total" in df.columns:
+        keep &= (df["mw_total"] > 0) & ~df["type_clean"].astype(str).str.contains(FOSSIL)
+    return keep
 
 
 def resolved_clean_energy(df: pd.DataFrame) -> pd.DataFrame:

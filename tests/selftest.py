@@ -202,6 +202,31 @@ def test_strategy_arithmetic():
     check("spend before the IA and carrying cost raise the bar", s2 > s)
 
 
+def test_frozen_spec():
+    print("\nFrozen specification for the one-time test (docs/FINAL_RUN.md)")
+    from queue_risk import data
+    from queue_risk.frozen import FROZEN
+    from queue_risk.models import selected
+    check("frozen outcome, horizon and regions match config",
+          FROZEN["outcome"] == config.OUTCOME and FROZEN["horizon"] == config.HORIZON
+          and FROZEN["regions"] == list(config.DATE_REGIONS))
+    check("frozen train/test windows match config",
+          tuple(config.SPLITS["within"]["train"]) == FROZEN["train"]
+          and tuple(config.SPLITS["within"]["test"]) == FROZEN["test"])
+    check("frozen feature groups match the default", tuple(features.DEFAULT_EXTRAS) == tuple(FROZEN["feature_extras"]))
+    X = pd.DataFrame({c: [0.0, 1.0] for c in FROZEN["feature_columns"]})
+    for c in features.CATEGORICAL:
+        X[c] = ["a", "b"]
+    est = selected("LASSO logistic", X)
+    check("selected() uses the frozen LASSO setting, on any machine", est.get_params()["clf__C"] == FROZEN["models"]["LASSO logistic"]["C"])
+    t = pd.Timestamp
+    q = pd.DataFrame({"type_1": ["Solar"] * 3, "q_year": [2010] * 3, "project_type": ["Generation"] * 3,
+                      "q_date": [t("2010-01-01")] * 3, "on_date": [pd.NaT] * 3,
+                      "mw_total": [100.0, 0.0, 50.0], "type_clean": ["Solar", "Solar", "Solar+Gas"]})
+    check("odd-row rule off: all three kept", data.in_scope(q, exclude_odd=False).sum() == 3)
+    check("odd-row rule on: 0 MW and Solar+Gas dropped", data.in_scope(q, exclude_odd=True).tolist() == [True, False, False])
+
+
 def test_built_within_label():
     print("\nFixed-horizon label: built within N years")
     from queue_risk import data
@@ -257,7 +282,7 @@ def main():
     for t in [test_lag_features_see_only_the_past, test_opposition_join, test_split,
               test_benchmarks, test_metrics_and_impact, test_sabin_parsing, test_text_features, test_schedule,
               test_strategy_arithmetic,
-              test_built_within_label,
+              test_frozen_spec, test_built_within_label,
               test_real_data_checkpoints]:
         t()
     print(f"\n{'All checks passed.' if not FAILURES else f'{len(FAILURES)} FAILED: ' + '; '.join(FAILURES)}")

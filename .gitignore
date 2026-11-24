@@ -39,3 +39,5 @@ Thumbs.db
 
 # Generated results tables (rebuild with python -m queue_risk.pipeline)
 reports/results_*.csv
+# ...except the one-time test results, which are part of the record (docs/FINAL_RUN.md)
+!reports/results_within_test.csv

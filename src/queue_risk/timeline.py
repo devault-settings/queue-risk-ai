@@ -25,8 +25,9 @@ from . import config, data, features, text
 from .models import _preprocess
 from sklearn.pipeline import Pipeline
 
-# Settings selected for the 5-year model by rolling validation (pipeline.py).
-GB_SETTINGS = dict(learning_rate=0.03, max_iter=200, random_state=config.SEED)
+# Fixed gradient-boosting settings for every horizon, recorded in the frozen spec.
+from .frozen import FROZEN
+GB_SETTINGS = dict(**FROZEN["timeline_gb"], random_state=config.SEED)
 
 
 def _model(X):
@@ -70,7 +71,11 @@ def curve(raw, decide_years, horizons=config.CURVE_HORIZONS):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--final", action="store_true", help="decide on the test cohort (use once)")
+    ap.add_argument("--signoff", default=None, help='required with --final: "names, date"')
     args = ap.parse_args()
+    if args.final:
+        from .final import preflight
+        preflight(args.signoff)
     years = config.SPLITS["within"]["test"] if args.final else (2013, 2014)
     raw = data.load_raw_queue()
     curves, scores = curve(raw, years)

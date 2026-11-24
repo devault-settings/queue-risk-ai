@@ -1,15 +1,16 @@
 """Run the whole tabular pipeline and print the benchmark table.
 
     python -m queue_risk.pipeline            # model selection on rolling validation only
-    python -m queue_risk.pipeline --final    # + one-time test-set "showtime" (Lecture 4)
+    python -m queue_risk.pipeline --final --signoff "names, date"   # one-time test (docs/FINAL_RUN.md)
     python -m queue_risk.pipeline --fast     # small grids, for a quick end-to-end check
     python -m queue_risk.pipeline --outcome ever   # the "ever built" definition instead
     python -m queue_risk.pipeline --models "Gradient,TabPFN" --ablation
         # selected models only, each with and without the news-opposition features
 
-Model selection never touches the test cohort. --final refits each model's selected
-settings on the whole training window and scores the test cohort once, with bootstrap
-95% intervals and the impact sweep.
+Model selection never touches the test cohort. --final does NOT re-select anything: after
+final.preflight() passes, it fits each model at its FROZEN settings (frozen.py) on the
+training window and scores the test cohort once, with bootstrap 95% intervals and the
+impact sweep across the sourced cost range. The run is logged to reports/final_run_log.md.
 """
 import argparse
 import time
@@ -27,13 +28,16 @@ TEXT_COLS = ["n_articles", "share_opposition", "news_coverage"]
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--final", action="store_true", help="score the held-out test cohort")
+    ap.add_argument("--final", action="store_true", help="score the held-out test cohort (frozen spec)")
+    ap.add_argument("--signoff", default=None, help='required with --final: "names, date"')
     ap.add_argument("--fast", action="store_true", help="first value of every grid only")
     ap.add_argument("--outcome", choices=["within", "ever"], default=config.OUTCOME)
     ap.add_argument("--models", default="", help="comma-separated name fragments, e.g. 'Gradient,TabPFN'")
     ap.add_argument("--ablation", action="store_true",
                     help="also run every model WITHOUT the text features (what does the text model add?)")
     args = ap.parse_args()
+    if args.final:
+        return run_final(args)
     split = config.SPLITS[args.outcome]
 
     raw = data.load_raw_queue()
@@ -79,31 +83,56 @@ def main():
         if oot.any() and yoot.nunique() > 1:
             p_oot = search.best_estimator_.predict_proba(Xoot[cols])[:, 1]
             row[f"out-of-time AUC {split['train'][1] + 1}-{split['test'][0] - 1}"] = evaluate.roc_auc_score(yoot, p_oot)
-        if args.final:
-            p = search.best_estimator_.predict_proba(Xte[cols])[:, 1]
-            test_scores[label] = p
-            row.update({f"test {k}": v for k, v in evaluate.scorecard(yte, p, config.TOP_K).items()})
-            lo, hi = evaluate.bootstrap_ci(yte.to_numpy(), p, evaluate.roc_auc_score, n=300)
-            row["test AUC 95% CI"] = f"[{lo:.3f}, {hi:.3f}]"
         rows.append(row)
         oot_txt = next((f" | out-of-time {v:.3f}" for k, v in row.items() if k.startswith("out-of-time")), "")
         print(f"  {label:48s} CV AUC {search.best_score_:.3f}{oot_txt}  ({row['secs']}s)")
 
     table = pd.DataFrame(rows)
     config.FIGURES.parent.mkdir(parents=True, exist_ok=True)
-    out = config.FIGURES.parent / f"results_{args.outcome}_{'test' if args.final else 'validation'}.csv"
+    out = config.FIGURES.parent / f"results_{args.outcome}_validation.csv"
     table.to_csv(out, index=False)
     with pd.option_context("display.width", 200, "display.max_columns", 20, "display.precision", 3):
         print(table.drop(columns="secs").to_string(index=False))
     print(f"wrote {out.relative_to(config.ROOT)}")
 
-    if args.final:
-        mw = projects.loc[test, "mw_total"].to_numpy()
-        test_scores["Perfect hindsight"] = yte.to_numpy().astype(float)
-        cost = config.DEV_COST_RANGE_USD[1]
-        curve = impact.sweep(yte, mw, test_scores, ks=config.TOP_K, cost_per_project=cost)
-        print(f"\nWasted development spend per built MW, at ${cost:,.0f}/project (placeholder):")
+
+
+def run_final(args):
+    """The one-time test: frozen models, preflight first, every model scored once."""
+    from .final import log_run, preflight
+    from .frozen import FROZEN
+    from .models import selected
+    if args.outcome != "within" or args.ablation or args.fast or args.models:
+        raise SystemExit("--final runs the frozen spec only: no --outcome ever, --ablation, --fast or --models.")
+    raw, P, X, y = preflight(args.signoff)
+    tr = P["q_year"].between(*FROZEN["train"]).to_numpy()
+    te = P["q_year"].between(*FROZEN["test"]).to_numpy()
+    zoo = model_zoo(X[tr])
+    rows, scores, lines = [], {}, []
+    for name in FROZEN["models"]:
+        if name not in zoo:
+            print(f"  {name}: not available here (e.g. TabPFN needs its package and a GPU), skipped")
+            lines.append(f"{name}: skipped (not available in this environment)")
+            continue
+        p = selected(name, X[tr]).fit(X[tr], y[tr]).predict_proba(X[te])[:, 1]
+        scores[name] = p
+        card = evaluate.scorecard(y[te], p, config.TOP_K)
+        lo, hi = evaluate.bootstrap_ci(y[te].to_numpy(), p, evaluate.roc_auc_score, n=1000, seed=config.SEED)
+        rows.append({"model": name, **{f"test {k}": v for k, v in card.items()}, "test AUC 95% CI": f"[{lo:.3f}, {hi:.3f}]"})
+        lines.append(f"{name}: test AUC {card['AUC']:.3f} [{lo:.3f}, {hi:.3f}], PR-AUC {card['PR-AUC']:.3f}")
+        print(f"  {name:36s} test AUC {card['AUC']:.3f} [{lo:.3f}, {hi:.3f}]")
+    table = pd.DataFrame(rows)
+    out = config.ROOT / "reports" / "results_within_test.csv"
+    table.to_csv(out, index=False)
+    with pd.option_context("display.width", 200, "display.max_columns", 20, "display.precision", 3):
+        print(table.to_string(index=False))
+    mw = P.loc[te, "mw_total"].fillna(0).to_numpy()
+    scores["Perfect hindsight"] = y[te].to_numpy().astype(float)
+    for cost in config.DEV_COST_RANGE_USD:
+        curve = impact.sweep(y[te], mw, scores, ks=config.TOP_K, cost_per_project=cost)
+        print(f"\nWasted development spend per built MW at ${cost:,.0f} per withdrawn project:")
         print(curve.pivot(index="rule", columns="k", values="wasted_per_built_mw").round(0).to_string())
+    log_run("pipeline --final", args.signoff, lines + [f"table: {out.relative_to(config.ROOT)}"])
 
 
 if __name__ == "__main__":

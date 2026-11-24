@@ -66,9 +66,16 @@ def bootstrap_gain(y, a, b, n=1000, seed=0):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--final", action="store_true")
+    ap.add_argument("--signoff", default=None, help='required with --final: "names, date"')
     ap.add_argument("--stage1", choices=["lasso", "gb", "tabpfn", "both"], default="both",
                     help="both = lasso and gb; tabpfn needs the tabpfn package and a GPU")
     args = ap.parse_args()
+    if args.final:
+        from .final import preflight
+        from .frozen import FROZEN
+        preflight(args.signoff)
+        # The frozen first stage is the headline model; the other stage-1 models stay validation-only.
+        args.stage1 = {name: key for key, name in STAGE1.items()}[FROZEN["headline_model"]]
     raw = data.load_raw_queue()
     P = data.built_within(raw, config.HORIZON)
     c = pd.read_csv(config.INTERIM / "sabin_contested.csv", dtype={"fips_list": str})

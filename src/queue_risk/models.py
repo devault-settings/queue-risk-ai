@@ -146,11 +146,20 @@ def _tabpfn(X: pd.DataFrame) -> dict:
 
 
 def selected(name: str, X: pd.DataFrame, outcome: str = "within"):
-    """The model `name` at the settings the last pipeline run selected (read from
-    reports/results_<outcome>_validation.csv), so downstream scripts (stack.py, sponsor.py)
-    use the same configuration the README reports. Falls back to defaults if not run yet."""
+    """The model `name` at its FROZEN settings (frozen.py), for the 5-year outcome.
+
+    Frozen settings are identical on every machine; re-selection is not (Colab picked LASSO
+    C = 0.01 where the laptop picked 0.1). Models not in the frozen spec, or another outcome,
+    fall back to the settings the last local pipeline run selected
+    (reports/results_<outcome>_validation.csv), then to defaults."""
     import ast
+    from .frozen import FROZEN
     est, _ = model_zoo(X)[name]
+    if outcome == "within" and name in FROZEN["models"]:
+        settings = FROZEN["models"][name]
+        if settings:
+            est.set_params(**{f"clf__{k}": v for k, v in settings.items()})
+        return est
     path = config.ROOT / "reports" / f"results_{outcome}_validation.csv"
     if path.exists():
         res = pd.read_csv(path)

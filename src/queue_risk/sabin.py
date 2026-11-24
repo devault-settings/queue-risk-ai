@@ -236,8 +236,18 @@ def main():
     raw = data.load_raw_queue()
     r, c = build(raw)
     config.INTERIM.mkdir(parents=True, exist_ok=True)
-    r.to_csv(config.INTERIM / "sabin_restrictions.csv", index=False)
-    c.assign(fips_list=c["fips_list"].map(";".join)).to_csv(config.INTERIM / "sabin_contested.csv", index=False)
+    # The committed parse is canonical: sabin_labels_all.csv is keyed to it, and pdftotext
+    # builds differ slightly across machines (curly vs straight quotes), which would break
+    # text.load_paragraphs(). Keep existing files unless explicitly rebuilding.
+    import sys
+    rebuild = "--rebuild" in sys.argv
+    out_r, out_c = config.INTERIM / "sabin_restrictions.csv", config.INTERIM / "sabin_contested.csv"
+    if out_c.exists() and not rebuild:
+        print(f"{out_c.name} and {out_r.name} already exist (committed parse, keyed to the labels); "
+              "kept as is. Pass --rebuild to overwrite, then re-check text.load_paragraphs().")
+    else:
+        r.to_csv(out_r, index=False)
+        c.assign(fips_list=c["fips_list"].map(";".join)).to_csv(out_c, index=False)
     print(f"Restrictions: {len(r):,} rules in {r['jurisdiction'].nunique():,} jurisdictions, "
           f"{r['state'].nunique()} states; county-level {(r['level'] == 'county').mean():.0%}, "
           f"matched to a FIPS {r.loc[r['level'] == 'county', 'fips'].notna().mean():.0%}")
