@@ -18,6 +18,11 @@ data/external/*
 models/*
 !**/.gitkeep
 
+# Sabin Center reports, their labels, and the text-model scores are public: commit them
+!data/external/sabin/
+!data/interim/sabin_*.csv
+!data/processed/text_scores.csv
+
 # Fine-tuned transformer checkpoints and caches
 *.pt
 *.safetensors

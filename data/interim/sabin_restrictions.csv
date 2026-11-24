@@ -1,0 +1,1232 @@
+state,jurisdiction,rule,rule_type,technology,known_by_year,fips,level
+AL,Baldwin County,1,Ban / Moratorium,wind,2021,01003,county
+AL,Cherokee County,6a,Setback Restriction,wind,2021,01019,county
+AL,Cherokee County,7,Noise Restriction,wind,2021,01019,county
+AL,Dekalb County,6a,Setback Restriction,wind,2021,01049,county
+AL,Dekalb County,7,Noise Restriction,wind,2021,01049,county
+AL,Etowah County,6a,Setback Restriction,wind,2021,01055,county
+AL,Etowah County,7,Noise Restriction,wind,2021,01055,county
+AK,Municipality of Anchorage,6a,Setback Restriction,wind,2025,,municipal
+AK,Municipality of Anchorage,9,Height Restriction,wind,2025,,municipal
+AZ,Apache County,1,Ban / Moratorium,wind,2023,04001,county
+AZ,Apache County,1,Ban / Moratorium,solar,2023,04001,county
+AZ,Apache County,6b,Setback Restriction,wind,2023,04001,county
+AZ,Apache County,1,Ban / Moratorium,solar,2023,04001,county
+AZ,Navajo County,1,Ban / Moratorium,wind,2023,04017,county
+AZ,Navajo County,1,Ban / Moratorium,solar,2023,04017,county
+AZ,Mohave County,1,Ban / Moratorium,solar,2021,04015,county
+AR,Arkansas Wind Energy Development Act,7,Noise Restriction,wind,2025,,state
+AR,Carroll County,1,Ban / Moratorium,wind,2024,05015,county
+AR,Carroll County,1,Ban / Moratorium,solar,2024,05015,county
+AR,Madison County,1,Ban/Moratorium,wind,2024,,county
+CA,Butte County,1,Ban / Moratorium,wind,2025,06007,county
+CA,Butte County,8,Shadow Flicker Restriction,wind,2025,06007,county
+CA,Contra Costa County,6a,Setback Restriction,wind,2021,06013,county
+CA,Contra Costa County,1,Ban / Moratorium,wind,2021,06013,county
+CA,Contra Costa County,2,Density Cap,wind,2021,06013,county
+CA,El Dorado County,1,Ban / Moratorium,wind,2025,06017,county
+CA,El Dorado County,2,Density Cap,wind,2025,06017,county
+CA,El Dorado County,6a,Setback Restriction,wind,2025,06017,county
+CA,Glenn County,1,Ban / Moratorium,solar,2025,06021,county
+CA,Inyo County,2,Size Cap and Capacity Cap,solar,2025,06027,county
+CA,Los Angeles County,1,Ban / Moratorium,wind,2022,06037,county
+CA,Merced County,1,Ban / Moratorium,wind,2025,06047,county
+CA,Monterey County,9,Height Restriction,wind,2025,06053,county
+CA,San Bernardino County,1,Ban / Moratorium,wind,2021,06071,county
+CA,San Bernardino County,1,Ban / Moratorium,solar,2021,06071,county
+CA,San Bernardino County,1,Ban / Moratorium,storage,2021,06071,county
+CA,Santa Clara County,1,Ban / Moratorium,solar,2021,06085,county
+CA,Tehama County,1,Ban / Moratorium,wind,2025,06103,county
+CA,Yolo County,1,Ban / Moratorium,solar,2025,06113,county
+CA,Yolo County,2,Size Cap,solar,2025,06113,county
+CA,Yolo County,2,Density Cap,wind,2025,06113,county
+CA,Yuba County,9,Height Restriction,wind,2025,06115,county
+CO,City and County of Denver,9,Height Restriction,wind,2025,,county
+CO,Delta County,1,Ban / Moratorium,wind,2023,08029,county
+CO,Delta County,1,Ban / Moratorium,solar,2023,08029,county
+CO,Dolores County,1,Ban / Moratorium,wind,2025,08033,county
+CO,Dolores County,1,Ban / Moratorium,solar,2025,08033,county
+CO,Dolores County,2,Size Cap,wind,2025,08033,county
+CO,Dolores County,2,Size Cap,solar,2025,08033,county
+CO,Grand County,1,Ban / Moratorium,wind,2025,,county
+CO,Grand County,1,Ban / Moratorium,solar,2025,,county
+CO,Grand County,1,Ban / Moratorium,storage,2025,,county
+CO,Kiowa County,10b,Setback Restriction,solar,2025,08061,county
+CO,Kit Carson County,10b,Setback Restriction,solar,2025,08063,county
+CO,Larimer County,2,Size Cap,solar,2025,08069,county
+CO,Mesa County,1,Ban / Moratorium,solar,2023,08077,county
+CO,Montrose County,1,Ban / Moratorium,wind,2023,08085,county
+CO,Montrose County,1,Ban / Moratorium,solar,2023,08085,county
+CO,Morgan County,10b,Setback Restriction,solar,2025,08087,county
+CO,Phillips County,1,Ban / Moratorium,solar,2025,,county
+CO,Phillips County,1,Ban / Moratorium,storage,2025,,county
+CO,Prowers County,6a,Setback Restriction,wind,2025,08099,county
+CO,Prowers County,10b,Setback Restriction,solar,2025,08099,county
+CO,Rio Blanco County,1,Ban / Moratorium,wind,2023,08103,county
+CO,Rio Blanco County,1,Ban / Moratorium,solar,2023,08103,county
+CO,San Miguel County,1,Ban / Moratorium,solar,2023,,county
+CO,San Miguel County,2,Size Cap,solar,2023,,county
+CO,Washington County,1,Ban / Moratorium,wind,2021,08121,county
+CO,Washington County,1,Ban / Moratorium,solar,2021,08121,county
+CO,Washington County,9,Height Restriction,wind,2021,08121,county
+CO,Washington County,10b,Setback Restriction,solar,2021,08121,county
+CT,Connecticut Public Act No. 17-218,1,Ban/Moratorium,solar,2025,,state
+CT,Connecticut Public Act No. 17-218,9,Height Restriction,wind,2025,,state
+CT,Connecticut Public Act No. 17-218,9,Height Restriction,wind,2025,,state
+CT,Connecticut Public Act No. 17-218,9,Height Restriction,wind,2025,,state
+CT,Connecticut Public Act No. 17-218,1,Ban / Moratorium,wind,2025,,state
+CT,Connecticut Public Act No. 17-218,9,Height Restriction,wind,2025,,state
+CT,Connecticut Public Act No. 17-218,9,Height Restriction,wind,2025,,state
+CT,Connecticut Public Act No. 17-218,9,Height Restriction,wind,2025,,state
+CT,Connecticut Public Act No. 17-218,2,Size and Capacity Cap,wind,2025,,state
+CT,Connecticut Public Act No. 17-218,9,Height Restriction,wind,2025,,state
+CT,Connecticut Public Act No. 17-218,1,Ban / Moratorium,solar,2025,,state
+CT,Connecticut Public Act No. 17-218,9,Height Restriction,wind,2025,,state
+CT,Connecticut Public Act No. 17-218,9,Height Restriction,wind,2025,,state
+CT,Connecticut Public Act No. 17-218,2,Size Cap,wind,2025,,state
+CT,Connecticut Public Act No. 17-218,9,Height Restriction,wind,2025,,state
+CT,Connecticut Public Act No. 17-218,9,Height Restriction,wind,2025,,state
+CT,Connecticut Public Act No. 17-218,9,Height Restriction,wind,2025,,state
+CT,Connecticut Public Act No. 17-218,9,Height Restriction,wind,2025,,state
+DE,Kent County,1,Ban / Moratorium,solar,2022,10001,county
+DE,Kent County,1,Ban / Moratorium,wind,2022,10001,county
+DE,Kent County,1,Ban / Moratorium,solar,2022,10001,county
+DE,Kent County,3,Use Restriction,solar,2022,10001,county
+GA,Baldwin County,10a,Setback Restriction,solar,2022,13009,county
+GA,Bulloch County,10b,Setback Restriction,solar,2025,13031,county
+GA,Crisp County,1,Ban / Moratorium,solar,2025,,county
+GA,Crisp County,2,Size Cap,solar,2025,,county
+GA,Crisp County,10b,Setback Restriction,solar,2025,,county
+GA,Dooly County,2,Size Cap,solar,2025,13093,county
+GA,Dougherty County,1,Ban / Moratorium,wind,2025,13095,county
+GA,Dougherty County,6a,Setback Restriction,wind,2025,13095,county
+GA,Dougherty County,8,Shadow Flicker Restriction,wind,2025,13095,county
+GA,Franklin County,1,Ban / Moratorium,wind,2023,13119,county
+GA,Franklin County,1,Ban / Moratorium,solar,2023,13119,county
+GA,Grady County,1,Ban / Moratorium,solar,2021,13131,county
+GA,Greene County,5,Viewshed Restriction,solar,2022,13133,county
+GA,Greene County,10a,Setback Restriction,solar,2022,13133,county
+GA,Greene County,10b,Setback Restriction,solar,2022,13133,county
+GA,Hart County,10a,Setback Restriction,solar,2025,13147,county
+GA,Heard County,10b,Setback Restriction,solar,2025,13149,county
+GA,Jeff Davis County,1,Ban / Moratorium,solar,2023,13161,county
+GA,Lee County,1,Ban / Moratorium,solar,2021,13177,county
+GA,Oglethorpe County,1,Ban / Moratorium,solar,2023,13221,county
+GA,Rabun County,1,Ban / Moratorium,solar,2025,13241,county
+GA,Thomas County,1,Ban / Moratorium,solar,2021,13275,county
+GA,Toombs County,10a,Setback Restriction,solar,2025,13279,county
+HI,City Honolulu,6a,Setback Restriction,wind,2023,,municipal
+ID,Bannock County,1,Ban / Moratorium,wind,2024,16005,county
+ID,Bannock County,2,Density Cap,wind,2024,16005,county
+ID,Bannock County,2,Size and Capacity Cap,solar,2024,16005,county
+ID,Bingham County,7,Noise Restriction,wind,2021,16011,county
+ID,Bonneville County,1,Ban / Moratorium,wind,2021,16019,county
+ID,Cassia County,1,Ban / Moratorium,solar,2023,16031,county
+ID,Elmore County,1,Ban / Moratorium,wind,2025,16039,county
+ID,Elmore County,1,Ban / Moratorium,solar,2025,16039,county
+ID,Elmore County,6b,Setback Restriction,wind,2025,16039,county
+ID,Elmore County,10b,Setback Restriction,solar,2025,16039,county
+ID,Gem County,6b,Setback Restriction,wind,2022,16045,county
+ID,Gem County,10b,Setback Restriction,solar,2022,16045,county
+ID,Gooding County,1,Ban / Moratorium,solar,2023,16047,county
+ID,Gooding County,1,Ban / Moratorium,wind,2023,16047,county
+ID,Latah County,6a,Setback Restriction,wind,2025,16057,county
+ID,Teton County,2,Density Cap,wind,2025,16081,county
+ID,Teton County,9,Height Restriction,wind,2025,16081,county
+ID,Twin Falls County,1,Ban / Moratorium,wind,2023,16083,county
+ID,Twin Falls County,1,Ban / Moratorium,solar,2023,16083,county
+IL,Illinois Public Act No. 103-0081,1,Ban/Moratorium,wind,2025,,state
+IL,Illinois Public Act No. 103-0081,1,Ban/Moratorium,solar,2025,,state
+IL,Bond County,1,Ban / Moratorium,solar,2025,17005,county
+IL,Christian County,6a,Setback Restriction,wind,2023,17021,county
+IL,Christian County,8,Shadow Flicker Restriction,wind,2023,17021,county
+IL,DeKalb County,6a,Setback Restriction,wind,2022,17037,county
+IL,DeKalb County,8,Shadow Flicker Restriction,wind,2022,17037,county
+IL,Ford County,6a,Setback Restriction,wind,2021,17053,county
+IL,Ford County,7,Noise Restriction,wind,2021,17053,county
+IL,Iroquois County,1,Ban / Moratorium,solar,2025,17075,county
+IL,Iroquois County,1,Ban / Moratorium,wind,2025,17075,county
+IL,Kankakee County,1,Ban / Moratorium,wind,2025,17091,county
+IL,Kendall County,1,Ban / Moratorium,wind,2022,17093,county
+IL,Kendall County,1,Ban / Moratorium,solar,2022,17093,county
+IL,Lee County,1,Ban / Moratorium,wind,2022,17103,county
+IL,Lee County,1,Ban / Moratorium,solar,2022,17103,county
+IL,Lee County,1,Ban / Moratorium,storage,2022,17103,county
+IL,McHenry County,1,Ban / Moratorium,wind,2025,17111,county
+IL,McHenry County,1,Ban / Moratorium,solar,2025,17111,county
+IL,Monroe County,6a,Setback Restriction,wind,2023,17133,county
+IL,Monroe County,7,Noise Restriction,wind,2023,17133,county
+IL,Monroe County,8,Shadow Flicker Restriction,wind,2023,17133,county
+IL,Moultrie County,1,Ban / Moratorium,solar,2025,17139,county
+IL,Piatt County,1,Ban / Moratorium,wind,2021,17147,county
+IL,Randolph County,1,Ban / Moratorium,wind,2025,17157,county
+IL,Randolph County,6b,Setback Restriction,wind,2025,17157,county
+IL,Randolph County,10b,Setback Restriction,solar,2025,17157,county
+IL,Sangamon County,1,Ban / Moratorium,wind,2025,17167,county
+IL,Sangamon County,6a,Setback Restriction,wind,2025,17167,county
+IL,Sangamon County,8,Shadow Flicker Restriction,wind,2025,17167,county
+IL,Tazewell County,1,Ban / Moratorium,wind,2022,17179,county
+IL,Vermillion County,1,Ban / Moratorium,wind,2021,,county
+IL,Vermillion County,1,Ban / Moratorium,wind,2021,,county
+IL,Whiteside County,10b,Setback Restriction,solar,2025,17195,county
+IL,Woodford County,6b,Setback Restriction,wind,2025,17203,county
+IL,Woodford County,10b,Setback Restriction,solar,2025,17203,county
+IN,Allen County,1,Ban / Moratorium,wind,2021,18003,county
+IN,Allen County,2,Size and Capacity Cap,wind,2021,18003,county
+IN,Allen County,9,Height Restriction,wind,2021,18003,county
+IN,Blackford County,1,Ban / Moratorium,wind,2025,18009,county
+IN,Blackford County,1,Ban / Moratorium,solar,2025,18009,county
+IN,Blackford County,7,Noise Restriction,wind,2025,18009,county
+IN,Boone County,1,Ban / Moratorium,wind,2021,18011,county
+IN,Boone County,1,Ban / Moratorium,solar,2021,18011,county
+IN,Boone County,1,Ban / Moratorium,storage,2021,18011,county
+IN,Boone County,2,Size Cap,solar,2021,18011,county
+IN,Cass County,6a,Setback Restriction,wind,2021,18017,county
+IN,Clark County,2,Size Cap,solar,2023,18019,county
+IN,Clark County,10b,Setback Restriction,solar,2023,18019,county
+IN,Decatur County,1,Ban / Moratorium,wind,2025,18031,county
+IN,Decatur County,1,Ban / Moratorium,solar,2025,18031,county
+IN,Delaware County,1,Ban / Moratorium,solar,2021,18035,county
+IN,Fountain County,6a,Setback Restriction,wind,2025,18045,county
+IN,Fountain County,7,Noise Restriction,wind,2025,18045,county
+IN,Fountain County,8,Shadow Flicker Restriction,wind,2025,18045,county
+IN,Fulton County,1,Ban / Moratorium,wind,2021,18049,county
+IN,Fulton County,2,Size Cap,solar,2021,18049,county
+IN,Fulton County,10b,Setback Restriction,solar,2021,18049,county
+IN,Hamilton County,1,Ban / Moratorium,solar,2021,18057,county
+IN,Hamilton County,9,Height Restriction,wind,2021,18057,county
+IN,Henry County,1,Ban / Moratorium,wind,2021,18065,county
+IN,Howard County,6a,Setback Restriction,wind,2022,18067,county
+IN,Howard County,7,Noise Restriction,wind,2022,18067,county
+IN,Huntington County,10a,Setback Restriction,solar,2025,18069,county
+IN,Jasper County,6a,Setback Restriction,wind,2021,18073,county
+IN,Kosciusko County,1,Ban / Moratorium,wind,2021,18085,county
+IN,Kosciusko County,1,Ban/Moratorium,solar,2021,18085,county
+IN,Kosciusko County,6a,Setback Restriction,wind,2021,18085,county
+IN,Kosciusko County,7,Noise Restriction,wind,2021,18085,county
+IN,Kosciusko County,8,Shadow Flicker Restriction,wind,2021,18085,county
+IN,LaGrange County,1,Ban / Moratorium,solar,2025,18087,county
+IN,Lake County,1,Ban / Moratorium,solar,2023,18089,county
+IN,Madison County,1,Ban / Moratorium,wind,2021,18095,county
+IN,Madison County,2,Size Cap,solar,2021,18095,county
+IN,Madison County,10b,Setback Restriction,solar,2021,18095,county
+IN,Marshall County,1,Ban / Moratorium,wind,2021,18099,county
+IN,Miami County,6a,Setback Restriction,wind,2021,18103,county
+IN,Noble County,6a,Setback Restriction,wind,2021,18113,county
+IN,Posey County,1,Ban / Moratorium,wind,2023,18129,county
+IN,Posey County,1,Ban / Moratorium,solar,2023,18129,county
+IN,Posey County,6b,Setback Restriction,wind,2023,18129,county
+IN,Pulaski County,1,Ban / Moratorium,wind,2021,18131,county
+IN,Rush County,6a,Setback Restriction,wind,2021,18139,county
+IN,Rush County,7,Noise Restriction,wind,2021,18139,county
+IN,Rush County,8,Shadow Flicker Restriction,wind,2021,18139,county
+IN,Rush County,9,Height Restriction,wind,2021,18139,county
+IN,Spencer County,2,Size Cap,solar,2023,18147,county
+IN,Spencer County,10b,Setback Restriction,solar,2023,18147,county
+IN,St. Joseph County,10b,Setback Restriction,solar,2024,18141,county
+IN,Tippecanoe County,9,Height Restriction,wind,2021,18157,county
+IN,Tipton County,6a,Setback Restriction,wind,2021,18159,county
+IN,Vermillion County,2,Capacity Cap,wind,2022,18165,county
+IN,Vermillion County,6a,Setback Restriction,wind,2022,18165,county
+IN,Vermillion County,7,Noise Restriction,wind,2022,18165,county
+IN,Wabash County,6b,Setback Restriction,wind,2021,18169,county
+IN,Wabash County,7,Noise Restriction,wind,2021,18169,county
+IN,Wabash County,8,Shadow Flicker Restriction,wind,2021,18169,county
+IN,Wayne County,2,Capacity Cap,wind,2021,18177,county
+IN,Wayne County,9,Height Restriction,wind,2021,18177,county
+IN,Wells County,1,Ban / Moratorium,wind,2023,18179,county
+IN,Whitley County,1,Ban / Moratorium,solar,2021,18183,county
+IA,Adair County,2,Density Cap,wind,2021,19001,county
+IA,Adams County,2,Density Cap,wind,2024,19003,county
+IA,Allamakee County,2,Size Cap,solar,2025,19005,county
+IA,Butler County,6a,Setback Restriction,wind,2023,,county
+IA,Butler County,7,Noise Restriction,wind,2023,,county
+IA,Cerro Gordo County,1,Ban / Moratorium,wind,2023,19033,county
+IA,Cerro Gordo County,1,Ban / Moratorium,solar,2023,19033,county
+IA,Cerro Gordo County,1,Ban / Moratorium,storage,2023,19033,county
+IA,Chickasaw County,10a,Setback Restriction,solar,2025,19037,county
+IA,Chickasaw County,1,Ban / Moratorium,wind,2025,19037,county
+IA,Clinton County,1,Ban / Moratorium,wind,2024,19045,county
+IA,Clinton County,6a,Setback Restriction,wind,2024,19045,county
+IA,Dallas County,7,Noise Restriction,wind,2022,19049,county
+IA,Decatur County,1,Ban / Moratorium,wind,2025,,county
+IA,Decatur County,1,Ban / Moratorium,solar,2025,,county
+IA,Des Moines County,6b,Setback Restriction,wind,2021,19057,county
+IA,Dubuque County,10a,Setback Restriction,solar,2025,19061,county
+IA,Emmet County,1,Ban / Moratorium,wind,2024,19063,county
+IA,Floyd County,1,Ban / Moratorium,wind,2024,,county
+IA,Floyd County,1,Ban / Moratorium,solar,2024,,county
+IA,Floyd County,1,Ban / Moratorium,storage,2024,,county
+IA,Fremont County,2,Density Cap,wind,2025,,county
+IA,Fremont County,6b,Setback Restriction,wind,2025,,county
+IA,Greene County,2,Size Cap,solar,2021,19073,county
+IA,Greene County,10b,Setback Restriction,solar,2021,19073,county
+IA,Grundy County,6b,Setback Restriction,wind,2023,19075,county
+IA,Hardin County,1,Ban / Moratorium,wind,2021,19083,county
+IA,Henry County,1,Ban / Moratorium,wind,2024,19087,county
+IA,Henry County,1,Ban / Moratorium,solar,2024,19087,county
+IA,Henry County,1,Ban / Moratorium,storage,2024,19087,county
+IA,Humboldt County,1,Ban / Moratorium,wind,2024,19091,county
+IA,Humboldt County,1,Ban / Moratorium,solar,2024,19091,county
+IA,Humboldt County,1,Ban / Moratorium,transmission,2024,19091,county
+IA,Ida County,1,Ban / Moratorium,wind,2021,19093,county
+IA,Iowa County,2,Density Cap,wind,2021,19095,county
+IA,Iowa County,6b,Setback Restriction,wind,2021,19095,county
+IA,Iowa County,9,Height Restriction,wind,2021,19095,county
+IA,Johnson County,1,Ban / Moratorium,solar,2022,19103,county
+IA,Kossuth County,1,Ban / Moratorium,solar,2024,19109,county
+IA,Linn County,1,Ban / Moratorium,solar,2022,19113,county
+IA,Madison County,2,Density Cap,wind,2021,19121,county
+IA,Madison County,6a,Setback Restriction,wind,2021,19121,county
+IA,Madison County,7,Noise Restriction,wind,2021,19121,county
+IA,Madison County,8,Shadow Flicker Restriction,wind,2021,19121,county
+IA,Mitchell County,2,Density Cap,wind,2021,19131,county
+IA,Mitchell County,9,Height Restriction,wind,2021,19131,county
+IA,Monona County,2,Density Cap,wind,2025,,county
+IA,Montgomery County,1,Ban / Moratorium,wind,2023,,county
+IA,Muscatine County,1,Ban / Moratorium,wind,2024,19139,county
+IA,Page County,7,Noise Restriction,wind,2022,19145,county
+IA,Page County,9,Height Restriction,wind,2022,19145,county
+IA,Page County,10a,Setback Restriction,solar,2022,19145,county
+IA,Palo Alto County,2,Capacity Cap,wind,2022,19147,county
+IA,Palo Alto County,6b,Setback Restriction,wind,2022,19147,county
+IA,Polk County,6a,Setback Restriction,wind,2025,19153,county
+IA,Polk County,8,Shadow Flicker Restriction,wind,2025,19153,county
+IA,Pottawattamie County,9,Height Restriction,wind,2021,19155,county
+IA,Ringgold County,2,Size Cap,solar,2024,19159,county
+IA,Ringgold County,10b,Setback Restriction,solar,2024,19159,county
+IA,Sac County,6b,Setback Restriction,wind,2023,19161,county
+IA,Sac County,8,Shadow Flicker Restriction,wind,2023,19161,county
+IA,Scott County,1,Ban / Moratorium,solar,2025,19163,county
+IA,Scott County,9,Height Restriction,wind,2025,19163,county
+IA,Scott County,10a,Setback Restriction,solar,2025,19163,county
+IA,Scott County,10b,Setback Restriction,solar,2025,19163,county
+IA,Sioux County,1,Ban / Moratorium,wind,2022,19167,county
+IA,Sioux County,1,Ban / Moratorium,solar,2022,19167,county
+IA,Story County,8,Shadow Flicker Restriction,wind,2022,19169,county
+IA,Union County,6a,Setback Restriction,wind,2023,19175,county
+IA,Webster County,1,Ban / Moratorium,wind,2024,19187,county
+IA,Webster County,6b,Setback Restriction,wind,2024,19187,county
+IA,Woodbury County,1,Ban / Moratorium,solar,2022,19193,county
+IA,Woodbury County,2,Size Cap,wind,2022,19193,county
+IA,Woodbury County,6b,Setback Restriction,wind,2022,19193,county
+KS,Kansas State Tallgrass Heartland Wind Moratorium,1,Ban/Moratorium,wind,2025,,state
+KS,Barton County,1,Ban / Moratorium,solar,2023,20009,county
+KS,Brown County,1,Ban / Moratorium,wind,2021,,county
+KS,Cherokee County,6a,Setback Restriction,wind,2022,20021,county
+KS,Cherokee County,7,Noise Restriction,wind,2022,20021,county
+KS,Cherokee County,9,Height Restriction,wind,2022,20021,county
+KS,Douglas County,6a,Setback Restriction,wind,2021,20045,county
+KS,Douglas County,2,Size Cap,solar,2021,20045,county
+KS,Douglas County,10b,Setback Restriction,solar,2021,20045,county
+KS,Franklin County,1,Ban / Moratorium,wind,2023,20059,county
+KS,Harvey County,1,Ban / Moratorium,wind,2023,20079,county
+KS,Harvey County,1,Ban / Moratorium,solar,2023,20079,county
+KS,Johnson County,2,Size Cap,solar,2023,20091,county
+KS,Kearny County,6a,Setback Restriction,wind,2022,20093,county
+KS,Kearny County,9,Height Restriction,wind,2022,20093,county
+KS,Leavenworth County,6a,Setback Restriction,wind,2023,20103,county
+KS,Leavenworth County,9,Height Restriction,wind,2023,20103,county
+KS,Linn County,1,Ban / Moratorium,solar,2021,20107,county
+KS,Linn County,1,Ban / Moratorium,wind,2021,20107,county
+KS,McPherson County,1,Ban / Moratorium,solar,2021,20113,county
+KS,McPherson County,1,Ban / Moratorium,wind,2021,20113,county
+KS,Nemaha County,1,Ban / Moratorium,wind,2023,20131,county
+KS,Osage County,1,Ban / Moratorium,wind,2022,20139,county
+KS,Osage County,1,Ban / Moratorium,solar,2022,20139,county
+KS,Pottawatomie County,1,Ban / Moratorium,solar,2024,20149,county
+KS,Pratt County,6b,Setback Restriction,wind,2021,20151,county
+KS,Reno County,1,Ban / Moratorium,wind,2021,20155,county
+KS,Sedgwick County,1,Ban / Moratorium,wind,2022,20173,county
+KS,Sedgwick County,1,Ban / Moratorium,solar,2022,20173,county
+KS,Sedgwick County,2,Size Cap,solar,2022,20173,county
+KS,Shawnee County,1,Ban / Moratorium,wind,2024,20177,county
+KS,Shawnee County,1,Ban / Moratorium,solar,2024,20177,county
+KS,Wabaunsee County,1,Ban / Moratorium,solar,2024,20197,county
+KS,Woodson County,1,Ban / Moratorium,wind,2025,,county
+KS,Woodson County,1,Ban / Moratorium,solar,2025,,county
+KY,Boyle County,3,Use Restriction,solar,2023,21021,county
+KY,Caldwell County,6b,Setback Restriction,wind,2025,21033,county
+KY,Calloway County,10a,Setback Restriction,solar,2025,,county
+KY,Calloway County,10a,Setback Restriction,solar,2025,,county
+KY,Calloway County,3,Use Restriction,solar,2025,,county
+KY,Calloway County,5,Viewshed Restriction,solar,2025,,county
+KY,Lyon County,10b,Setback Restriction,solar,2024,21143,county
+KY,McCracken County,1,Ban / Moratorium,solar,2025,21145,county
+KY,McCracken County,10b,Setback Restriction,solar,2025,21145,county
+KY,Meade County,1,Ban / Moratorium,solar,2023,21163,county
+KY,Ohio County,10a,Setback Restriction,solar,2025,21183,county
+LA,Louisiana HB 459 Act 279 of 2025,10a,Setback Restriction,solar,2025,,state
+LA,Boassier Parish,10b,Setback Restriction,solar,2025,,county
+LA,Caddo Parish,8,Shadow Flicker Restriction,wind,2025,22017,county
+LA,Iberia Parish,1,Ban / Moratorium,solar,2025,22045,county
+LA,Iberia Parish,10a,Setback Restriction,solar,2025,22045,county
+LA,Jefferson Davis Parish,6b,Setback Restriction,wind,2021,22053,county
+LA,Rapides Parish,10b,Setback Restriction,solar,2025,22079,county
+LA,Richland Parish,10b,Setback Restriction,solar,2025,22083,county
+LA,St. James Parish,10b,Setback Restriction,solar,2022,22093,county
+LA,Washington Parish,10b,Setback Restriction,solar,2023,22117,county
+ME,Maine Bill L.D. 1619 of 2021,1,Ban/Moratorium,wind,2025,,state
+ME,Maine Bill L.D. 1619 of 2021,5,Viewshed Restriction,solar,2025,,state
+ME,Maine Bill L.D. 1619 of 2021,1,Ban / Moratorium,solar,2025,,state
+ME,Maine Bill L.D. 1619 of 2021,1,Ban / Moratorium,solar,2025,,state
+ME,Maine Bill L.D. 1619 of 2021,1,Ban / Moratorium,transmission,2025,,state
+ME,Maine Bill L.D. 1619 of 2021,10a,Setback Restriction,solar,2025,,state
+ME,Maine Bill L.D. 1619 of 2021,2,Size Cap,solar,2025,,state
+ME,Maine Bill L.D. 1619 of 2021,10a,Setback Restriction,solar,2025,,state
+ME,Maine Bill L.D. 1619 of 2021,1,Ban / Moratorium,solar,2025,,state
+ME,Maine Bill L.D. 1619 of 2021,2,Size Cap,solar,2025,,state
+ME,Maine Bill L.D. 1619 of 2021,1,Ban / Moratorium,solar,2025,,state
+ME,Maine Bill L.D. 1619 of 2021,1,Ban / Moratorium,solar,2025,,state
+ME,Maine Bill L.D. 1619 of 2021,1,Ban / Moratorium,solar,2025,,state
+ME,Maine Bill L.D. 1619 of 2021,2,Size Cap,solar,2025,,state
+ME,Maine Bill L.D. 1619 of 2021,6a,Setback Restriction,wind,2025,,state
+ME,Maine Bill L.D. 1619 of 2021,6a,Setback Restriction,wind,2025,,state
+ME,Maine Bill L.D. 1619 of 2021,7,Noise Restriction,wind,2025,,state
+ME,Maine Bill L.D. 1619 of 2021,8,Shadow Flicker Restriction,wind,2025,,state
+ME,Maine Bill L.D. 1619 of 2021,1,Ban / Moratorium,solar,2025,,state
+ME,Maine Bill L.D. 1619 of 2021,2,Size Cap,solar,2025,,state
+ME,Maine Bill L.D. 1619 of 2021,1,Ban / Moratorium,solar,2025,,state
+ME,Maine Bill L.D. 1619 of 2021,2,Size Cap,solar,2025,,state
+ME,Maine Bill L.D. 1619 of 2021,1,Ban / Moratorium,solar,2025,,state
+ME,Maine Bill L.D. 1619 of 2021,6a,Setback Restriction,wind,2025,,state
+ME,Maine Bill L.D. 1619 of 2021,8,Shadow Flicker Restriction,wind,2025,,state
+ME,Maine Bill L.D. 1619 of 2021,1,Ban / Moratorium,solar,2025,,state
+ME,Maine Bill L.D. 1619 of 2021,6b,Setback Restriction,wind,2025,,state
+ME,Maine Bill L.D. 1619 of 2021,10b,Setback Restriction,solar,2025,,state
+ME,Maine Bill L.D. 1619 of 2021,2,Size Cap,solar,2025,,state
+ME,Maine Bill L.D. 1619 of 2021,1,Ban / Moratorium,transmission,2025,,state
+ME,Maine Bill L.D. 1619 of 2021,2,Capacity Cap,transmission,2025,,state
+ME,Maine Bill L.D. 1619 of 2021,2,Size Cap,solar,2025,,state
+ME,Maine Bill L.D. 1619 of 2021,9,Height Restriction,wind,2025,,state
+ME,Maine Bill L.D. 1619 of 2021,10a,Setback Restriction,solar,2025,,state
+ME,Maine Bill L.D. 1619 of 2021,1,Ban / Moratorium,solar,2025,,state
+ME,Maine Bill L.D. 1619 of 2021,5,Viewshed Restriction,solar,2025,,state
+ME,Maine Bill L.D. 1619 of 2021,1,Ban / Moratorium,transmission,2025,,state
+ME,Maine Bill L.D. 1619 of 2021,2,Capacity Cap,transmission,2025,,state
+ME,Maine Bill L.D. 1619 of 2021,1,Ban / Moratorium,solar,2025,,state
+ME,Maine Bill L.D. 1619 of 2021,6a,Setback Restriction,wind,2025,,state
+ME,Maine Bill L.D. 1619 of 2021,7,Noise Restriction,wind,2025,,state
+MD,Maryland Renewable Energy Certainty Act of 2025,1,Ban/Moratorium,solar,2025,,state
+MD,Maryland Renewable Energy Certainty Act of 2025,2,Size Cap,solar,2025,,state
+MD,Allegany County,6b,Setback Restriction,wind,2021,24001,county
+MD,Calvert County,9,Height Restriction,wind,2025,24009,county
+MD,Caroline County,2,Size Cap,solar,2025,24011,county
+MD,Carroll County,2,Size Cap,solar,2022,24013,county
+MD,Carroll County,5,Viewshed Restriction,solar,2022,24013,county
+MD,Carroll County,10a,Setback Restriction,solar,2022,24013,county
+MD,Cecil County,2,Size Cap,solar,2025,24015,county
+MD,City of Baltimore,9,Height Restriction,wind,2025,,municipal
+MD,Garrett County,1,Ban / Moratorium,solar,2025,24023,county
+MD,Harford County,1,Ban / Moratorium,wind,2024,24025,county
+MD,Harford County,1,Ban / Moratorium,solar,2024,24025,county
+MD,Queen Anne’s County,3,Use Restriction,wind,2025,24035,county
+MD,Queen Anne’s County,9,Height Restriction,wind,2025,24035,county
+MD,Talbot County,1,Ban / Moratorium,solar,2025,24041,county
+MD,Worcester County,1,Ban / Moratorium,wind,2022,24047,county
+MD,Worcester County,1,Ban / Moratorium,solar,2022,24047,county
+MI,Alcona County,2,Size Cap,solar,2025,26001,county
+MI,Alcona County,8,Shadow Flicker Restriction,wind,2025,26001,county
+MI,Alcona County,6a,Setback Restriction,wind,2025,26001,county
+MI,Alcona County,7,Noise Restriction,wind,2025,26001,county
+MI,Alcona County,8,Shadow Flicker Restriction,wind,2025,26001,county
+MI,Alcona County,6a,Setback Restriction,wind,2025,26001,county
+MI,Alcona County,7,Noise Restriction,wind,2025,26001,county
+MI,Alcona County,1,Ban / Moratorium,solar,2025,26001,county
+MI,Barry County,6a,Setback Restriction,wind,2025,26015,county
+MI,Barry County,9,Height Restriction,wind,2025,26015,county
+MI,Barry County,9,Height Restriction,wind,2025,26015,county
+MI,Barry County,6a,Setback Restriction,wind,2025,26015,county
+MI,Barry County,8,Shadow Flicker Restriction,wind,2025,26015,county
+MI,Barry County,10a,Setback Restriction,solar,2025,26015,county
+MI,Barry County,1,Ban / Moratorium,solar,2025,26015,county
+MI,Barry County,1,Ban / Moratorium,solar,2025,26015,county
+MI,Barry County,9,Height Restriction,wind,2025,26015,county
+MI,Barry County,1,Ban / Moratorium,wind,2025,26015,county
+MI,Barry County,6a,Setback Restriction,wind,2025,26015,county
+MI,Barry County,6a,Setback Restriction,wind,2025,26015,county
+MI,Barry County,7,Noise Restriction,wind,2025,26015,county
+MI,Barry County,8,Shadow Flicker Restriction,wind,2025,26015,county
+MI,Barry County,2,Size Cap,solar,2025,26015,county
+MI,Barry County,10a,Setback Restriction,solar,2025,26015,county
+MI,Barry County,1,Ban / Moratorium,solar,2025,26015,county
+MI,Barry County,1,Ban / Moratorium,solar,2025,26015,county
+MI,Barry County,1,Ban / Moratorium,solar,2025,26015,county
+MI,Barry County,1,Ban / Moratorium,solar,2025,26015,county
+MI,Barry County,1,Ban / Moratorium,solar,2025,26015,county
+MI,Barry County,6a,Setback Restriction,wind,2025,26015,county
+MI,Barry County,7,Noise Restriction,wind,2025,26015,county
+MI,Clinton County,6b,Setback Restriction,wind,2021,26037,county
+MI,Clinton County,7,Noise Restriction,wind,2021,26037,county
+MI,Clinton County,8,Shadow Flicker Restriction,wind,2021,26037,county
+MI,Clinton County,9,Height Restriction,wind,2021,26037,county
+MI,Clinton County,1,Ban / Moratorium,solar,2021,26037,county
+MI,Clinton County,1,Ban / Moratorium,solar,2021,26037,county
+MI,Clinton County,1,Ban / Moratorium,wind,2021,26037,county
+MI,Clinton County,1,Ban / Moratorium,solar,2021,26037,county
+MI,Clinton County,1,Ban / Moratorium,solar,2021,26037,county
+MI,Clinton County,2,Size Cap,solar,2021,26037,county
+MI,Clinton County,7,Noise Restriction,wind,2021,26037,county
+MI,Clinton County,8,Shadow Flicker Restriction,wind,2021,26037,county
+MI,Clinton County,9,Height Restriction,wind,2021,26037,county
+MI,Clinton County,10a,Setback Restriction,solar,2021,26037,county
+MI,Clinton County,6a,Setback Restriction,wind,2021,26037,county
+MI,Clinton County,7,Noise Restriction,wind,2021,26037,county
+MI,Clinton County,8,Shadow Flicker Restriction,wind,2021,26037,county
+MI,Clinton County,1,Ban / Moratorium,solar,2021,26037,county
+MI,Emmet County,7,Noise Restriction,wind,2022,,county
+MI,Emmet County,9,Height Restriction,wind,2022,,county
+MI,Emmet County,2,Size Cap,solar,2022,,county
+MI,Emmet County,2,Size Cap,wind,2022,,county
+MI,Emmet County,2,Size Cap,solar,2022,,county
+MI,Emmet County,1,Ban / Moratorium,solar,2022,,county
+MI,Emmet County,6a,Setback Restriction,wind,2022,,county
+MI,Emmet County,9,Height Restriction,wind,2022,,county
+MI,Emmet County,10a,Setback Restriction,solar,2022,,county
+MI,Emmet County,1,Ban / Moratorium,solar,2022,,county
+MI,Gladwin County,9,Height Restriction,wind,2025,26051,county
+MI,Gladwin County,1,Ban / Moratorium,solar,2025,26051,county
+MI,Gladwin County,2,Size Cap,solar,2025,26051,county
+MI,Gladwin County,1,Ban / Moratorium,solar,2025,26051,county
+MI,Gladwin County,1,Ban / Moratorium,solar,2025,26051,county
+MI,Gladwin County,2,Size Cap,solar,2025,26051,county
+MI,Gladwin County,10a,Setback Restriction,solar,2025,26051,county
+MI,Huron County,1,Ban / Moratorium,wind,2021,26063,county
+MI,Huron County,9,Height Restriction,wind,2021,26063,county
+MI,Huron County,1,Ban / Moratorium,wind,2021,26063,county
+MI,Huron County,1,Ban / Moratorium,solar,2021,26063,county
+MI,Huron County,1,Ban / Moratorium,storage,2021,26063,county
+MI,Huron County,1,Ban / Moratorium,wind,2021,26063,county
+MI,Huron County,1,Ban / Moratorium,solar,2021,26063,county
+MI,Huron County,6a,Setback Restriction,wind,2021,26063,county
+MI,Huron County,1,Ban / Moratorium,solar,2021,26063,county
+MI,Huron County,10a,Setback Restriction,solar,2021,26063,county
+MI,Huron County,6a,Setback Restriction,wind,2021,26063,county
+MI,Huron County,7,Noise Restriction,wind,2021,26063,county
+MI,Huron County,9,Height Restriction,wind,2021,26063,county
+MI,Huron County,9,Height Restriction,wind,2021,26063,county
+MI,Huron County,1,Ban / Moratorium,solar,2021,26063,county
+MI,Huron County,9,Height Restriction,wind,2021,26063,county
+MI,Huron County,10a,Setback Restriction,solar,2021,26063,county
+MI,Huron County,9,Height Restriction,wind,2021,26063,county
+MI,Huron County,1,Ban / Moratorium,solar,2021,26063,county
+MI,Huron County,2,Size Cap,solar,2021,26063,county
+MI,Huron County,9,Height Restriction,wind,2021,26063,county
+MI,Huron County,6b,Setback Restriction,wind,2021,26063,county
+MI,Huron County,8,Shadow Flicker Restriction,wind,2021,26063,county
+MI,Huron County,1,Ban / Moratorium,wind,2021,26063,county
+MI,Mason County,8,Shadow Flicker Restriction,wind,2023,26105,county
+MI,Mason County,6a,Setback Restriction,wind,2023,26105,county
+MI,Mason County,8,Shadow Flicker Restriction,wind,2023,26105,county
+MI,Mason County,9,Height Restriction,wind,2023,26105,county
+MI,Mason County,1,Ban / Moratorium,solar,2023,26105,county
+MI,Mason County,6a,Setback Restriction,wind,2023,26105,county
+MI,Mason County,8,Shadow Flicker Restriction,wind,2023,26105,county
+MI,Mason County,1,Ban / Moratorium,solar,2023,26105,county
+MI,Mason County,1,Ban / Moratorium,solar,2023,26105,county
+MI,Mason County,1,Ban / Moratorium,wind,2023,26105,county
+MI,Mason County,1,Ban / Moratorium,solar,2023,26105,county
+MI,Mason County,10b,Setback Restriction,solar,2023,26105,county
+MI,Mason County,1,Ban / Moratorium,wind,2023,26105,county
+MI,Ogemaw County,6a,Setback Restriction,wind,2025,26129,county
+MI,Ogemaw County,10a,Setback Restriction,solar,2025,26129,county
+MI,Ogemaw County,6a,Setback Restriction,wind,2025,26129,county
+MI,Ogemaw County,7,Noise Restriction,wind,2025,26129,county
+MI,Ogemaw County,8,Shadow Flicker Restriction,wind,2025,26129,county
+MI,Ogemaw County,1,Ban / Moratorium,solar,2025,26129,county
+MI,Presque Isle Township,9,Height Restriction,wind,2025,,municipal
+MI,Presque Isle Township,2,Size Cap,solar,2025,,municipal
+MI,Presque Isle Township,9,Height Restriction,wind,2025,,municipal
+MI,Presque Isle Township,7,Noise Restriction,wind,2025,,municipal
+MI,Presque Isle Township,7,Noise Restriction,wind,2025,,municipal
+MI,Presque Isle Township,1,Ban / Moratorium,wind,2025,,municipal
+MI,Presque Isle Township,6a,Setback Restriction,wind,2025,,municipal
+MI,Presque Isle Township,7,Noise Restriction,wind,2025,,municipal
+MI,Presque Isle Township,8,Shadow Flicker Restriction,wind,2025,,municipal
+MI,Presque Isle Township,9,Height Restriction,wind,2025,,municipal
+MI,Presque Isle Township,1,Ban / Moratorium,wind,2025,,municipal
+MI,Presque Isle Township,6a,Setback Restriction,wind,2025,,municipal
+MI,Presque Isle Township,7,Noise Restriction,wind,2025,,municipal
+MI,Presque Isle Township,8,Shadow Flicker Restriction,wind,2025,,municipal
+MI,Schoolcraft County,6b,Setback Restriction,wind,2025,26153,county
+MI,Schoolcraft County,7,Noise Restriction,wind,2025,26153,county
+MI,Schoolcraft County,8,Shadow Flicker Restriction,wind,2025,26153,county
+MI,Schoolcraft County,9,Height Restriction,wind,2025,26153,county
+MI,Schoolcraft County,9,Height Restriction,wind,2025,26153,county
+MI,Shiawassee County,6a,Setback Restriction,wind,2023,26155,county
+MI,Shiawassee County,7,Noise Restriction,wind,2023,26155,county
+MI,Shiawassee County,8,Shadow Flicker Restriction,wind,2023,26155,county
+MI,Shiawassee County,9,Height Restriction,wind,2023,26155,county
+MI,Shiawassee County,8,Shadow Flicker Restriction,wind,2023,26155,county
+MI,Shiawassee County,9,Height Restriction,wind,2023,26155,county
+MI,St. Clair County,1,Ban / Moratorium,wind,2023,26147,county
+MI,St. Clair County,1,Ban / Moratorium,solar,2023,26147,county
+MI,St. Clair County,5,Viewshed Restriction,solar,2023,26147,county
+MI,St. Clair County,1,Ban / Moratorium,wind,2023,26147,county
+MI,St. Clair County,9,Height Restriction,wind,2023,26147,county
+MI,St. Clair County,1,Ban / Moratorium,solar,2023,26147,county
+MI,St. Clair County,1,Ban / Moratorium,wind,2023,26147,county
+MI,St. Clair County,1,Ban / Moratorium,solar,2023,26147,county
+MI,St. Clair County,1,Ban / Moratorium,storage,2023,26147,county
+MI,St. Clair County,6a,Setback Restriction,wind,2023,26147,county
+MI,St. Clair County,2,Size Cap,solar,2023,26147,county
+MI,St. Clair County,1,Ban / Moratorium,wind,2023,26147,county
+MI,St. Clair County,1,Ban / Moratorium,solar,2023,26147,county
+MI,St. Clair County,10a,Setback Restriction,solar,2023,26147,county
+MI,St. Clair County,1,Ban / Moratorium,wind,2023,26147,county
+MI,St. Clair County,1,Ban / Moratorium,solar,2023,26147,county
+MI,St. Clair County,6a,Setback Restriction,wind,2023,26147,county
+MI,St. Clair County,7,Noise Restriction,wind,2023,26147,county
+MI,St. Clair County,8,Shadow Flicker Restriction,wind,2023,26147,county
+MI,St. Clair County,9,Height Restriction,wind,2023,26147,county
+MI,St. Clair County,10a,Setback Restriction,solar,2023,26147,county
+MN,Minnesota R. 7850.4400,1,Ban/Moratorium,wind,2023,,municipal
+MN,Minnesota R. 7850.4400,1,Ban/Moratorium,solar,2023,,municipal
+MN,Aitkin County,1,Ban / Moratorium,wind,2025,27001,county
+MN,Aitkin County,1,Ban / Moratorium,solar,2025,27001,county
+MN,Aitkin County,9,Height Restriction,wind,2025,27001,county
+MN,Anoka County,1,Ban / Moratorium,wind,2025,27003,county
+MN,Anoka County,9,Height Restriction,wind,2025,27003,county
+MN,Beltrami County,1,Ban / Moratorium,wind,2025,27007,county
+MN,Beltrami County,9,Height Restriction,wind,2025,27007,county
+MN,Blue Earth County,10b,Setback Restriction,solar,2025,27013,county
+MN,Carlton County,1,Ban / Moratorium,wind,2025,,county
+MN,Carlton County,9,Height Restriction,wind,2025,,county
+MN,Carver County,2,Capacity Cap,wind,2025,27019,county
+MN,Carver County,2,Capacity Cap,solar,2025,27019,county
+MN,Chippewa County,1,Ban / Moratorium,solar,2024,27023,county
+MN,Chippewa County,10b,Setback Restriction,solar,2024,27023,county
+MN,Chisago County,1,Ban / Moratorium,wind,2025,27025,county
+MN,Chisago County,1,Ban / Moratorium,solar,2025,27025,county
+MN,Chisago County,2,Density Cap,wind,2025,27025,county
+MN,Chisago County,9,Height Restriction,wind,2025,27025,county
+MN,Chisago County,2,Size Cap,solar,2025,27025,county
+MN,Chisago County,10a,Setback Restriction,solar,2025,27025,county
+MN,Cook County,1,Ban / Moratorium,wind,2025,27031,county
+MN,Cook County,9,Height Restriction,wind,2025,27031,county
+MN,Crow Wing County,1,Ban / Moratorium,wind,2025,,county
+MN,Crow Wing County,1,Ban / Moratorium,solar,2025,,county
+MN,Freeborn County,1,Ban / Moratorium,wind,2025,27047,county
+MN,Isanti County,2,Size Cap,solar,2025,27059,county
+MN,Le Sueur County,1,Ban / Moratorium,wind,2025,27079,county
+MN,Le Sueur County,1,Ban / Moratorium,solar,2025,27079,county
+MN,Le Sueur County,10b,Setback Restriction,solar,2025,27079,county
+MN,Meeker County,1,Ban / Moratorium,wind,2024,27093,county
+MN,Meeker County,1,Ban / Moratorium,solar,2024,27093,county
+MN,Mille Lacs County,2,Size Cap,wind,2025,,county
+MN,Mille Lacs County,2,Size Cap,solar,2025,,county
+MN,Morrison County,1,Ban / Moratorium,wind,2025,27097,county
+MN,Morrison County,1,Ban / Moratorium,solar,2025,27097,county
+MN,Morrison County,9,Height Restriction,wind,2025,27097,county
+MN,Mower County,1,Ban / Moratorium,wind,2025,27099,county
+MN,Mower County,1,Ban / Moratorium,solar,2025,27099,county
+MN,Nicollet County,1,Ban / Moratorium,wind,2025,27103,county
+MN,Nicollet County,6b,Setback Restriction,wind,2025,27103,county
+MN,Olmsted County,1,Ban / Moratorium,solar,2025,27109,county
+MN,Pine County,1,Ban / Moratorium,wind,2025,27115,county
+MN,Pine County,9,Height Restriction,wind,2025,27115,county
+MN,Pope County,1,Ban / Moratorium,wind,2025,27121,county
+MN,Pope County,9,Height Restriction,wind,2025,27121,county
+MN,Pope County,10a,Setback Restriction,solar,2025,27121,county
+MN,Ramsey County,1,Ban / Moratorium,wind,2025,27123,county
+MN,Ramsey County,9,Height Restriction,wind,2025,27123,county
+MN,Scott County,2,Size Cap,wind,2025,27139,county
+MN,Scott County,9,Height Restriction,wind,2025,27139,county
+MN,St. Louis County,1,Ban / Moratorium,wind,2025,27137,county
+MN,St. Louis County,1,Ban / Moratorium,solar,2025,27137,county
+MN,Stevens County,1,Ban / Moratorium,wind,2025,27149,county
+MN,Stevens County,1,Ban / Moratorium,solar,2025,27149,county
+MN,Todd County,9,Height Restriction,wind,2025,27153,county
+MN,Traverse County,1,Ban / Moratorium,wind,2024,27155,county
+MN,Traverse County,1,Ban / Moratorium,solar,2024,27155,county
+MN,Traverse County,1,Ban / Moratorium,storage,2024,27155,county
+MN,Wabasha County,1,Ban / Moratorium,wind,2025,27157,county
+MN,Wabasha County,2,Size Cap,solar,2025,27157,county
+MN,Wabasha County,6b,Setback Restriction,wind,2025,27157,county
+MN,Wadena County,1,Ban / Moratorium,solar,2025,27159,county
+MN,Waseca County,10b,Setback Restriction,solar,2025,27161,county
+MN,Wright County,2,Density Cap,solar,2022,27171,county
+MN,Yellow Medicine County,1,Ban / Moratorium,wind,2025,27173,county
+MS,Harrison County,2,Size Cap,wind,2025,28047,county
+MS,Harrison County,9,Height Restriction,wind,2025,28047,county
+MO,Boone County,6b,Setback Restriction,wind,2021,29019,county
+MO,Boone County,9,Height Restriction,wind,2021,29019,county
+MO,Buchanan County,1,Ban / Moratorium,wind,2021,29021,county
+MO,Caldwell County,1,Ban / Moratorium,wind,2025,29025,county
+MO,Cass County,2,Size Cap,solar,2025,29037,county
+MO,Cass County,6a,Setback Restriction,wind,2025,29037,county
+MO,Cass County,7,Noise Restriction,wind,2025,29037,county
+MO,Cass County,10b,Setback Restriction,solar,2025,29037,county
+MO,Cass County,1,Ban / Moratorium,solar,2025,29037,county
+MO,Clinton County,1,Ban / Moratorium,wind,2021,29049,county
+MO,Monroe County,1,Ban / Moratorium,wind,2023,29137,county
+MO,Ralls County,1,Ban / Moratorium,solar,2025,29173,county
+MO,Ralls County,2,Size Cap,solar,2025,29173,county
+MT,Lewis and Clark County,9,Height Restriction,wind,2025,30049,county
+NE,Adams County,1,Ban / Moratorium,solar,2021,31001,county
+NE,Adams County,6b,Setback Restriction,wind,2021,31001,county
+NE,Antelope County,6b,Setback Restriction,wind,2025,31003,county
+NE,Brown County,6a,Setback Restriction,wind,2022,31017,county
+NE,Burt County,2,Density Cap,wind,2021,31021,county
+NE,Burt County,7,Noise Restriction,wind,2021,31021,county
+NE,Burt County,8,Shadow Flicker Restriction,wind,2021,31021,county
+NE,Cedar County,6b,Setback Restriction,wind,2023,31027,county
+NE,Cedar County,1,Ban / Moratorium,solar,2023,31027,county
+NE,Colfax County,1,Ban / Moratorium,wind,2025,31037,county
+NE,Colfax County,6b,Setback Restriction,wind,2025,31037,county
+NE,Cuming County,1,Ban / Moratorium,wind,2025,,county
+NE,Cuming County,6b,Setback Restriction,wind,2025,,county
+NE,Dakota County,6b,Setback Restriction,wind,2021,31043,county
+NE,Dawson County,7,Noise Restriction,wind,2023,31047,county
+NE,Dodge County,1,Ban / Moratorium,wind,2025,31053,county
+NE,Dodge County,6a,Setback Restriction,wind,2025,31053,county
+NE,Frontier County,2,Size Cap,wind,2025,,county
+NE,Frontier County,8,Shadow Flicker Restriction,wind,2025,,county
+NE,Gage County,6a,Setback Restriction,wind,2021,31067,county
+NE,Gage County,10b,Setback Restriction,solar,2021,31067,county
+NE,Greeley County,1,Ban / Moratorium,wind,2024,31077,county
+NE,Greeley County,1,Ban / Moratorium,solar,2024,31077,county
+NE,Hamilton County,6a,Setback Restriction,wind,2022,31081,county
+NE,Hitchcock County,1,Ban / Moratorium,wind,2025,,county
+NE,Hitchcock County,1,Ban / Moratorium,solar,2025,,county
+NE,Holt County,6b,Setback Restriction,wind,2023,31089,county
+NE,Jefferson County,6b,Setback Restriction,wind,2022,31095,county
+NE,Kearney County,10b,Setback Restriction,solar,2022,31099,county
+NE,Knox County,1,Ban / Moratorium,wind,2024,31107,county
+NE,Knox County,1,Ban / Moratorium,solar,2024,31107,county
+NE,Lancaster County,6b,Setback Restriction,wind,2021,31109,county
+NE,Lancaster County,7,Noise Restriction,wind,2021,31109,county
+NE,Lincoln County,1,Ban / Moratorium,wind,2021,31111,county
+NE,Lincoln County,1,Ban / Moratorium,solar,2021,31111,county
+NE,Lincoln County,6a,Setback Restriction,wind,2021,31111,county
+NE,Loup County,6a,Setback Restriction,wind,2025,,county
+NE,Loup County,7,Noise Restriction,wind,2025,,county
+NE,Loup County,9,Height Restriction,wind,2025,,county
+NE,Madison County,1,Ban / Moratorium,wind,2021,31119,county
+NE,Madison County,6a,Setback Restriction,wind,2021,31119,county
+NE,Otoe County,1,Ban / Moratorium,wind,2022,31131,county
+NE,Otoe County,2,Density Cap,wind,2022,31131,county
+NE,Otoe County,2,Size Cap,solar,2022,31131,county
+NE,Otoe County,10b,Setback Restriction,solar,2022,31131,county
+NE,Perkins County,6b,Setback Restriction,wind,2025,31135,county
+NE,Phelps County,1,Ban / Moratorium,wind,2025,31137,county
+NE,Phelps County,6b,Setback Restriction,wind,2025,31137,county
+NE,Phelps County,1,Ban / Moratorium,solar,2025,31137,county
+NE,Phelps County,2,Size Cap,solar,2025,31137,county
+NE,Pierce County,6b,Setback Restriction,wind,2022,31139,county
+NE,Red Willow County,10b,Setback Restriction,solar,2022,31145,county
+NE,Red Willow County,6a,Setback Restriction,wind,2022,31145,county
+NE,Saline County,6b,Setback Restriction,wind,2021,31151,county
+NE,Saline County,7,Noise Restriction,wind,2021,31151,county
+NE,Saline County,6a,Setback Restriction,wind,2021,31151,county
+NE,Scotts Bluff County,6b,Setback Restriction,wind,2024,31157,county
+NE,Scotts Bluff County,10b,Setback Restriction,solar,2024,31157,county
+NE,Scotts Bluff County,6a,Setback Restriction,wind,2024,31157,county
+NE,Stanton County,1,Ban / Moratorium,wind,2021,31167,county
+NE,Stanton County,6b,Setback Restriction,wind,2021,31167,county
+NE,Thayer County,6a,Setback Restriction,wind,2025,31169,county
+NE,Thayer County,7,Noise Restriction,wind,2025,31169,county
+NE,Thomas County,6a,Setback Restriction,wind,2022,,county
+NE,Thomas County,7,Noise Restriction,wind,2022,,county
+NE,Wheeler County,6b,Setback Restriction,wind,2022,,county
+NE,Wheeler County,9,Height Restriction,wind,2022,,county
+NV,Lander County,1,Ban / Moratorium,wind,2025,32015,county
+NV,Lander County,1,Ban / Moratorium,solar,2025,32015,county
+NV,Nye County,10b,Setback Restriction,solar,2021,32023,county
+NY,Cattaraugus County,1,Ban / Moratorium,wind,2022,36009,county
+NY,Cattaraugus County,1,Ban / Moratorium,solar,2022,36009,county
+NY,Chautauqua County,1,Ban / Moratorium,wind,2021,36013,county
+NY,Chautauqua County,1,Ban / Moratorium,solar,2021,36013,county
+NY,Chautauqua County,2,Size Cap,solar,2021,36013,county
+NY,Chautauqua County,1,Ban / Moratorium,solar,2021,36013,county
+NY,Chautauqua County,1,Ban / Moratorium,storage,2021,36013,county
+NY,Chautauqua County,1,Ban / Moratorium,wind,2021,36013,county
+NY,Chautauqua County,1,Ban / Moratorium,solar,2021,36013,county
+NY,Chautauqua County,2,Size Cap,solar,2021,36013,county
+NY,Chautauqua County,2,Size Cap,solar,2021,36013,county
+NY,Chautauqua County,1,Ban / Moratorium,wind,2021,36013,county
+NY,Chautauqua County,9,Height Restriction,wind,2021,36013,county
+NY,Chautauqua County,9,Height Restriction,wind,2021,36013,county
+NY,Chautauqua County,1,Ban / Moratorium,wind,2021,36013,county
+NY,Chautauqua County,1,Ban / Moratorium,wind,2021,36013,county
+NY,Chautauqua County,1,Ban / Moratorium,solar,2021,36013,county
+NY,Chautauqua County,1,Ban / Moratorium,solar,2021,36013,county
+NY,Chautauqua County,9,Height Restriction,wind,2021,36013,county
+NY,Chautauqua County,1,Ban / Moratorium,wind,2021,36013,county
+NY,Chautauqua County,7,Noise Restriction,wind,2021,36013,county
+NY,Chautauqua County,9,Height Restriction,wind,2021,36013,county
+NY,Chautauqua County,9,Height Restriction,wind,2021,36013,county
+NY,Chautauqua County,1,Ban / Moratorium,wind,2021,36013,county
+NY,Chautauqua County,1,Ban / Moratorium,solar,2021,36013,county
+NY,Chautauqua County,1,Ban / Moratorium,solar,2021,36013,county
+NY,Chautauqua County,1,Ban / Moratorium,wind,2021,36013,county
+NY,Chautauqua County,6a,Setback Restriction,wind,2021,36013,county
+NY,Chautauqua County,9,Height Restriction,wind,2021,36013,county
+NY,Chautauqua County,1,Ban / Moratorium,solar,2021,36013,county
+NY,Chautauqua County,3,Use Restriction,wind,2021,36013,county
+NY,Chautauqua County,1,Ban / Moratorium,solar,2021,36013,county
+NY,Chautauqua County,9,Height Restriction,wind,2021,36013,county
+NY,Chautauqua County,1,Ban / Moratorium,solar,2021,36013,county
+NY,Chautauqua County,1,Ban / Moratorium,wind,2021,36013,county
+NY,Chautauqua County,1,Ban / Moratorium,wind,2021,36013,county
+NY,Chautauqua County,1,Ban / Moratorium,wind,2021,36013,county
+NY,Chautauqua County,1,Ban / Moratorium,solar,2021,36013,county
+NY,Chautauqua County,3,Use Restriction,solar,2021,36013,county
+NY,Chautauqua County,6a,Setback Restriction,wind,2021,36013,county
+NY,Chautauqua County,1,Ban / Moratorium,solar,2021,36013,county
+NY,Chautauqua County,1,Ban / Moratorium,solar,2021,36013,county
+NY,Chautauqua County,1,Ban / Moratorium,storage,2021,36013,county
+NY,Chautauqua County,9,Height Restriction,wind,2021,36013,county
+NY,Chautauqua County,1,Ban / Moratorium,storage,2021,36013,county
+NY,Chautauqua County,1,Ban / Moratorium,wind,2021,36013,county
+NY,Chautauqua County,8,Shadow Flicker Restriction,wind,2021,36013,county
+NY,Chautauqua County,7,Noise Restriction,wind,2021,36013,county
+NY,Chautauqua County,8,Shadow Flicker Restriction,wind,2021,36013,county
+NY,Chautauqua County,1,Ban / Moratorium,solar,2021,36013,county
+NY,Chautauqua County,1,Ban / Moratorium,solar,2021,36013,county
+NY,Chautauqua County,1,Ban / Moratorium,solar,2021,36013,county
+NY,Chautauqua County,1,Ban / Moratorium,solar,2021,36013,county
+NY,Chautauqua County,2,Size Cap,solar,2021,36013,county
+NY,Chautauqua County,2,Size Cap,wind,2021,36013,county
+NY,Chautauqua County,2,Size Cap,solar,2021,36013,county
+NY,Chautauqua County,1,Ban / Moratorium,wind,2021,36013,county
+NY,Chautauqua County,2,Size Cap,solar,2021,36013,county
+NY,Chautauqua County,10b,Setback Restriction,solar,2021,36013,county
+NY,Chautauqua County,1,Ban / Moratorium,wind,2021,36013,county
+NY,Chautauqua County,1,Ban / Moratorium,solar,2021,36013,county
+NY,Chautauqua County,7,Noise Restriction,wind,2021,36013,county
+NY,Chautauqua County,1,Ban / Moratorium,solar,2021,36013,county
+NY,Chautauqua County,2,Size Cap,solar,2021,36013,county
+NY,Chautauqua County,1,Ban / Moratorium,solar,2021,36013,county
+NY,Chautauqua County,1,Ban / Moratorium,solar,2021,36013,county
+NY,Chautauqua County,1,Ban / Moratorium,storage,2021,36013,county
+NY,Chautauqua County,1,Ban / Moratorium,solar,2021,36013,county
+NY,Chautauqua County,1,Ban / Moratorium,storage,2021,36013,county
+NY,Chautauqua County,1,Ban / Moratorium,storage,2021,36013,county
+NY,Chautauqua County,1,Ban / Moratorium,solar,2021,36013,county
+NY,Chautauqua County,1,Ban / Moratorium,storage,2021,36013,county
+NY,Chautauqua County,2,Size Cap,solar,2021,36013,county
+NY,Chautauqua County,1,Ban / Moratorium,wind,2021,36013,county
+NY,Chautauqua County,1,Ban / Moratorium,solar,2021,36013,county
+NY,Chautauqua County,6a,Setback Restriction,wind,2021,36013,county
+NY,Chautauqua County,1,Ban / Moratorium,solar,2021,36013,county
+NY,Chautauqua County,1,Ban / Moratorium,wind,2021,36013,county
+NY,Chautauqua County,1,Ban / Moratorium,solar,2021,36013,county
+NY,Chautauqua County,2,Capacity Cap,solar,2021,36013,county
+NY,Chautauqua County,2,Size Cap,wind,2021,36013,county
+NY,Chautauqua County,2,Size Cap,solar,2021,36013,county
+NY,Chautauqua County,6a,Setback Restriction,wind,2021,36013,county
+NY,Chautauqua County,7,Noise Restriction,wind,2021,36013,county
+NY,Chautauqua County,2,Size Cap,solar,2021,36013,county
+NY,Chautauqua County,1,Ban / Moratorium,solar,2021,36013,county
+NY,Chautauqua County,3,Use Restriction,solar,2021,36013,county
+NY,Chautauqua County,1,Ban / Moratorium,solar,2021,36013,county
+NY,Chautauqua County,6b,Setback Restriction,wind,2021,36013,county
+NY,Chautauqua County,1,Ban / Moratorium,wind,2021,36013,county
+NY,Chautauqua County,6b,Setback Restriction,wind,2021,36013,county
+NY,Chautauqua County,7,Noise Restriction,wind,2021,36013,county
+NY,Chautauqua County,1,Ban / Moratorium,solar,2021,36013,county
+NY,Chautauqua County,1,Ban / Moratorium,storage,2021,36013,county
+NY,Chautauqua County,1,Ban / Moratorium,solar,2021,36013,county
+NY,Chautauqua County,1,Ban / Moratorium,storage,2021,36013,county
+NY,Chautauqua County,7,Noise Restriction,wind,2021,36013,county
+NY,Chautauqua County,2,Capacity Cap,solar,2021,36013,county
+NY,Chautauqua County,1,Ban / Moratorium,wind,2021,36013,county
+NY,Chautauqua County,2,Size Cap,wind,2021,36013,county
+NY,Chautauqua County,7,Noise Restriction,wind,2021,36013,county
+NY,Chautauqua County,9,Height Restriction,wind,2021,36013,county
+NY,Chautauqua County,1,Ban / Moratorium,wind,2021,36013,county
+NY,Chautauqua County,3,Use Restriction,wind,2021,36013,county
+NY,Chautauqua County,6b,Setback Restriction,wind,2021,36013,county
+NY,Chautauqua County,9,Height Restriction,wind,2021,36013,county
+NY,Chautauqua County,1,Ban / Moratorium,storage,2021,36013,county
+NY,Chautauqua County,1,Ban / Moratorium,storage,2021,36013,county
+NY,Chautauqua County,9,Height Restriction,wind,2021,36013,county
+NY,Chautauqua County,1,Ban / Moratorium,solar,2021,36013,county
+NY,Chautauqua County,1,Ban / Moratorium,storage,2021,36013,county
+NY,Chautauqua County,1,Ban / Moratorium,wind,2021,36013,county
+NY,Chautauqua County,1,Ban / Moratorium,solar,2021,36013,county
+NY,Chautauqua County,1,Ban / Moratorium,wind,2021,36013,county
+NY,Chautauqua County,1,Ban / Moratorium,solar,2021,36013,county
+NY,Chautauqua County,1,Ban / Moratorium,storage,2021,36013,county
+NY,Chautauqua County,1,Ban / Moratorium,wind,2021,36013,county
+NY,Chautauqua County,2,Size Cap,wind,2021,36013,county
+NY,Chautauqua County,6a,Setback Restriction,wind,2021,36013,county
+NY,Chautauqua County,2,Size Cap,solar,2021,36013,county
+NY,Chautauqua County,10a,Setback Restriction,solar,2021,36013,county
+NY,Chautauqua County,1,Ban / Moratorium,wind,2021,36013,county
+NY,Chautauqua County,2,Size Cap,solar,2021,36013,county
+NY,Chautauqua County,1,Ban / Moratorium,storage,2021,36013,county
+NC,Alexander County,1,Ban / Moratorium,solar,2025,,county
+NC,Ashe County,9,Height Restriction,wind,2022,,county
+NC,Brunswick County,1,Ban / Moratorium,wind,2021,37019,county
+NC,Caldwell County,2,Size Cap,solar,2025,37027,county
+NC,Carteret County,6a,Setback Restriction,wind,2022,37031,county
+NC,Carteret County,7,Noise Restriction,wind,2022,37031,county
+NC,Carteret County,9,Height Restriction,wind,2022,37031,county
+NC,Cleveland County,1,Ban / Moratorium,solar,2025,37045,county
+NC,Cleveland County,1,Ban / Moratorium,storage,2025,37045,county
+NC,Craven County,6a,Setback Restriction,wind,2022,37049,county
+NC,Craven County,7,Noise Restriction,wind,2022,37049,county
+NC,Craven County,8,Shadow Flicker Restriction,wind,2022,37049,county
+NC,Currituck County,1,Ban / Moratorium,wind,2022,37053,county
+NC,Currituck County,1,Ban / Moratorium,solar,2022,37053,county
+NC,Dare County,2,Density Cap,wind,2021,,county
+NC,Dare County,2,Density Cap,solar,2021,,county
+NC,Dare County,7,Noise Restriction,wind,2021,,county
+NC,Gates County,6a,Setback Restriction,wind,2025,37073,county
+NC,Gates County,9,Height Restriction,wind,2025,37073,county
+NC,Granville County,9,Height Restriction,wind,2025,37077,county
+NC,Harnett County,9,Height Restriction,wind,2025,37085,county
+NC,Henderson County,1,Ban / Moratorium,solar,2025,,county
+NC,Hertford County,1,Ban / Moratorium,wind,2021,37091,county
+NC,Hertford County,1,Ban / Moratorium,solar,2021,37091,county
+NC,Iredell County,7,Noise Restriction,wind,2022,37097,county
+NC,Iredell County,9,Height Restriction,wind,2022,37097,county
+NC,Johnston County,1,Ban / Moratorium,wind,2025,37101,county
+NC,Johnston County,9,Height Restriction,wind,2025,37101,county
+NC,Onslow County,1,Ban / Moratorium,wind,2025,37133,county
+NC,Onslow County,1,Ban / Moratorium,solar,2025,37133,county
+NC,Pamlico County,6a,Setback Restriction,wind,2025,37137,county
+NC,Pasquotank County,1,Ban / Moratorium,solar,2025,37139,county
+NC,Pasquotank County,2,Size Cap,solar,2025,37139,county
+NC,Perquimans County,1,Ban / Moratorium,solar,2025,37143,county
+NC,Rowan County,1,Ban / Moratorium,solar,2021,37159,county
+NC,Sampson County,9,Height Restriction,wind,2025,37163,county
+NC,Sampson County,1,Ban / Moratorium,solar,2025,37163,county
+ND,Barnes County,6b,Setback Restriction,wind,2025,38003,county
+ND,Bowman County,6b,Setback Restriction,wind,2025,38011,county
+ND,Bowman County,10b,Setback Restriction,solar,2025,38011,county
+ND,Bowman County,1,Ban / Moratorium,wind,2025,38011,county
+ND,Bowman County,6b,Setback Restriction,wind,2025,38011,county
+ND,Dunn County,6b,Setback Restriction,wind,2025,38025,county
+ND,Dunn County,7,Noise Restriction,wind,2025,38025,county
+ND,Golden Valley County,6b,Setback Restriction,wind,2025,,county
+ND,Grand Forks County,2,Size Cap,wind,2021,38035,county
+ND,Grand Forks County,6b,Setback Restriction,wind,2021,38035,county
+ND,Grand Forks County,9,Height Restriction,wind,2021,38035,county
+ND,McLean County,1,Ban / Moratorium,wind,2021,38055,county
+ND,McLean County,1,Ban / Moratorium,transmission,2021,38055,county
+ND,Mercer County,1,Ban / Moratorium,wind,2021,38057,county
+ND,Towner County,2,Capacity Cap,wind,2021,,county
+ND,Towner County,9,Height Restriction,wind,2021,,county
+OH,Ohio House Bill 483 of 2014,6a,Setback Restriction,wind,2023,,state
+OH,Ohio Senate Bill 52 of 2021,1,Ban/Moratorium,wind,2022,,state
+OH,Ohio Senate Bill 52 of 2021,1,Ban/Moratorium,solar,2022,,state
+OH,Adams County,1,Ban / Moratorium,solar,2024,39001,county
+OH,Allen County,1,Ban / Moratorium,wind,2022,39003,county
+OH,Allen County,1,Ban / Moratorium,solar,2022,39003,county
+OH,Auglaize County,1,Ban / Moratorium,wind,2022,39011,county
+OH,Auglaize County,1,Ban / Moratorium,solar,2022,39011,county
+OH,Brown County,1,Ban / Moratorium,wind,2023,39015,county
+OH,Brown County,1,Ban / Moratorium,solar,2023,39015,county
+OH,Butler County,1,Ban / Moratorium,wind,2022,39017,county
+OH,Butler County,1,Ban / Moratorium,solar,2022,39017,county
+OH,Clark County,1,Ban / Moratorium,wind,2025,39023,county
+OH,Clark County,1,Ban / Moratorium,solar,2025,39023,county
+OH,Clermont County,1,Ban / Moratorium,wind,2023,39025,county
+OH,Clermont County,1,Ban / Moratorium,solar,2023,39025,county
+OH,Clinton County,1,Ban / Moratorium,wind,2021,39027,county
+OH,Clinton County,1,Ban / Moratorium,solar,2021,39027,county
+OH,Columbiana County,1,Ban / Moratorium,wind,2022,39029,county
+OH,Columbiana County,1,Ban / Moratorium,solar,2022,39029,county
+OH,Crawford County,1,Ban / Moratorium,wind,2022,39033,county
+OH,Crawford County,1,Ban / Moratorium,solar,2022,39033,county
+OH,Erie County,1,Ban / Moratorium,wind,2021,39043,county
+OH,Erie County,1,Ban / Moratorium,solar,2021,39043,county
+OH,Fairfield County,1,Ban / Moratorium,solar,2024,39045,county
+OH,Fayette County,1,Ban / Moratorium,wind,2023,39047,county
+OH,Fayette County,1,Ban / Moratorium,solar,2023,39047,county
+OH,Greene County,1,Ban / Moratorium,wind,2021,39057,county
+OH,Greene County,1,Ban / Moratorium,solar,2021,39057,county
+OH,Hancock County,1,Ban / Moratorium,wind,2022,39063,county
+OH,Hancock County,1,Ban / Moratorium,solar,2022,39063,county
+OH,Henry County,1,Ban / Moratorium,wind,2021,39069,county
+OH,Henry County,1,Ban / Moratorium,solar,2021,39069,county
+OH,Knox County,1,Ban / Moratorium,wind,2022,39083,county
+OH,Licking County,1,Ban / Moratorium,wind,2024,39089,county
+OH,Licking County,1,Ban / Moratorium,solar,2024,39089,county
+OH,Logan County,1,Ban / Moratorium,wind,2022,39091,county
+OH,Logan County,1,Ban / Moratorium,solar,2022,39091,county
+OH,Madison County,1,Ban / Moratorium,wind,2022,39097,county
+OH,Madison County,1,Ban / Moratorium,solar,2022,39097,county
+OH,Mahoning County,1,Ban / Moratorium,wind,2023,39099,county
+OH,Mahoning County,1,Ban / Moratorium,solar,2023,39099,county
+OH,Marion County,1,Ban / Moratorium,wind,2022,39101,county
+OH,Marion County,1,Ban / Moratorium,solar,2022,39101,county
+OH,Medina County,1,Ban / Moratorium,wind,2022,39103,county
+OH,Medina County,1,Ban / Moratorium,solar,2022,39103,county
+OH,Ottawa County,1,Ban / Moratorium,wind,2022,39123,county
+OH,Ottawa County,1,Ban / Moratorium,solar,2022,39123,county
+OH,Portage County,1,Ban / Moratorium,wind,2023,,county
+OH,Portage County,1,Ban / Moratorium,solar,2023,,county
+OH,Putnam County,1,Ban / Moratorium,wind,2023,39137,county
+OH,Putnam County,1,Ban / Moratorium,solar,2023,39137,county
+OH,Richland County,1,Ban / Moratorium,wind,2022,39139,county
+OH,Richland County,1,Ban / Moratorium,solar,2022,39139,county
+OH,Seneca County,1,Ban / Moratorium,wind,2021,39147,county
+OH,Seneca County,1,Ban / Moratorium,solar,2021,39147,county
+OH,Union County,1,Ban / Moratorium,solar,2021,39159,county
+OH,Wayne County,1,Ban / Moratorium,solar,2022,39169,county
+OH,Wyandot County,1,Ban / Moratorium,wind,2025,39175,county
+OH,Wyandot County,1,Ban / Moratorium,solar,2025,39175,county
+OK,Oklahoma House Bill 2118 of 2019,6b,Setback Restriction,wind,2025,,state
+OK,Oklahoma House Bill 2118 of 2019,6b,Setback Restriction,wind,2025,,state
+OK,Oklahoma House Bill 2118 of 2019,9,Height Restriction,wind,2025,,state
+OK,Oklahoma House Bill 2118 of 2019,9,Height Restriction,wind,2025,,state
+OK,Oklahoma House Bill 2118 of 2019,2,Density Cap,wind,2025,,state
+OK,Oklahoma House Bill 2118 of 2019,9,Height Restriction,wind,2025,,state
+OR,Oregon Department of Land Conservation and Development solar Siting Rules,1,Ban/Moratorium,solar,2025,,municipal
+OR,Curry County,2,Size Cap,solar,2025,41015,county
+OR,Polk County,2,Size Cap,solar,2025,41053,county
+OR,Umatilla County,6b,Setback Restriction,wind,2022,41059,county
+OR,Wallowa County,1,Ban / Moratorium,wind,2025,41063,county
+OR,Wallowa County,2,Size Cap,solar,2025,41063,county
+PA,Pennsylvania Game Commission Moratorium,1,Ban/Moratorium,wind,2023,,municipal
+PA,Pennsylvania Game Commission Moratorium,2,Size Cap,solar,2023,,municipal
+PA,Pennsylvania Game Commission Moratorium,3,Use Restriction,solar,2023,,municipal
+PA,Pennsylvania Game Commission Moratorium,1,Ban / Moratorium,wind,2023,,municipal
+PA,Pennsylvania Game Commission Moratorium,2,Capacity and Size Cap,wind,2023,,municipal
+PA,Pennsylvania Game Commission Moratorium,3,Use Restriction,wind,2023,,municipal
+PA,Pennsylvania Game Commission Moratorium,2,Density Cap,solar,2023,,municipal
+PA,Pennsylvania Game Commission Moratorium,2,Density Cap,wind,2023,,municipal
+PA,Pennsylvania Game Commission Moratorium,7,Noise Restriction,wind,2023,,municipal
+PA,Pennsylvania Game Commission Moratorium,9,Height Restriction,wind,2023,,municipal
+PA,Pennsylvania Game Commission Moratorium,6b,Setback Restriction,wind,2023,,municipal
+PA,Pennsylvania Game Commission Moratorium,1,Ban / Moratorium,solar,2023,,municipal
+PA,Pennsylvania Game Commission Moratorium,1,Ban / Moratorium,wind,2023,,municipal
+PA,Pennsylvania Game Commission Moratorium,9,Height Restriction,wind,2023,,municipal
+PA,Pennsylvania Game Commission Moratorium,1,Ban / Moratorium,solar,2023,,municipal
+PA,Pennsylvania Game Commission Moratorium,2,Density Cap,wind,2023,,municipal
+PA,Pennsylvania Game Commission Moratorium,9,Height Restriction,wind,2023,,municipal
+PA,Pennsylvania Game Commission Moratorium,2,Density Cap,wind,2023,,municipal
+PA,Pennsylvania Game Commission Moratorium,3,Use Restriction,wind,2023,,municipal
+PA,Pennsylvania Game Commission Moratorium,9,Height Restriction,wind,2023,,municipal
+PA,Pennsylvania Game Commission Moratorium,7,Noise Restriction,wind,2023,,municipal
+PA,Pennsylvania Game Commission Moratorium,9,Height Restriction,wind,2023,,municipal
+PA,Pennsylvania Game Commission Moratorium,2,Size Cap,solar,2023,,municipal
+PA,Pennsylvania Game Commission Moratorium,2,Size Cap,solar,2023,,municipal
+PA,Pennsylvania Game Commission Moratorium,1,Ban / Moratorium,wind,2023,,municipal
+PA,Pennsylvania Game Commission Moratorium,1,Ban / Moratorium,wind,2023,,municipal
+PA,Pennsylvania Game Commission Moratorium,1,Ban / Moratorium,wind,2023,,municipal
+PA,Pennsylvania Game Commission Moratorium,1,Ban / Moratorium,solar,2023,,municipal
+PA,Pennsylvania Game Commission Moratorium,2,Size Cap,solar,2023,,municipal
+PA,Pennsylvania Game Commission Moratorium,9,Height Restriction,wind,2023,,municipal
+PA,Pennsylvania Game Commission Moratorium,1,Ban / Moratorium,solar,2023,,municipal
+PA,Pennsylvania Game Commission Moratorium,9,Height Restriction,wind,2023,,municipal
+PA,Pennsylvania Game Commission Moratorium,6b,Setback Restriction,wind,2023,,municipal
+PA,Pennsylvania Game Commission Moratorium,8,Shadow Flicker Restriction,wind,2023,,municipal
+PA,Pennsylvania Game Commission Moratorium,1,Ban / Moratorium,solar,2023,,municipal
+PA,Pennsylvania Game Commission Moratorium,2,Size Cap,solar,2023,,municipal
+PA,Pennsylvania Game Commission Moratorium,2,Density Cap,wind,2023,,municipal
+PA,Pennsylvania Game Commission Moratorium,7,Noise Restriction,wind,2023,,municipal
+PA,Pennsylvania Game Commission Moratorium,9,Height Restriction,wind,2023,,municipal
+PA,Pennsylvania Game Commission Moratorium,1,Ban / Moratorium,solar,2023,,municipal
+PA,Pennsylvania Game Commission Moratorium,1,Ban / Moratorium,wind,2023,,municipal
+PA,Pennsylvania Game Commission Moratorium,9,Height Restriction,wind,2023,,municipal
+PA,Pennsylvania Game Commission Moratorium,6b,Setback Restriction,wind,2023,,municipal
+PA,Pennsylvania Game Commission Moratorium,8,Shadow Flicker Restriction,wind,2023,,municipal
+PA,Pennsylvania Game Commission Moratorium,9,Height Restriction,wind,2023,,municipal
+PA,Pennsylvania Game Commission Moratorium,1,Ban / Moratorium,solar,2023,,municipal
+PA,Pennsylvania Game Commission Moratorium,1,Ban / Moratorium,wind,2023,,municipal
+PA,Pennsylvania Game Commission Moratorium,6b,Setback Restriction,wind,2023,,municipal
+PA,Pennsylvania Game Commission Moratorium,6b,Setback Restriction,wind,2023,,municipal
+PA,Pennsylvania Game Commission Moratorium,1,Ban / Moratorium,solar,2023,,municipal
+PA,Pennsylvania Game Commission Moratorium,2,Size Cap,solar,2023,,municipal
+PA,Pennsylvania Game Commission Moratorium,1,Ban / Moratorium,wind,2023,,municipal
+PA,Pennsylvania Game Commission Moratorium,6b,Setback Restriction,wind,2023,,municipal
+PA,Pennsylvania Game Commission Moratorium,8,Shadow Flicker Restriction,wind,2023,,municipal
+PA,Pennsylvania Game Commission Moratorium,9,Height Restriction,wind,2023,,municipal
+PA,Pennsylvania Game Commission Moratorium,6b,Setback Restriction,wind,2023,,municipal
+PA,Pennsylvania Game Commission Moratorium,1,Ban / Moratorium,wind,2023,,municipal
+PA,Pennsylvania Game Commission Moratorium,6b,Setback Restriction,wind,2023,,municipal
+PA,Pennsylvania Game Commission Moratorium,1,Ban / Moratorium,solar,2023,,municipal
+PA,Pennsylvania Game Commission Moratorium,10a,Setback Restriction,solar,2023,,municipal
+PA,Pennsylvania Game Commission Moratorium,1,Ban / Moratorium,solar,2023,,municipal
+PA,Pennsylvania Game Commission Moratorium,1,Ban / Moratorium,wind,2023,,municipal
+PA,Pennsylvania Game Commission Moratorium,2,Size Cap,solar,2023,,municipal
+PA,Pennsylvania Game Commission Moratorium,9,Height Restriction,wind,2023,,municipal
+PA,Pennsylvania Game Commission Moratorium,2,Size Cap,solar,2023,,municipal
+PA,Pennsylvania Game Commission Moratorium,1,Ban / Moratorium,wind,2023,,municipal
+PA,Pennsylvania Game Commission Moratorium,8,Shadow Flicker Restriction,wind,2023,,municipal
+PA,Pennsylvania Game Commission Moratorium,7,Noise Restriction,wind,2023,,municipal
+PA,Pennsylvania Game Commission Moratorium,9,Height Restriction,wind,2023,,municipal
+PA,Pennsylvania Game Commission Moratorium,1,Ban / Moratorium,solar,2023,,municipal
+PA,Pennsylvania Game Commission Moratorium,6b,Setback Restriction,wind,2023,,municipal
+PA,Pennsylvania Game Commission Moratorium,9,Height Restriction,wind,2023,,municipal
+PA,Pennsylvania Game Commission Moratorium,2,Size Cap,solar,2023,,municipal
+PA,Pennsylvania Game Commission Moratorium,2,Density Cap,wind,2023,,municipal
+PA,Pennsylvania Game Commission Moratorium,7,Noise Restriction,wind,2023,,municipal
+PA,Pennsylvania Game Commission Moratorium,9,Height Restriction,wind,2023,,municipal
+PA,Pennsylvania Game Commission Moratorium,1,Ban / Moratorium,solar,2023,,municipal
+PA,Pennsylvania Game Commission Moratorium,9,Height Restriction,wind,2023,,municipal
+PA,Pennsylvania Game Commission Moratorium,1,Ban / Moratorium,solar,2023,,municipal
+PA,Pennsylvania Game Commission Moratorium,1,Ban / Moratorium,storage,2023,,municipal
+PA,Pennsylvania Game Commission Moratorium,10b,Setback Restriction,solar,2023,,municipal
+PA,Pennsylvania Game Commission Moratorium,1,Ban / Moratorium,wind,2023,,municipal
+PA,Pennsylvania Game Commission Moratorium,1,Ban / Moratorium,wind,2023,,municipal
+PA,Pennsylvania Game Commission Moratorium,9,Height Restriction,wind,2023,,municipal
+PA,Pennsylvania Game Commission Moratorium,1,Ban / Moratorium,wind,2023,,municipal
+PA,Pennsylvania Game Commission Moratorium,2,Density Cap,wind,2023,,municipal
+PA,Pennsylvania Game Commission Moratorium,9,Height Restriction,wind,2023,,municipal
+PA,Pennsylvania Game Commission Moratorium,1,Ban / Moratorium,wind,2023,,municipal
+PA,Pennsylvania Game Commission Moratorium,8,Shadow Flicker Restriction,wind,2023,,municipal
+PA,Pennsylvania Game Commission Moratorium,1,Ban / Moratorium,wind,2023,,municipal
+PA,Pennsylvania Game Commission Moratorium,9,Height Restriction,wind,2023,,municipal
+PA,Pennsylvania Game Commission Moratorium,9,Height Restriction,wind,2023,,municipal
+PA,Pennsylvania Game Commission Moratorium,1,Ban / Moratorium,wind,2023,,municipal
+PA,Pennsylvania Game Commission Moratorium,1,Ban / Moratorium,wind,2023,,municipal
+PA,Pennsylvania Game Commission Moratorium,6b,Setback Restriction,wind,2023,,municipal
+PA,Pennsylvania Game Commission Moratorium,1,Ban / Moratorium,wind,2023,,municipal
+PA,Pennsylvania Game Commission Moratorium,6a,Setback Restriction,wind,2023,,municipal
+PA,Pennsylvania Game Commission Moratorium,9,Height Restriction,wind,2023,,municipal
+PA,Pennsylvania Game Commission Moratorium,1,Ban / Moratorium,wind,2023,,municipal
+PA,Pennsylvania Game Commission Moratorium,9,Height Restriction,wind,2023,,municipal
+PA,Pennsylvania Game Commission Moratorium,1,Ban / Moratorium,solar,2023,,municipal
+PA,Pennsylvania Game Commission Moratorium,10b,Setback Restriction,solar,2023,,municipal
+PA,Pennsylvania Game Commission Moratorium,9,Height Restriction,wind,2023,,municipal
+PA,Pennsylvania Game Commission Moratorium,1,Ban / Moratorium,wind,2023,,municipal
+PA,Pennsylvania Game Commission Moratorium,8,Shadow Flicker Restriction,wind,2023,,municipal
+PA,Pennsylvania Game Commission Moratorium,9,Height Restriction,wind,2023,,municipal
+PA,Pennsylvania Game Commission Moratorium,6a,Setback Restriction,wind,2023,,municipal
+PA,Pennsylvania Game Commission Moratorium,1,Ban / Moratorium,wind,2023,,municipal
+PA,Pennsylvania Game Commission Moratorium,9,Height Restriction,wind,2023,,municipal
+PA,Pennsylvania Game Commission Moratorium,1,Ban / Moratorium,solar,2023,,municipal
+PA,Pennsylvania Game Commission Moratorium,2,Size Cap,solar,2023,,municipal
+SC,Calhoun County,10a,Setback Restriction,solar,2023,45017,county
+SC,Darlington County,9,Height Restriction,wind,2025,45031,county
+SC,Edgefield County,2,Size Cap,solar,2025,45037,county
+SC,Edgefield County,10b,Setback Restriction,solar,2025,45037,county
+SC,Marlboro County,2,Size Cap,solar,2025,45069,county
+SC,Marlboro County,2,Size Cap,wind,2025,45069,county
+SD,Brookings County,10b,Setback Restriction,solar,2025,46011,county
+SD,Deuel County,6b,Setback Restriction,wind,2025,46039,county
+SD,Edmunds County,6b,Setback Restriction,wind,2025,46045,county
+SD,Hughes County,6a,Setback Restriction,wind,2021,46065,county
+SD,Hughes County,6a,Setback Restriction,wind,2021,46065,county
+SD,Miner County,10b,Setback Restriction,solar,2025,,county
+SD,Pennington County,1,Ban / Moratorium,solar,2024,46103,county
+SD,Pennington County,1,Ban / Moratorium,wind,2024,46103,county
+SD,Roberts County,10b,Setback Restriction,solar,2025,46109,county
+SD,Sully County,7,Noise Restriction,wind,2025,46119,county
+SD,Sully County,8,Shadow Flicker Restriction,wind,2025,46119,county
+TN,Tennessee House Bill 1021 of 2017,1,Ban/Moratorium,wind,2025,,state
+TN,Tennessee House Bill 1731 of 2018,6a,Setback Restriction,wind,2025,,state
+TN,Tennessee House Bill 1731 of 2018,7,Noise Restriction,wind,2025,,state
+TN,Dyer County,6b,Setback Restriction,wind,2025,47045,county
+TN,Franklin County,1,Ban / Moratorium,solar,2023,47051,county
+TN,Franklin County,1,Ban / Moratorium,wind,2023,47051,county
+TN,Greene County,1,Ban / Moratorium,solar,2023,47059,county
+TN,Haywood County,10b,Setback Restriction,solar,2025,47075,county
+TN,Robertson County,9,Height Restriction,wind,2025,47147,county
+TN,Shelby County,1,Ban / Moratorium,solar,2024,47157,county
+UT,Beaver County,6b,Setback Restriction,wind,2025,49001,county
+UT,Duchesne County,8,Shadow Flicker Restriction,wind,2025,49013,county
+UT,Kane County,10b,Setback Restriction,solar,2022,49025,county
+UT,Utah County,1,Ban / Moratorium,wind,2021,49049,county
+UT,Utah County,9,Height Restriction,wind,2021,49049,county
+UT,Weber County,1,Ban / Moratorium,wind,2025,49057,county
+UT,Weber County,9,Height Restriction,wind,2025,49057,county
+VA,Accomack County,1,Ban / Moratorium,wind,2023,51001,county
+VA,Amelia County,2,Size Cap,solar,2025,51007,county
+VA,Amherst County,1,Ban / Moratorium,solar,2023,51009,county
+VA,Amherst County,2,Size Cap,solar,2023,51009,county
+VA,Augusta County,1,Ban / Moratorium,solar,2023,51015,county
+VA,Brunswick County,2,Size Cap,solar,2023,51025,county
+VA,Buckingham County,2,Size Cap,solar,2023,51029,county
+VA,Caroline County,2,Capacity Cap,solar,2024,51033,county
+VA,Charlotte County,1,Ban / Moratorium,solar,2022,51037,county
+VA,City of Roanoke,1,Ban / Moratorium,wind,2025,,municipal
+VA,City of Roanoke,9,Height Restriction,wind,2025,,municipal
+VA,City of Suffolk,2,Size Cap,solar,2025,,municipal
+VA,Clarke County,1,Ban / Moratorium,solar,2024,51043,county
+VA,Culpeper County,2,Size Cap,solar,2022,51047,county
+VA,Fauquier County,2,Size Cap,solar,2023,51061,county
+VA,Franklin County,2,Size Cap,solar,2022,51067,county
+VA,Giles County,1,Ban / Moratorium,solar,2025,51071,county
+VA,Goochland County,2,Size Cap,solar,2025,51075,county
+VA,Grayson County,10a,Setback Restriction,solar,2024,51077,county
+VA,Greensville County,2,Size Cap,solar,2023,51081,county
+VA,Halifax County,10a,Setback Restriction,solar,2022,51083,county
+VA,Henrico County,1,Ban / Moratorium,wind,2025,51087,county
+VA,Henrico County,1,Ban / Moratorium,solar,2025,51087,county
+VA,Henrico County,2,Size Cap,solar,2025,51087,county
+VA,Henrico County,9,Height Restriction,wind,2025,51087,county
+VA,Henry County,2,Size Cap,solar,2022,51089,county
+VA,Isle of Wight County,2,Size Cap,solar,2022,51093,county
+VA,James City County,1,Ban / Moratorium,solar,2023,51095,county
+VA,King George County,2,Size Cap,solar,2025,51099,county
+VA,King William County,1,Ban / Moratorium,solar,2025,51101,county
+VA,King William County,1,Ban / Moratorium,storage,2025,51101,county
+VA,King William County,2,Size Cap,solar,2025,51101,county
+VA,Louisa County,2,Size Cap,solar,2023,51109,county
+VA,Lunenburg County,1,Ban / Moratorium,solar,2023,51111,county
+VA,Madison County,1,Ban / Moratorium,solar,2023,51113,county
+VA,Mecklenburg County,1,Ban / Moratorium,solar,2022,51117,county
+VA,Mecklenburg County,2,Size Cap,solar,2022,51117,county
+VA,Nottoway County,2,Capacity Cap,solar,2025,51135,county
+VA,Page County,2,Size Cap,solar,2022,51139,county
+VA,Page County,10a,Setback Restriction,solar,2022,51139,county
+VA,Pittsylvania County,1,Ban / Moratorium,solar,2022,51143,county
+VA,Pittsylvania County,2,Size Cap,solar,2022,51143,county
+VA,Prince George County,2,Size Cap,solar,2023,51149,county
+VA,Rockingham County,2,Size Cap,solar,2023,51165,county
+VA,Shenandoah County,2,Size Cap,solar,2022,51171,county
+VA,Smyth County,1,Ban / Moratorium,wind,2025,51173,county
+VA,Smyth County,9,Height Restriction,wind,2025,51173,county
+VA,Southampton County,2,Size Cap,solar,2023,51175,county
+VA,Southampton County,10a,Setback Restriction,solar,2023,51175,county
+VA,Stafford County,1,Ban / Moratorium,solar,2025,51179,county
+VA,Stafford County,2,Size Cap,solar,2025,51179,county
+VA,Stafford County,5,Viewshed Restriction,solar,2025,51179,county
+VA,Warren County,9,Height Restriction,wind,2022,51187,county
+WA,Grant County,1,Ban / Moratorium,wind,2021,53025,county
+WA,Grant County,1,Ban / Moratorium,solar,2021,53025,county
+WA,Kittitas County,1,Ban / Moratorium,solar,2021,53037,county
+WA,Klickitat County,6b,Setback Restriction,wind,2022,53039,county
+WA,Klickitat County,10b,Setback Restriction,solar,2022,53039,county
+WA,Okanogan County,6a,Setback Restriction,wind,2025,,county
+WA,Pacific County,1,Ban / Moratorium,wind,2022,53049,county
+WA,Pacific County,2,Density Cap,wind,2022,53049,county
+WA,Pacific County,9,Height Restriction,wind,2022,53049,county
+WA,Whitman County,6b,Setback Restriction,wind,2025,53075,county
+WA,Yakima County,1,Ban / Moratorium,solar,2022,53077,county
+WV,West Virginia Senate Bill 583 of 2020,2,Capacity Cap,solar,2025,,state
+WI,Kenosha County,1,Ban / Moratorium,solar,2025,55059,county
+WI,Kenosha County,2,Capacity Cap,solar,2025,55059,county
+WI,Sawyer County,1,Ban / Moratorium,wind,2025,55113,county
+WI,Sawyer County,1,Ban / Moratorium,solar,2025,55113,county
+WI,Sawyer County,1,Ban / Moratorium,storage,2025,55113,county
+WI,Sawyer County,9,Height Restriction,wind,2025,55113,county
+WI,Sawyer County,6a,Setback Restriction,wind,2025,55113,county
+WI,Sawyer County,7,Noise Restriction,wind,2025,55113,county
+WI,Sawyer County,6a,Setback Restriction,wind,2025,55113,county
+WI,Sawyer County,7,Noise Restriction,wind,2025,55113,county
+WI,Sawyer County,10a,Setback Restriction,solar,2025,55113,county
+WI,Sawyer County,6a,Setback Restriction,wind,2025,55113,county
+WI,Sawyer County,7,Noise Restriction,wind,2025,55113,county
+WI,Sawyer County,6a,Setback Restriction,wind,2025,55113,county
+WI,Sawyer County,7,Noise Restriction,wind,2025,55113,county
+WI,Sawyer County,6a,Setback Restriction,wind,2025,55113,county
+WI,Sawyer County,7,Noise Restriction,wind,2025,55113,county
+WI,Sawyer County,6a,Setback Restriction,wind,2025,55113,county
+WI,Sawyer County,7,Noise Restriction,wind,2025,55113,county
+WI,Sawyer County,6a,Setback Restriction,wind,2025,55113,county
+WI,Sawyer County,7,Noise Restriction,wind,2025,55113,county
+WI,Sawyer County,6a,Setback Restriction,wind,2025,55113,county
+WI,Sawyer County,7,Noise Restriction,wind,2025,55113,county
+WI,Sawyer County,6a,Setback Restriction,wind,2025,55113,county
+WI,Sawyer County,7,Noise Restriction,wind,2025,55113,county
+WI,Sawyer County,1,Ban / Moratorium,wind,2025,55113,county
+WI,Sawyer County,6a,Setback Restriction,wind,2025,55113,county
+WI,Sawyer County,7,Noise Restriction,wind,2025,55113,county
+WI,Sawyer County,6a,Setback Restriction,wind,2025,55113,county
+WI,Sawyer County,7,Noise Restriction,wind,2025,55113,county
+WI,Sawyer County,1,Ban / Moratorium,solar,2025,55113,county
+WI,Sawyer County,6b,Setback Restriction,wind,2025,55113,county
+WI,Sawyer County,1,Ban / Moratorium,solar,2025,55113,county
+WI,Trempealeau County,7,Noise Restriction,wind,2025,55121,county
+WY,Campbell County,6b,Setback Restriction,wind,2025,56005,county
+WY,Crook County,6b,Setback Restriction,wind,2022,,county
+WY,Crook County,7,Noise Restriction,wind,2022,,county
+WY,Sheridan County,1,Ban / Moratorium,solar,2025,,county
