@@ -158,14 +158,14 @@ The "ever built" column predates the data-quality fixes and the new features. Ev
 
 **Which model?** Gradient boosting wins on rolling CV, but **LASSO transfers best to the later cohorts**: 0.686 overall, and 0.668 and 0.737 in 2017 and 2018. That's Lecture 4's case for regularization under a shifting environment, and it is the closer stand-in for the 2019–2020 test. Recommendation: LASSO as the headline model, gradient boosting as the comparison.
 
-**Time-to-build curve, validated by deciding on 2013–2014 entries.** Each horizon trains only on cohorts whose window had closed by 2013.
+**Time-to-build curve, validated by deciding on 2013–2014 entries** (rerun Nov 24 with the current features and the leakage fix). Each horizon trains only on cohorts whose window had closed by 2013.
 
 | Horizon | Trained on | AUC | Predicted rate | Actual rate |
 |---|---|---|---|---|
-| 2 years | 2005–2011 (3,215) | 0.732 | 1.2% | 5.5% |
-| 3 years | 2005–2010 (2,626) | 0.655 | 3.5% | 11.5% |
-| 5 years | 2005–2008 (1,523) | 0.550 | 6.9% | 19.6% |
-| 7 years | 2005–2006 (539) | 0.531 | 18.8% | 22.7% |
+| 2 years | 2005–2011 (3,215) | 0.745 | 1.1% | 5.5% |
+| 3 years | 2005–2010 (2,626) | 0.629 | 3.7% | 11.5% |
+| 5 years | 2005–2008 (1,523) | 0.553 | 9.3% | 19.6% |
+| 7 years | 2005–2006 (539) | 0.517 | 19.2% | 22.7% |
 
 There are two lessons:
 - **Data runs short at long horizons.** The honest training window shrinks as the horizon grows. A discrete-time hazard model, which reuses partial histories, is the fix if there's time.

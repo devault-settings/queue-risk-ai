@@ -5,6 +5,19 @@
 
 ---
 
+## ▶ Update, Tue Nov 24 (TabPFN, costs, odd rows)
+
+- **TabPFN, first Colab run** (`notebooks/tabpfn_colab_ran_1.ipynb`, validation only). Same environment, rolling CV / out-of-time 2015–18:
+  - TabPFN **0.677** / 0.646
+  - Gradient boosting 0.666 / 0.651
+  - LASSO 0.635 / **0.682**
+  - Historical rate 0.620 / 0.593
+
+  TabPFN has the best rolling CV; LASSO still transfers best. The stacking half failed on a Colab install error (fixed in the notebook); rerun pending. On Colab, LASSO and gradient boosting differ slightly from the laptop numbers (library versions), so compare within one environment.
+- **Spend lost per withdrawn project** is now built from Sara's sources: **$2.40M / $4.95M / $8.65M** per 100 MW project (price of rights + spend toward the IA). It's an upper bound, and it replaces the $1M / $3M / $10M placeholder ([assumptions.md](assumptions.md)).
+- **Odd rows (Charles's question), sized:** in the modeling table through 2018 there are only **3** projects with 0 or missing capacity (all still active) and **12** solar/wind projects paired with gas (11 withdrawn). Dropping both changes nothing that matters: LASSO out-of-time AUC 0.686 → 0.686–0.687; top 20% still 123 built of about 697. They do occupy 4 of the top-20% slots, which is why one shows up in the demo. **Suggested rule:** exclude 0-capacity and fossil-paired rows as out of scope. It's a one-line change in `data.in_scope`, for the team to approve before the final test.
+- **Time-to-build table refreshed** (README) with the current features: 2-year AUC 0.745, falling to 0.517 at 7 years.
+
 ## ▶ Update, Tue Nov 24 (cost sourcing merged)
 
 - **Sara's `sara/cost-sourcing` branch is merged into `main`.**
