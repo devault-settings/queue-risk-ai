@@ -3,7 +3,7 @@
 **Which new clean-energy projects in the US interconnection queue will actually get built?**
 15.071 The AI Edge (MIT Sloan, Fall 2026), Project 1 · Audrey DeVault, Paul Bustarret, Charles Loriot, Sara Alafifi
 
-> DRAFT for team review (Nov 24). Replaces the long README once the final test is run; the current detail moves to `docs/`. Test-set numbers are **pending** and must be filled from the one-time `--final` run.
+> DRAFT for team review (Nov 24). Replaces the long README; the current detail moves to `docs/`. Test numbers are from the one-time run of Nov 24 ([log](../reports/final_run_log.md)).
 
 ## Problem and decision
 Only about 13% of capacity entering US interconnection queues gets built. On the day a solar, wind or storage project enters the queue, we estimate **P(operating within 5 years)**. An investor uses it to rank which early-stage projects to back. A developer uses the same model to screen where similar projects have done well.
@@ -20,20 +20,20 @@ Only about 13% of capacity entering US interconnection queues gets built. On the
 3. **Text, two stages:** fine-tuned DistilBERT reads each paragraph (did the contested project proceed?); a county's earlier opposition becomes a score; late fusion with the tabular log-odds.
 4. **Decision layer:** back the top K; cost per built MW vs. waiting for the interconnection agreement, swept across sourced cost ranges.
 
-## Results (validation; test pending)
+## Results
 | Model | Rolling CV AUC | Out-of-time AUC (2015–18) |
 |---|---|---|
 | Historical rate (region × technology) | 0.620 | 0.593 |
 | **LASSO** (headline: transfers best) | 0.631 | **0.686** |
 | Gradient boosting | 0.663 | 0.633 |
 | TabPFN (pre-trained transformer, Colab GPU)* | 0.677 | 0.646 |
-| *Test 2019–2020, selected models* | — | *pending* |
+| **Test 2019–2020 (one-time, frozen):** LASSO **0.613** [0.561, 0.666]; historical rate 0.587; gradient boosting 0.530; random forest 0.454 | | |
 
 \*TabPFN comes from a Colab run, whose library versions shift the other models slightly (LASSO 0.635 / 0.682, gradient boosting 0.666 / 0.651 there).
 
-- **Ranking value:** LASSO's top 20% of 2015–2018 entries were built **17.6%** of the time, against an 8.8% base rate, i.e. **about 2×**.
+- **Ranking value:** LASSO's top 20% were built **about 2×** as often as average on 2015–18 (17.6% vs. 8.8%), and **1.65×** on the 2019–20 test (6.1% vs. 3.7%). Its edge over the rule of thumb on the test is small (0.613 vs. 0.587), and the flexible models collapse under drift.
 - **Text reader:** fine-tuned DistilBERT, AUC **0.962** [0.92, 0.99] on 100 human-labeled paragraphs (TF-IDF 0.840, keyword rules 0.754).
-- **Opposition:** projects in a county with earlier contested projects have **about 0.63× the odds** of being built (5.2% vs. 9.2%, 2015–18). But the ranking gain on top of the tabular model is near zero (+0.001 pooled AUC; Paul's fusion reports +0.011 within-year; *to reconcile*), and automatic downgrades lower the top-25 shortlists (20 → 16 built). So opposition is a **due-diligence flag**, not a model input.
+- **Opposition:** on the test, adding the opposition flag lifted AUC from 0.613 to 0.623 (+0.010 [+0.001, +0.018]). In validation, projects in a county with earlier contested projects have **about 0.63× the odds** of being built (5.2% vs. 9.2%, 2015–18). But the ranking gain on top of the tabular model is near zero (+0.001 pooled AUC; Paul's fusion reports +0.011 within-year; *to reconcile*), and automatic downgrades lower the top-25 shortlists (20 → 16 built). So opposition is a **due-diligence flag**, not a model input.
 - **Back early vs. wait for the agreement:** the break-even hit rate is 18–43% (median 28%) across the sourced assumptions. Today's 2× lift makes early backing *competitive under some assumptions*, not reliably profitable.
 
 ## Reproduce

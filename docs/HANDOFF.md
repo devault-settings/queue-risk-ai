@@ -5,6 +5,19 @@
 
 ---
 
+## ▶ Update, Tue Nov 24 (evening): THE TEST HAS BEEN RUN
+
+- **Signed off by all four**, run from the frozen spec (odd rows excluded; TabPFN validation-only). Results committed unchanged in [reports/final_run_log.md](../reports/final_run_log.md); summary in [model_log.md](model_log.md).
+- **LASSO test AUC 0.613** [0.561, 0.666] vs. the rule of thumb's 0.587. The top 20% were built 1.65× as often as average. The flexible models collapsed (gradient boosting 0.530, random forest 0.454). Opposition adds +0.010 [+0.001, +0.018]. The 2-year time-to-build AUC is 0.777.
+- **Filled in:** the README test table, the one-page draft, the video script, and the deck notes (slides 5–6).
+- **Still to do:**
+  - Sara updates slides 4, 5, 6, 7 and 8 (see the deck notes).
+  - Decide the README swap and the Sabin-text question.
+  - Reconcile the opposition metric with Paul.
+  - Ask Paul what `queue_with_costs.csv` is.
+  - The demo's export checkpoints still expect 3,490 projects (now 3,484 with odd rows excluded). Rerun `demo/export_data.py` only if the demo needs regenerating, after updating its checkpoints.
+- **Do not re-run `--final`.** If a bug turns up, fix it and report both runs.
+
 ## ▶ Update, Tue Nov 24 (evening): test run frozen
 
 - **The final test now runs only from a frozen spec** ([frozen.py](../src/queue_risk/frozen.py)), with a checklist in [FINAL_RUN.md](FINAL_RUN.md). Model selection is environment-dependent (Colab picked LASSO C = 0.01, the laptop C = 0.1), so `--final` never re-selects anything.

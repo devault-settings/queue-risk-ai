@@ -6,6 +6,31 @@ All results are on the **5-year outcome** with **validation data only**, using t
 - **Rolling CV:** mean AUC over the yearly folds 2010–2014, fitting on earlier years each time.
 - **Out-of-time:** train on 2005–2014, score 2015–2018. This is the harder check, because the queue changed. Neither check touches the 2019–2020 test cohort.
 
+
+## Nov 24: THE ONE-TIME TEST RUN (2019–2020; signed off by all four)
+
+Run from commit `f726fcb` with the frozen spec ([frozen.py](../src/queue_risk/frozen.py)): odd rows excluded, TabPFN validation-only. The preflight passed, including LASSO reproducing 0.686 out of time. Raw output: [reports/final_run_log.md](../reports/final_run_log.md), committed unchanged. Test cohort: 3,181 projects, 118 built within 5 years (3.7%).
+
+| Model | Test AUC (2019–20) [95% CI] | Out-of-time AUC (2015–18) |
+|---|---|---|
+| **LASSO** (headline) | **0.613** [0.561, 0.666] | 0.686 |
+| Historical rate (rule of thumb) | 0.587 [0.539, 0.636] | 0.593 |
+| Logistic regression | 0.545 [0.496, 0.597] | 0.641 |
+| Gradient boosting | 0.530 [0.472, 0.588] | 0.633 |
+| Flat rate | 0.500 | 0.500 |
+| CART | 0.475 [0.431, 0.521] | 0.610 |
+| Random forest | 0.454 [0.400, 0.511] | 0.588 |
+
+- **LASSO remains the best model and beats chance**, but its edge over the rule of thumb is small (0.613 vs. 0.587, overlapping intervals). By year: 0.555 for 2019 and 0.658 for 2020.
+- **The flexible models collapse**: gradient boosting 0.530, CART 0.475, random forest 0.454. That's the drift pattern the 2017–18 validation hinted at, and it vindicates choosing LASSO on out-of-time performance.
+- **Shortlist value** (reporting, computed after the run from the same frozen LASSO, no changes):
+  - Top 20% (636 projects): 39 built (6.1%) vs. 23.6 expected at random, so **1.65×**, down from 2.0× on 2015–18.
+  - Top 50: 10% built.
+- **Calibration:** LASSO predicts 2.3× more builds than happened. Rankings transfer; probabilities need recalibrating on the latest closed cohort before anyone quotes them.
+- **Opposition (stack --final):** + opposition test AUC **0.623**, gain **+0.010 [+0.001, +0.018]**, positive in 99% of draws. That's stronger than validation suggested (+0.001 with corrected dates), but small and borderline.
+- **Time-to-build (timeline --final):** the 2-year AUC is **0.777**, 3-year **0.761**, 4-year 0.650, 5-year 0.559. Short horizons rank well, and their training windows reach closer to the test years. Probabilities run high (5-year: 6.1% predicted vs. 3.7% actual).
+- **Wasted-spend tables** from `pipeline --final` are too noisy to quote: about one build per 25 picks, and several are infinite (no builds in the shortlist).
+
 ## Nov 24 (evening): opposition second stage with Paul's corrected paragraph dates
 
 `stack.py` now dates paragraphs with `text.load_paragraphs()`. These are re-dated from the cleaned labeling text, without the footnote citations that had added later years. Same 2015–2018 validation design, laptop:

@@ -140,6 +140,24 @@ python -m queue_risk.pipeline --models "Gradient,TabPFN" --ablation   # with vs.
 | Training cohort (2005–2014 entries) | 4,029 projects, 11.1% built | 5,862 projects, 17.7% built |
 | Test cohort, not yet scored | 2019–2020: 3,184 projects, 3.7% built | 2015–2017: 3,557 projects, 19.7% built |
 
+**Test results (one-time run, Nov 24, signed off by all four; [log](reports/final_run_log.md)):** the 2019–2020 cohort, 3,181 projects, 3.7% built within 5 years.
+
+| Model | Test AUC (2019–20) [95% CI] | Out-of-time AUC (2015–18) |
+|---|---|---|
+| **LASSO** (headline) | **0.613** [0.561, 0.666] | 0.686 |
+| Historical rate (rule of thumb) | 0.587 [0.539, 0.636] | 0.593 |
+| Logistic regression | 0.545 [0.496, 0.597] | 0.641 |
+| Gradient boosting | 0.530 [0.472, 0.588] | 0.633 |
+| Flat rate | 0.500 | 0.500 |
+| CART | 0.475 [0.431, 0.521] | 0.610 |
+| Random forest | 0.454 [0.400, 0.511] | 0.588 |
+
+- **LASSO's top 20% were built 1.65× as often as average** (6.1% vs. 3.7%), down from 2× on 2015–18.
+- **Its edge over the rule of thumb is small** (intervals overlap), and the flexible models collapse under drift.
+- **Opposition as a second stage:** test AUC 0.613 → 0.623 (+0.010 [+0.001, +0.018]).
+- **Time to build:** 2-year AUC 0.777, 3-year 0.761.
+- **Probabilities run about 2× high,** so recalibrate before quoting them.
+
 **Validation results (Nov 15, after the blank-field leakage fix):** 25 features, including the point-of-interconnection track record and voltage; no missing-value flags. Two numbers per model, both for the *same* selected configuration:
 - **Rolling CV:** fit on earlier years, validate on each of 2010–2014.
 - **Out-of-time:** fit on 2005–2014, score 2015–2018. These cohorts sit between training and test, so this check is the closest to how the model would be used.
