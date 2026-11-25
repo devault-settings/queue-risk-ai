@@ -12,7 +12,7 @@ Change anything here only by team decision, before the final run, and say so in 
 """
 FROZEN = {
     "frozen_on": "2026-11-24",
-    "status": "DRAFT: team sign-off pending",
+    "status": "SIGNED OFF Nov 24, 2026: Audrey DeVault, Paul Bustarret, Charles Loriot, Sara Alafifi",
 
     # ---- task and data
     "outcome": "within",
@@ -22,11 +22,14 @@ FROZEN = {
     "out_of_time": (2015, 2018),
     "test": (2019, 2020),
 
-    # TEAM DECISION PENDING (Charles's Nov 20 question): drop projects with 0 or missing
+    # TEAM DECISION (Charles's Nov 20 question): drop projects with 0 or missing
     # capacity and solar/wind projects paired with fossil units (e.g. "Wind+Gas") as out of
     # scope? Effect on validation is nil (LASSO out-of-time 0.686 either way).
-    # Set True or False; preflight() refuses to run while it is None.
-    "exclude_odd_rows": None,
+    # Team decision, Nov 24: EXCLUDE them (out of scope).
+    "exclude_odd_rows": True,
+    # Team decision, Nov 24: TabPFN is reported on validation only; the test covers the
+    # models that run on the laptop (it is skipped there for lack of a GPU).
+    "tabpfn_in_test": False,
 
     # ---- features
     "feature_extras": ("poi",),

@@ -6,6 +6,48 @@ All results are on the **5-year outcome** with **validation data only**, using t
 - **Rolling CV:** mean AUC over the yearly folds 2010–2014, fitting on earlier years each time.
 - **Out-of-time:** train on 2005–2014, score 2015–2018. This is the harder check, because the queue changed. Neither check touches the 2019–2020 test cohort.
 
+
+
+## Nov 24 (night): post-hoc TabPFN test, and a scikit-learn trap on Colab
+
+**Post-hoc, not part of the sign-off** ([run](../notebooks/tabpfn_posthoc_test_ran.ipynb), [log](../reports/posthoc_log.md)). TabPFN at its frozen settings, fit on 2005–2014 and scored on the 2019–2020 test:
+
+| Model | Test AUC [95% CI] | Top 20% built (× average) | Where |
+|---|---|---|---|
+| **LASSO** (real L1) | **0.613** [0.561, 0.666] | 6.1% (1.65×) | laptop, signed-off run |
+| L2 logistic (Colab's "LASSO", see below) | 0.566 [0.516, 0.621] | 5.8% (1.57×) | Colab |
+| Gradient boosting | 0.531 [0.473, 0.587] | 5.2% (1.40×) | Colab (laptop, signed-off: 0.530) |
+| TabPFN | 0.530 [0.471, 0.589] | 4.7% (1.27×) | Colab |
+
+- **LASSO was the right headline.** TabPFN ties gradient boosting at about 0.53 on the test: the pre-trained transformer doesn't survive the drift any better than the trees. That confirms the out-of-time choice (and Lecture 8's point, for tabular data).
+- **The trap:** on scikit-learn before 1.8, `LogisticRegression(l1_ratio=1.0)` silently fits **L2**, because `l1_ratio` is only read with `penalty="elasticnet"`. Colab's version did this, so **every "LASSO" number from Colab was an L2 model**: here, and in TabPFN runs 1 and 2 (Nov 24 entry below; that's also why Colab "selected" C = 0.01). Refitting L2 on the laptop reproduces Colab's 0.669 / 0.566 exactly.
+- **Fixed:** `models.L1_PENALTY` spells the L1 penalty for the installed version, and notebook 01 uses it too. The selftest fails if the "LASSO" isn't really L1.
+- **The signed-off test is unaffected:** it ran on the laptop (1.9.1), and the preflight's 0.686 check would have refused a Colab run (0.669).
+
+## Nov 24: THE ONE-TIME TEST RUN (2019–2020; signed off by all four)
+
+Run from commit `f726fcb` with the frozen spec ([frozen.py](../src/queue_risk/frozen.py)): odd rows excluded, TabPFN validation-only. The preflight passed, including LASSO reproducing 0.686 out of time. Raw output: [reports/final_run_log.md](../reports/final_run_log.md), committed unchanged. Test cohort: 3,181 projects, 118 built within 5 years (3.7%).
+
+| Model | Test AUC (2019–20) [95% CI] | Out-of-time AUC (2015–18) |
+|---|---|---|
+| **LASSO** (headline) | **0.613** [0.561, 0.666] | 0.686 |
+| Historical rate (rule of thumb) | 0.587 [0.539, 0.636] | 0.593 |
+| Logistic regression | 0.545 [0.496, 0.597] | 0.641 |
+| Gradient boosting | 0.530 [0.472, 0.588] | 0.633 |
+| Flat rate | 0.500 | 0.500 |
+| CART | 0.475 [0.431, 0.521] | 0.610 |
+| Random forest | 0.454 [0.400, 0.511] | 0.588 |
+
+- **LASSO remains the best model and beats chance**, but its edge over the rule of thumb is small (0.613 vs. 0.587, overlapping intervals). By year: 0.555 for 2019 and 0.658 for 2020.
+- **The flexible models collapse**: gradient boosting 0.530, CART 0.475, random forest 0.454. That's the drift pattern the 2017–18 validation hinted at, and it vindicates choosing LASSO on out-of-time performance.
+- **Shortlist value** (reporting, computed after the run from the same frozen LASSO, no changes):
+  - Top 20% (636 projects): 39 built (6.1%) vs. 23.6 expected at random, so **1.65×**, down from 2.0× on 2015–18.
+  - Top 50: 10% built.
+- **Calibration:** LASSO predicts 2.3× more builds than happened. Rankings transfer; probabilities need recalibrating on the latest closed cohort before anyone quotes them.
+- **Opposition (stack --final):** + opposition test AUC **0.623**, gain **+0.010 [+0.001, +0.018]**, positive in 99% of draws. That's stronger than validation suggested (+0.001 with corrected dates), but small and borderline.
+- **Time-to-build (timeline --final):** the 2-year AUC is **0.777**, 3-year **0.761**, 4-year 0.650, 5-year 0.559. Short horizons rank well, and their training windows reach closer to the test years. Probabilities run high (5-year: 6.1% predicted vs. 3.7% actual).
+- **Wasted-spend tables** from `pipeline --final` are too noisy to quote: about one build per 25 picks, and several are infinite (no builds in the shortlist).
+
 ## Nov 24 (evening): opposition second stage with Paul's corrected paragraph dates
 
 `stack.py` now dates paragraphs with `text.load_paragraphs()`. These are re-dated from the cleaned labeling text, without the footnote citations that had added later years. Same 2015–2018 validation design, laptop:
@@ -21,7 +63,7 @@ All results are on the **5-year outcome** with **validation data only**, using t
 
 ## Nov 24: TabPFN (Colab T4; [run 1](../notebooks/tabpfn_colab_ran_1.ipynb), [run 2](../notebooks/tabpfn_colab_ran_2.ipynb))
 
-TabPFN 3.5 (pre-trained tabular transformer), imputed before it sees the data, so no blank-field leak. Validation only. **All rows come from the same Colab environment.** Its library versions shift LASSO and gradient boosting slightly from the laptop numbers, and LASSO's selected C there was 0.01, not 0.1.
+TabPFN 3.5 (pre-trained tabular transformer), imputed before it sees the data, so no blank-field leak. Validation only. **All rows come from the same Colab environment.** ⚠ *Correction (Nov 24, night): the "LASSO" rows below were fit as L2 on Colab's older scikit-learn; see the post-hoc entry above. The real LASSO is 0.631 / 0.686 (laptop).* Its library versions shift LASSO and gradient boosting slightly from the laptop numbers, and LASSO's selected C there was 0.01, not 0.1.
 
 | Model | Rolling CV | Out-of-time 2015–18 | 2015 / 2016 / 2017 / 2018 (stage 1 alone) |
 |---|---|---|---|

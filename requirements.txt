@@ -2,7 +2,7 @@
 pandas>=2.2
 numpy>=1.26
 openpyxl>=3.1
-scikit-learn>=1.5
+scikit-learn>=1.8   # older versions also work (models.L1_PENALTY), but results were produced on 1.9.1
 # optional: lightgbm, xgboost (the pipeline uses scikit-learn's HistGradientBoosting)
 shap>=0.45
 

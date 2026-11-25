@@ -111,8 +111,13 @@ def main():
                 out[name] = m.predict_proba(test[cols])[:, 1]
             yy = test["y"].to_numpy()
             g = bootstrap_gain(yy, out["tabular only"], out["+ opposition"])
-            print({k: round(roc_auc_score(yy, v), 3) for k, v in out.items()},
-                  f"gain {g[0]:+.3f} [{g[1]:+.3f}, {g[2]:+.3f}]")
+            aucs = {k: round(roc_auc_score(yy, v), 3) for k, v in out.items()}
+            print(aucs, f"gain {g[0]:+.3f} [{g[1]:+.3f}, {g[2]:+.3f}]")
+            from .final import log_run
+            log_run("stack --final", args.signoff, [
+                f"first stage: {STAGE1[s1]} (frozen); second stage fit on {STAGE2_YEARS[0]}-{STAGE2_YEARS[1]}",
+                f"test {len(test):,} projects: tabular only AUC {aucs['tabular only']}, + opposition AUC {aucs['+ opposition']}",
+                f"AUC gain from opposition {g[0]:+.3f}, 95% CI [{g[1]:+.3f}, {g[2]:+.3f}], positive in {g[3]:.0%} of draws"])
 
 
 if __name__ == "__main__":

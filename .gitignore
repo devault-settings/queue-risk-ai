@@ -22,6 +22,9 @@ models/*
 !data/external/sabin/
 !data/interim/sabin_*.csv
 !data/processed/text_scores.csv
+# Paul's queue + interconnection-cost join (reference only; not used by src/)
+!data/external/queue_with_costs.csv
+!data/external/README.md
 
 # Fine-tuned transformer checkpoints and caches
 *.pt

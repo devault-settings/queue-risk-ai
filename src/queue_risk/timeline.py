@@ -83,6 +83,12 @@ def main():
     with pd.option_context("display.width", 200, "display.precision", 3):
         print(scores.to_string(index=False))
         print("\nAverage predicted curve:", curves.mean().round(3).to_dict())
+    if args.final:
+        from .final import log_run
+        log_run("timeline --final", args.signoff,
+                [f"decision cohort {years[0]}-{years[1]}: {len(curves):,} projects"]
+                + [", ".join(f"{k} {v:.3f}" if isinstance(v, float) else f"{k} {v}" for k, v in r.items())
+                   for r in scores.to_dict("records")])
 
 
 if __name__ == "__main__":

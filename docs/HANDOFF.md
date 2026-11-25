@@ -1,9 +1,30 @@
 # Handoff: Queue Risk AI (15.071 Project 1)
 
+> The team's working log, kept as written for transparency (newest updates first). For the project itself, start with the [README](../README.md).
+
 *As of Thu Nov 12, 2026 (evening). Due **Fri Nov 20**; Mon Nov 16 is a holiday.*
-*Repo:* https://github.com/devault-settings/queue-risk-ai (private). Start with the [README](../README.md); this file is the short version plus the to-do list.
+*Repo:* https://github.com/devault-settings/queue-risk-ai. Start with the [README](../README.md); this file is the short version plus the to-do list.
 
 ---
+
+## ▶ Update, Tue Nov 24 (night): post-hoc TabPFN; Colab LASSO trap fixed
+
+- **Post-hoc TabPFN test** (not part of the sign-off): AUC **0.530** on 2019–20, against the LASSO's 0.613. LASSO was the right headline ([posthoc_log.md](../reports/posthoc_log.md)).
+- **Trap found and fixed:** scikit-learn before 1.8 ignores `l1_ratio=1.0`, so on Colab the "LASSO" was secretly an L2 model (0.566 test, 0.669 out of time). Every Colab "LASSO" number was L2. `models.L1_PENALTY` now works on any version, and the selftest checks for it. Notebook 01 uses the fix too. **Charles: pull before pushing** (notebook 01 and `demo/export_data.py` changed).
+
+## ▶ Update, Tue Nov 24 (evening): THE TEST HAS BEEN RUN
+
+- **Signed off by all four**, run from the frozen spec (odd rows excluded; TabPFN validation-only). Results committed unchanged in [reports/final_run_log.md](../reports/final_run_log.md); summary in [model_log.md](model_log.md).
+- **LASSO test AUC 0.613** [0.561, 0.666] vs. the rule of thumb's 0.587. The top 20% were built 1.65× as often as average. The flexible models collapsed (gradient boosting 0.530, random forest 0.454). Opposition adds +0.010 [+0.001, +0.018]. The 2-year time-to-build AUC is 0.777.
+- **Filled in:** the README test table, the one-page draft, the video script, and the deck notes (slides 5–6).
+- **Still to do:**
+  - Sara updates slides 4, 5, 6, 7 and 8 (see the deck notes).
+  - Decide the README swap. (Sabin text in the repo: **decided Nov 24, keep it**; the reports are open access. Cite them, and swap copies for links if republication is ever questioned.)
+  - Reconcile the opposition metric with Paul.
+  - ~~Ask Paul what `queue_with_costs.csv` is.~~ Moved to `data/external/` with a note (Nov 25); not used by any model.
+  - **Post-hoc TabPFN test** (not part of the sign-off): `notebooks/tabpfn_posthoc_test.ipynb`, logged to `reports/posthoc_log.md`.
+  - The demo's export checkpoints still expect 3,490 projects (now 3,484 with odd rows excluded). Rerun `demo/export_data.py` only if the demo needs regenerating, after updating its checkpoints.
+- **Do not re-run `--final`.** If a bug turns up, fix it and report both runs.
 
 ## ▶ Update, Tue Nov 24 (evening): test run frozen
 
@@ -71,7 +92,7 @@
 - The 2019–2020 test cohort has **not** been scored.
 
 **First things tomorrow:**
-1. **TabPFN in Colab.** The reminder set in the Claude session (9:47am) only fires if that session is still open, so this line is the backup. Decide first how opposition enters the comparison: (a) export the Sabin county-year signal to `data/processed/opposition_scores.csv` so the notebook's `--ablation` compares with and without it, or (b) add TabPFN as an alternative first stage in `stack.py` (more consistent with how the text signal is tested now). Then: accept the license at ux.priorlabs.ai → add `GITHUB_TOKEN` and `TABPFN_TOKEN` to Colab Secrets → T4 GPU → run `notebooks/tabpfn_colab.ipynb`.
+1. **TabPFN in Colab.** Decide first how opposition enters the comparison: (a) export the Sabin county-year signal to `data/processed/opposition_scores.csv` so the notebook's `--ablation` compares with and without it, or (b) add TabPFN as an alternative first stage in `stack.py` (more consistent with how the text signal is tested now). Then: accept the license at ux.priorlabs.ai → add `GITHUB_TOKEN` and `TABPFN_TOKEN` to Colab Secrets → T4 GPU → run `notebooks/tabpfn_colab.ipynb`.
 2. **Start labeling.** Open `data/interim/sabin_label_sheet.csv` in Excel and label the first 50 following [labeling_guidelines.md](labeling_guidelines.md), then review them with Claude before doing the other 250. Target: all 300 by Mon Nov 16.
 3. **Optional, CPU:** try the 3-year-horizon idea from [model_log.md](model_log.md), which lets training include cohorts closer to the test years.
 
@@ -105,7 +126,7 @@ Every result so far is on **validation data only**. The test cohort (2019–2020
 
 ### Data and labels
 - **Queued Up file, cleaned** ([data.py](../src/queue_risk/data.py)). A generated audit ([data_quality.md](data_quality.md)) lists every issue with its row count and the fix we applied. The biggest catch: 222 withdrawn and 133 active projects carry a completion date. A project's *status* decides whether it was built, never a date field.
-- **The outcome.** "Built within 5 years of entry" ([README](../README.md#two-outcomes-and-why-we-lead-with-within-5-years)). Once 5 years have passed, every project has an answer, so nothing is censored and we can test on recent cohorts:
+- **The outcome.** "Built within 5 years of entry" ([README](README_detailed.md#two-outcomes-and-why-we-lead-with-within-5-years)). Once 5 years have passed, every project has an answer, so nothing is censored and we can test on recent cohorts:
   - Training uses 2005–2014 entries, whose 5-year outcomes were known by 2019, the test-decision date.
   - It's limited to the six grid operators that report completion dates: CAISO, ERCOT, MISO, NYISO, PJM, SPP (66% of projects).
   - The old "ever built" outcome still runs with `--outcome ever`.

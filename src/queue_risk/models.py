@@ -25,6 +25,22 @@ from . import config
 from .features import CATEGORICAL
 
 
+def _l1_penalty() -> dict:
+    """The LASSO (L1) penalty, spelled for the installed scikit-learn.
+
+    From 1.8, `penalty` is deprecated and `l1_ratio=1.0` alone means L1. BEFORE 1.8,
+    `l1_ratio` is IGNORED unless penalty="elasticnet", so `l1_ratio=1.0` silently fits an
+    L2 (ridge) model. That happened on Colab (Nov 24): its "LASSO" scored 0.669 out of time
+    and 0.566 on test, exactly an L2 model's numbers, against the real LASSO's 0.686 / 0.613.
+    """
+    import sklearn
+    major, minor = (int(x) for x in sklearn.__version__.split(".")[:2])
+    return {"l1_ratio": 1.0} if (major, minor) >= (1, 8) else {"penalty": "l1"}
+
+
+L1_PENALTY = _l1_penalty()
+
+
 # ------------------------------------------------------------------ benchmarks
 
 class FlatRate(ClassifierMixin, BaseEstimator):
@@ -93,7 +109,7 @@ def model_zoo(X: pd.DataFrame) -> dict:
                       ("clf", LogisticRegression(max_iter=2000))]), {}),
         "LASSO logistic": (
             Pipeline([("prep", _preprocess(X, scale=True)),
-                      ("clf", LogisticRegression(l1_ratio=1.0, solver="saga", max_iter=5000))]),
+                      ("clf", LogisticRegression(**L1_PENALTY, solver="saga", max_iter=5000))]),
             {"clf__C": [0.01, 0.03, 0.1, 0.3, 1.0]}),
         "CART": (
             Pipeline([("prep", _preprocess(X, scale=False)),

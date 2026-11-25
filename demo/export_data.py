@@ -47,11 +47,16 @@ MIN_MW = 0.05
 SIM_DRAWS = 20_000                  # redraws for the "how typical is this sample" line
 OUT = Path(__file__).resolve().parent / "data.js"
 
-# Frozen from docs/model_log.md (Nov 15: "LASSO (C = 0.1) ... out-of-time 2015-18 0.686";
-# Nov 20: "All 3,490 projects from 2015-2018"). If a rerun disagrees, nothing is written.
+# Read from the frozen spec (src/queue_risk/frozen.py), so the demo follows the team's decisions.
+# Nov 24: odd rows (0 MW, fossil-paired) are excluded, so 2015-2018 has 3,484 projects, not
+# the 3,490 of Nov 20. LASSO's out-of-time AUC is 0.686 either way. Because the cohort changed,
+# the seed-15072 draw of 50 projects changes too; that follows from the data decision, not a re-pick.
+# If a rerun disagrees, nothing is written.
+from queue_risk.frozen import FROZEN  # noqa: E402
+
 CHECKPOINTS = {
-    "LASSO out-of-time AUC 2015-2018": 0.686,
-    "out-of-time projects 2015-2018": 3490,
+    "LASSO out-of-time AUC 2015-2018": FROZEN["headline_out_of_time_auc"],
+    "out-of-time projects 2015-2018": FROZEN["counts"][bool(FROZEN["exclude_odd_rows"])]["out_of_time"],
 }
 
 
