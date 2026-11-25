@@ -48,7 +48,7 @@ GPU (Colab): `notebooks/tabpfn_colab.ipynb` (TabPFN); `notebooks/02_paul_text_mo
 
 ## Limitations
 - **Leakage handled:** blank fields are recorded after the outcome in this snapshot, so the model never sees whether a field was blank. Proposed dates, study results and agreement status are never features.
-- **Drift:** build rates fell from 21% (2014 entries) to 4% (2020). Rankings transfer; probabilities need recalibrating.
+- **Drift:** build rates fell from 20% (2014 entries) to 3% (2020). Rankings transfer; probabilities need recalibrating.
 - **Labels:** 472 of 572 paragraph labels were LLM-drafted under written guidelines; humans labeled the 100 used for testing.
 - **Not causal:** the model ranks the odds of being built; it doesn't say backing or siting a project changes them.
 

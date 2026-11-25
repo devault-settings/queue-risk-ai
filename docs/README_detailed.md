@@ -203,7 +203,7 @@ The full audit, with every issue, its row count and what we do about it, is gene
 - **Future dates.** 52 dates fall after the file's end-2025 as-of date; they are treated as missing.
 
 - **Right-censoring (the "ever built" outcome only).** Withdrawals resolve faster than builds, so once active projects are dropped, recent cohorts look worse than they are. The fixed-horizon outcome avoids this.
-- **A real decline, not an artifact.** Even with fully observed 5-year labels, the build rate falls from 21% for 2014 entries to 3.9% for 2020 entries. The queue is flooding with speculative requests. Ranking still works under this drift, but probabilities need recalibrating.
+- **A real decline, not an artifact.** Even with fully observed 5-year labels, the build rate falls from 20.0% for 2014 entries to 3.0% for 2020 entries (by project count; by capacity, 23% to 2.6%). Earlier drafts said 21% to 3.9%, from before the status-decides-built label fix. The queue is flooding with speculative requests. Ranking still works under this drift, but probabilities need recalibrating.
 - **Missing dates.**
   - 27% of built projects have no completion date, concentrated outside the six operators above. Inside them, 4% are missing; those take the developer's proposed online date, which gives the same 5-year label 90% of the time. It's used for the label only, never as a feature.
   - 34% of withdrawn projects have no withdrawal date. The track-record features treat an unknown date as "not known at entry," which undercounts past withdrawals.
