@@ -1,7 +1,9 @@
 # Handoff: Queue Risk AI (15.071 Project 1)
 
+> The team's working log, kept as written for transparency (newest updates first). For the project itself, start with the [README](../README.md).
+
 *As of Thu Nov 12, 2026 (evening). Due **Fri Nov 20**; Mon Nov 16 is a holiday.*
-*Repo:* https://github.com/devault-settings/queue-risk-ai (private). Start with the [README](../README.md); this file is the short version plus the to-do list.
+*Repo:* https://github.com/devault-settings/queue-risk-ai. Start with the [README](../README.md); this file is the short version plus the to-do list.
 
 ---
 
@@ -19,7 +21,7 @@
   - Sara updates slides 4, 5, 6, 7 and 8 (see the deck notes).
   - Decide the README swap. (Sabin text in the repo: **decided Nov 24, keep it**; the reports are open access. Cite them, and swap copies for links if republication is ever questioned.)
   - Reconcile the opposition metric with Paul.
-  - Ask Paul what `queue_with_costs.csv` is.
+  - ~~Ask Paul what `queue_with_costs.csv` is.~~ Moved to `data/external/` with a note (Nov 25); not used by any model.
   - **Post-hoc TabPFN test** (not part of the sign-off): `notebooks/tabpfn_posthoc_test.ipynb`, logged to `reports/posthoc_log.md`.
   - The demo's export checkpoints still expect 3,490 projects (now 3,484 with odd rows excluded). Rerun `demo/export_data.py` only if the demo needs regenerating, after updating its checkpoints.
 - **Do not re-run `--final`.** If a bug turns up, fix it and report both runs.
@@ -90,7 +92,7 @@
 - The 2019–2020 test cohort has **not** been scored.
 
 **First things tomorrow:**
-1. **TabPFN in Colab.** The reminder set in the Claude session (9:47am) only fires if that session is still open, so this line is the backup. Decide first how opposition enters the comparison: (a) export the Sabin county-year signal to `data/processed/opposition_scores.csv` so the notebook's `--ablation` compares with and without it, or (b) add TabPFN as an alternative first stage in `stack.py` (more consistent with how the text signal is tested now). Then: accept the license at ux.priorlabs.ai → add `GITHUB_TOKEN` and `TABPFN_TOKEN` to Colab Secrets → T4 GPU → run `notebooks/tabpfn_colab.ipynb`.
+1. **TabPFN in Colab.** Decide first how opposition enters the comparison: (a) export the Sabin county-year signal to `data/processed/opposition_scores.csv` so the notebook's `--ablation` compares with and without it, or (b) add TabPFN as an alternative first stage in `stack.py` (more consistent with how the text signal is tested now). Then: accept the license at ux.priorlabs.ai → add `GITHUB_TOKEN` and `TABPFN_TOKEN` to Colab Secrets → T4 GPU → run `notebooks/tabpfn_colab.ipynb`.
 2. **Start labeling.** Open `data/interim/sabin_label_sheet.csv` in Excel and label the first 50 following [labeling_guidelines.md](labeling_guidelines.md), then review them with Claude before doing the other 250. Target: all 300 by Mon Nov 16.
 3. **Optional, CPU:** try the 3-year-horizon idea from [model_log.md](model_log.md), which lets training include cohorts closer to the test years.
 
