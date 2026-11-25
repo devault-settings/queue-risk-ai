@@ -23,7 +23,7 @@
   - Reconcile the opposition metric with Paul.
   - ~~Ask Paul what `queue_with_costs.csv` is.~~ Moved to `data/external/` with a note (Nov 25); not used by any model.
   - **Post-hoc TabPFN test** (not part of the sign-off): `notebooks/tabpfn_posthoc_test.ipynb`, logged to `reports/posthoc_log.md`.
-  - The demo's export checkpoints still expect 3,490 projects (now 3,484 with odd rows excluded). Rerun `demo/export_data.py` only if the demo needs regenerating, after updating its checkpoints.
+  - ~~The demo's export checkpoints still expect 3,490 projects.~~ Done Nov 25 on `demo-100-projects-savings`: merged main, regenerated `demo/data.js` on the 3,484-project cohort (same seed 15072; the 100-project draw now holds 6 builds, 5 of them in the top 25; page savings 72%). See `demo/README.md`.
 - **Do not re-run `--final`.** If a bug turns up, fix it and report both runs.
 
 ## ▶ Update, Tue Nov 24 (evening): test run frozen

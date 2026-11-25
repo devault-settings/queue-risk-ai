@@ -38,11 +38,14 @@ N_SAMPLE, TOP = 100, 25
 # - Nov 24: the pool dropped projects with 0 or negative MW (MIN_MW below). With the same seed,
 #   that 50-project draw had only 1 build (ranked 14th). A 50-project sample is too noisy, so
 #   we moved to 100 projects / top 25 (same 25% share), same seed and pool, and kept the result.
+# - Nov 25: merged main's frozen spec, which drops odd rows (0 or negative MW, fossil-paired) from
+#   the cohort: 3,490 -> 3,484. Same seed, same rules; the 100-project draw changed with the data
+#   (11 builds -> 6) and we kept it. Not a re-pick.
 SAMPLE_SEED = config.SEED + 1
 # Projects that would print as "0.0 MW" or less on the page are left out of the pool the sample
-# is drawn from: 20 PJM 5 kW (0.005 MW) batteries and 3 ERCOT wind entries with negative MW
-# (capacity reductions). None of the 23 was built. Rule fixed before looking at the new draw;
-# the seed above is unchanged. The model, AUC check and full-cohort comparison still use all 3,490.
+# is drawn from: 20 PJM 5 kW (0.005 MW) batteries, none built (the 3 negative-MW ERCOT entries
+# are now dropped earlier, as odd rows). Rule fixed before looking at the new draw; the seed above
+# is unchanged. The model, AUC check and full-cohort comparison use the whole cohort (3,484).
 MIN_MW = 0.05
 SIM_DRAWS = 20_000                  # redraws for the "how typical is this sample" line
 OUT = Path(__file__).resolve().parent / "data.js"
@@ -50,7 +53,7 @@ OUT = Path(__file__).resolve().parent / "data.js"
 # Read from the frozen spec (src/queue_risk/frozen.py), so the demo follows the team's decisions.
 # Nov 24: odd rows (0 MW, fossil-paired) are excluded, so 2015-2018 has 3,484 projects, not
 # the 3,490 of Nov 20. LASSO's out-of-time AUC is 0.686 either way. Because the cohort changed,
-# the seed-15072 draw of 50 projects changes too; that follows from the data decision, not a re-pick.
+# the seed-15072 draw of 100 projects changes too; that follows from the data decision, not a re-pick.
 # If a rerun disagrees, nothing is written.
 from queue_risk.frozen import FROZEN  # noqa: E402
 

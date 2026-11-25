@@ -4,8 +4,8 @@ window.DEMO = {
   "model": "LASSO",
   "C": 0.1,
   "auc": 0.686,
-  "auc_lo": 0.658,
-  "auc_hi": 0.714,
+  "auc_lo": 0.655,
+  "auc_hi": 0.715,
   "score_years": [
    2015,
    2018
@@ -14,7 +14,7 @@ window.DEMO = {
    2005,
    2014
   ],
-  "base_rate": 0.0883,
+  "base_rate": 0.0884,
   "horizon": 5,
   "regions": [
    "CAISO",
@@ -25,22 +25,22 @@ window.DEMO = {
    "SPP"
   ],
   "seed": 15072,
-  "generated": "2026-11-24",
-  "pool_n": 3467,
-  "pool_excluded": 23
+  "generated": "2026-11-25",
+  "pool_n": 3464,
+  "pool_excluded": 20
  },
  "sample": {
   "n": 100,
   "top": 25,
-  "built": 11,
-  "random_expected": 2.8,
-  "perfect": 11
+  "built": 6,
+  "random_expected": 1.5,
+  "perfect": 6
  },
  "full": {
-  "n": 3490,
+  "n": 3484,
   "built": 308,
-  "k": 872,
-  "top_built": 143,
+  "k": 871,
+  "top_built": 142,
   "random_expected": 77.0,
   "perfect": 308
  },
@@ -48,7 +48,7 @@ window.DEMO = {
   "draws": 20000,
   "mean_top": 4.2,
   "mean_random": 2.2,
-  "luckier_than": 0.56
+  "luckier_than": 0.83
  },
  "savings": {
   "cost": [
@@ -60,81 +60,103 @@ window.DEMO = {
   "sample": {
    "top": 25,
    "built": 5,
-   "mw_built": 694,
-   "random_mw_built": 351,
+   "mw_built": 612,
+   "random_mw_built": 204,
    "per_mw": [
-    69164,
-    142651,
-    249280
+    78393,
+    161685,
+    282541
    ],
    "random_per_mw": [
-    152058,
-    313619,
-    548041
+    276589,
+    570465,
+    996874
    ],
-   "reduction": 0.545,
+   "reduction": 0.717,
    "saved": [
-    57528037,
-    118651577,
-    207340635
+    121355581,
+    250295887,
+    437385741
    ]
   },
   "full": {
-   "top": 872,
-   "built": 143,
-   "mw_built": 17755,
-   "random_mw_built": 10201,
+   "top": 871,
+   "built": 142,
+   "mw_built": 17388,
+   "random_mw_built": 10207,
    "per_mw": [
-    98542,
-    203244,
-    355163
+    100620,
+    207529,
+    362651
    ],
    "random_per_mw": [
-    187052,
-    385795,
-    674167
+    186699,
+    385067,
+    672895
    ],
-   "reduction": 0.473,
+   "reduction": 0.461,
    "saved": [
-    1571470294,
-    3241157482,
-    5663840852
+    1496764093,
+    3087075943,
+    5394587254
    ]
   }
  },
  "projects": [
   {
-   "id": "475",
-   "name": "Windy Hill Solar",
+   "id": "474",
+   "name": "North Slope Wind",
    "operator": "NYISO",
    "state": "NY",
    "tech": "Wind",
-   "mw": 20.0,
-   "entered": "2015-02-02",
-   "p": 0.1832,
-   "built": 0
-  },
-  {
-   "id": "GEN-2015-002",
-   "name": null,
-   "operator": "SPP",
-   "state": "OK",
-   "tech": "Solar",
    "mw": 200.0,
-   "entered": "2015-03-24",
-   "p": 0.1058,
+   "entered": "2015-01-30",
+   "p": 0.102,
    "built": 0
   },
   {
-   "id": "GEN-2015-015",
+   "id": "486",
+   "name": "Buell Battery Storage",
+   "operator": "NYISO",
+   "state": "NY",
+   "tech": "Battery",
+   "mw": 20.0,
+   "entered": "2015-03-09",
+   "p": 0.1937,
+   "built": 0
+  },
+  {
+   "id": "GEN-2015-004",
    "name": null,
    "operator": "SPP",
    "state": "OK",
    "tech": "Wind",
-   "mw": 154.6,
-   "entered": "2015-03-27",
-   "p": 0.1659,
-   "built": 1
+   "mw": 52.9,
+   "entered": "2015-03-18",
+   "p": 0.2396,
+   "built": 0
+  },
+  {
+   "id": "GEN-2015-018",
+   "name": null,
+   "operator": "SPP",
+   "state": "NM",
+   "tech": "Wind",
+   "mw": 80.0,
+   "entered": "2015-03-31",
+   "p": 0.1137,
+   "built": 0
+  },
+  {
+   "id": "15INR0090",
+   "name": "East Blackland Solar",
+   "operator": "ERCOT",
+   "state": "TX",
+   "tech": "Solar+Battery",
+   "mw": 144.0,
+   "entered": "2015-04-27",
+   "p": 0.2764,
+   "built": 0
   },
   {
    "id": "1120",
@@ -144,7 +166,7 @@ window.DEMO = {
    "tech": "Solar+Battery",
    "mw": 287.0,
    "entered": "2015-04-30",
-   "p": 0.1141,
+   "p": 0.1161,
    "built": 0
   },
   {
@@ -155,7 +177,7 @@ window.DEMO = {
    "tech": "Solar",
    "mw": 40.0,
    "entered": "2015-04-30",
-   "p": 0.1515,
+   "p": 0.1529,
    "built": 0
   },
   {
@@ -166,7 +188,18 @@ window.DEMO = {
    "tech": "Solar",
    "mw": 120.0,
    "entered": "2015-04-30",
-   "p": 0.1097,
+   "p": 0.1109,
+   "built": 0
+  },
+  {
+   "id": "1161",
+   "name": "ROYAL (FKA WHEELER INDIGO)",
+   "operator": "CAISO",
+   "state": "CA",
+   "tech": "Solar+Battery",
+   "mw": 360.3,
+   "entered": "2015-04-30",
+   "p": 0.1084,
    "built": 0
   },
   {
@@ -177,18 +210,7 @@ window.DEMO = {
    "tech": "Battery",
    "mw": 40.0,
    "entered": "2015-04-30",
-   "p": 0.1131,
-   "built": 0
-  },
-  {
-   "id": "1200",
-   "name": "VICTORY PASS SOLAR",
-   "operator": "CAISO",
-   "state": "CA",
-   "tech": "Solar+Battery",
-   "mw": 250.0,
-   "entered": "2015-04-30",
-   "p": 0.1147,
+   "p": 0.1137,
    "built": 0
   },
   {
@@ -199,95 +221,62 @@ window.DEMO = {
    "tech": "Battery",
    "mw": 412.0,
    "entered": "2015-04-30",
-   "p": 0.0547,
+   "p": 0.0552,
    "built": 0
   },
   {
-   "id": "AA2-160",
+   "id": "AA2-163",
    "name": null,
    "operator": "PJM",
-   "state": "DE",
+   "state": "VA",
    "tech": "Solar",
    "mw": 20.0,
    "entered": "2015-04-30",
-   "p": 0.2037,
+   "p": 0.1922,
    "built": 0
   },
   {
-   "id": "AA2-177",
-   "name": "Fort Powhatan Solar",
+   "id": "AA2-179",
+   "name": null,
    "operator": "PJM",
-   "state": "VA",
+   "state": "NC",
    "tech": "Solar",
    "mw": 80.0,
    "entered": "2015-04-30",
-   "p": 0.1396,
+   "p": 0.1401,
    "built": 0
   },
   {
-   "id": "AB1-067",
+   "id": "AB1-072",
    "name": null,
    "operator": "PJM",
-   "state": "VA",
+   "state": "MD",
    "tech": "Solar",
-   "mw": 10.0,
-   "entered": "2015-08-31",
-   "p": 0.2324,
+   "mw": 2.5,
+   "entered": "2015-09-14",
+   "p": 0.3062,
    "built": 0
   },
   {
-   "id": "GEN-2015-036",
+   "id": "GEN-2015-038",
    "name": null,
    "operator": "SPP",
    "state": "OK",
    "tech": "Wind",
    "mw": 303.6,
-   "entered": "2015-09-10",
-   "p": 0.1306,
+   "entered": "2015-09-30",
+   "p": 0.1397,
    "built": 0
   },
   {
-   "id": "513",
-   "name": "Orangeville",
-   "operator": "NYISO",
-   "state": "NY",
-   "tech": "Battery",
-   "mw": 20.0,
-   "entered": "2015-09-21",
-   "p": 0.1768,
-   "built": 0
-  },
-  {
-   "id": "GEN-2015-069",
-   "name": null,
-   "operator": "SPP",
-   "state": "KS",
-   "tech": "Wind",
-   "mw": 300.0,
-   "entered": "2015-09-21",
-   "p": 0.0717,
-   "built": 1
-  },
-  {
-   "id": "AB1-130",
-   "name": null,
+   "id": "AB1-176",
+   "name": "Cedar Lane Solar",
    "operator": "PJM",
    "state": "MD",
    "tech": "Solar",
-   "mw": 10.0,
-   "entered": "2015-10-29",
-   "p": 0.2255,
-   "built": 0
-  },
-  {
-   "id": "AB1-170",
-   "name": null,
-   "operator": "PJM",
-   "state": "IL",
-   "tech": "Wind",
-   "mw": 250.0,
+   "mw": 4.0,
    "entered": "2015-10-30",
-   "p": 0.1199,
+   "p": 0.2808,
    "built": 0
   },
   {
@@ -298,7 +287,29 @@ window.DEMO = {
    "tech": "Solar",
    "mw": 19.8,
    "entered": "2015-10-31",
-   "p": 0.1846,
+   "p": 0.1853,
+   "built": 0
+  },
+  {
+   "id": "519",
+   "name": "Canisteo Wind",
+   "operator": "NYISO",
+   "state": "NY",
+   "tech": "Wind",
+   "mw": 290.7,
+   "entered": "2015-11-02",
+   "p": 0.084,
+   "built": 0
+  },
+  {
+   "id": "AB1-132",
+   "name": "Oak Solar",
+   "operator": "PJM",
+   "state": "NC",
+   "tech": "Solar",
+   "mw": 120.0,
+   "entered": "2015-11-02",
+   "p": 0.111,
    "built": 0
   },
   {
@@ -320,7 +331,7 @@ window.DEMO = {
    "tech": "Wind",
    "mw": 200.0,
    "entered": "2015-11-13",
-   "p": 0.3358,
+   "p": 0.336,
    "built": 1
   },
   {
@@ -331,40 +342,40 @@ window.DEMO = {
    "tech": "Wind",
    "mw": 250.0,
    "entered": "2015-11-16",
-   "p": 0.3097,
+   "p": 0.3099,
    "built": 1
   },
   {
-   "id": "AB2-027",
-   "name": "Funkstonw Solar Facility",
+   "id": "AB2-029",
+   "name": null,
    "operator": "PJM",
-   "state": "MD",
+   "state": "VA",
    "tech": "Solar",
-   "mw": 8.8,
-   "entered": "2016-02-10",
-   "p": 0.2439,
-   "built": 0
-  },
-  {
-   "id": "AB2-032",
-   "name": "Pondtown Solar 2",
-   "operator": "PJM",
-   "state": "MD",
-   "tech": "Solar",
-   "mw": 20.0,
+   "mw": 19.8,
    "entered": "2016-02-11",
-   "p": 0.1995,
+   "p": 0.1986,
+   "built": 1
+  },
+  {
+   "id": "AB2-035",
+   "name": null,
+   "operator": "PJM",
+   "state": "NC",
+   "tech": "Solar",
+   "mw": 3.0,
+   "entered": "2016-02-23",
+   "p": 0.288,
    "built": 0
   },
   {
-   "id": "AB2-041",
-   "name": "Mason Dixon Wind Farm",
+   "id": "AB2-043",
+   "name": "Bluestone Farm Solar",
    "operator": "PJM",
-   "state": "PA",
-   "tech": "Wind",
-   "mw": 19.4,
+   "state": "VA",
+   "tech": "Solar",
+   "mw": 49.9,
    "entered": "2016-02-29",
-   "p": 0.2615,
+   "p": 0.1521,
    "built": 0
   },
   {
@@ -379,36 +390,36 @@ window.DEMO = {
    "built": 1
   },
   {
-   "id": "R101",
+   "id": "GEN-2016-008",
    "name": null,
-   "operator": "MISO",
-   "state": "MN",
-   "tech": "Wind+Gas",
-   "mw": 4.6,
-   "entered": "2016-03-17",
-   "p": 0.4869,
+   "operator": "SPP",
+   "state": "OK",
+   "tech": "Solar",
+   "mw": 40.0,
+   "entered": "2016-03-24",
+   "p": 0.1524,
    "built": 0
   },
   {
-   "id": "AB2-062",
+   "id": "AB2-064",
    "name": null,
    "operator": "PJM",
-   "state": "VA",
+   "state": "OH",
    "tech": "Solar",
-   "mw": 20.0,
+   "mw": 40.0,
    "entered": "2016-03-30",
-   "p": 0.1943,
+   "p": 0.1598,
    "built": 0
   },
   {
-   "id": "AB2-144",
+   "id": "GEN-2016-069",
    "name": null,
-   "operator": "PJM",
-   "state": "MD",
+   "operator": "SPP",
+   "state": "NM",
    "tech": "Solar",
-   "mw": 13.8,
-   "entered": "2016-04-29",
-   "p": 0.2018,
+   "mw": 31.4,
+   "entered": "2016-03-30",
+   "p": 0.0959,
    "built": 0
   },
   {
@@ -419,18 +430,29 @@ window.DEMO = {
    "tech": "Solar",
    "mw": 19.9,
    "entered": "2016-04-29",
-   "p": 0.1834,
+   "p": 0.1838,
    "built": 0
   },
   {
-   "id": "AB2-188",
+   "id": "AB2-150",
    "name": null,
    "operator": "PJM",
-   "state": "NC",
+   "state": "VA",
    "tech": "Solar",
-   "mw": 20.0,
+   "mw": 40.0,
    "entered": "2016-04-29",
-   "p": 0.1836,
+   "p": 0.151,
+   "built": 0
+  },
+  {
+   "id": "AB2-190",
+   "name": "Fort Powhatan Solar",
+   "operator": "PJM",
+   "state": "VA",
+   "tech": "Solar",
+   "mw": 150.0,
+   "entered": "2016-04-29",
+   "p": 0.1032,
    "built": 0
   },
   {
@@ -441,18 +463,18 @@ window.DEMO = {
    "tech": "Battery",
    "mw": 418.0,
    "entered": "2016-05-02",
-   "p": 0.049,
+   "p": 0.0495,
    "built": 0
   },
   {
-   "id": "1302",
-   "name": "SOL CATCHER BESS",
+   "id": "1327",
+   "name": "CYCLONE SOLAR",
    "operator": "CAISO",
    "state": "CA",
    "tech": "Solar+Battery",
-   "mw": 334.5,
+   "mw": 65.0,
    "entered": "2016-05-02",
-   "p": 0.1028,
+   "p": 0.1535,
    "built": 0
   },
   {
@@ -478,95 +500,84 @@ window.DEMO = {
    "built": 0
   },
   {
-   "id": "20INR0002",
-   "name": "Lake Spring Solar",
-   "operator": "ERCOT",
-   "state": "TX",
-   "tech": "Solar",
-   "mw": 400.0,
-   "entered": "2016-06-23",
-   "p": 0.164,
-   "built": 0
-  },
-  {
-   "id": "GEN-2016-077",
-   "name": null,
-   "operator": "SPP",
-   "state": "TX",
-   "tech": "Solar",
-   "mw": 54.0,
-   "entered": "2016-06-29",
-   "p": 0.0801,
-   "built": 0
-  },
-  {
-   "id": "AC1-026",
-   "name": null,
-   "operator": "PJM",
-   "state": "NJ",
-   "tech": "Battery",
-   "mw": 1.3,
-   "entered": "2016-07-18",
-   "p": 0.3232,
-   "built": 0
-  },
-  {
-   "id": "GEN-2016-088",
-   "name": null,
-   "operator": "SPP",
-   "state": "MO",
-   "tech": "Wind",
-   "mw": 151.2,
-   "entered": "2016-08-11",
-   "p": 0.0763,
-   "built": 0
-  },
-  {
-   "id": "18INR0040",
-   "name": "Soda Lake Solar 1",
-   "operator": "ERCOT",
-   "state": "TX",
-   "tech": "Solar",
-   "mw": 202.6,
-   "entered": "2016-10-06",
-   "p": 0.1789,
-   "built": 0
-  },
-  {
-   "id": "AC1-150",
-   "name": null,
-   "operator": "PJM",
-   "state": "OH",
-   "tech": "Solar",
-   "mw": 200.0,
-   "entered": "2016-10-31",
-   "p": 0.0734,
-   "built": 0
-  },
-  {
-   "id": "AC1-176",
-   "name": null,
-   "operator": "PJM",
-   "state": "OH",
-   "tech": "Wind",
-   "mw": 58.7,
-   "entered": "2016-10-31",
-   "p": 0.187,
-   "built": 0
-  },
-  {
-   "id": "AC1-207",
-   "name": "Hoffman Station Road Solar",
+   "id": "AC1-030",
+   "name": "Pennsauken Solar 3",
    "operator": "PJM",
    "state": "NJ",
    "tech": "Solar",
-   "mw": 13.1,
-   "entered": "2016-10-31",
-   "p": 0.1749,
+   "mw": 2.5,
+   "entered": "2016-08-01",
+   "p": 0.3629,
    "built": 1
   },
   {
-   "id": "J774",
+   "id": "J716",
+   "name": null,
+   "operator": "MISO",
+   "state": "LA",
+   "tech": "Solar",
+   "mw": 60.0,
+   "entered": "2016-09-12",
+   "p": 0.0089,
+   "built": 0
+  },
+  {
+   "id": "GEN-2016-089",
+   "name": null,
+   "operator": "SPP",
+   "state": "TX",
+   "tech": "Solar",
+   "mw": 100.0,
+   "entered": "2016-09-28",
+   "p": 0.0651,
+   "built": 0
+  },
+  {
+   "id": "18INR0042",
+   "name": "Kaiser Creek Wind",
+   "operator": "ERCOT",
+   "state": "TX",
+   "tech": "Wind",
+   "mw": 101.5,
+   "entered": "2016-10-11",
+   "p": 0.2902,
+   "built": 0
+  },
+  {
+   "id": "AC1-154",
+   "name": "Harris Project",
+   "operator": "PJM",
+   "state": "MD",
+   "tech": "Solar",
+   "mw": 3.2,
+   "entered": "2016-10-31",
+   "p": 0.244,
+   "built": 0
+  },
+  {
+   "id": "AC1-187",
+   "name": null,
+   "operator": "PJM",
+   "state": "PA",
+   "tech": "Wind",
+   "mw": 117.0,
+   "entered": "2016-10-31",
+   "p": 0.1522,
+   "built": 0
+  },
+  {
+   "id": "AC1-209",
+   "name": "Pine Grove Solar",
+   "operator": "PJM",
+   "state": "PA",
+   "tech": "Solar",
+   "mw": 18.0,
+   "entered": "2016-10-31",
+   "p": 0.1612,
+   "built": 0
+  },
+  {
+   "id": "J775",
    "name": null,
    "operator": "MISO",
    "state": "SD",
@@ -577,47 +588,47 @@ window.DEMO = {
    "built": 0
   },
   {
-   "id": "GEN-2016-166",
+   "id": "GEN-2016-167",
    "name": null,
    "operator": "SPP",
-   "state": "AR",
+   "state": "LA",
    "tech": "Solar",
-   "mw": 35.0,
+   "mw": 73.5,
    "entered": "2016-11-29",
-   "p": 0.088,
+   "p": 0.0705,
    "built": 0
   },
   {
-   "id": "599",
-   "name": "LeRoy Solar",
+   "id": "GEN-2016-129",
+   "name": null,
+   "operator": "SPP",
+   "state": "OK",
+   "tech": "Wind",
+   "mw": 132.0,
+   "entered": "2016-11-30",
+   "p": 0.1181,
+   "built": 0
+  },
+  {
+   "id": "602",
+   "name": "Keesog Solar",
    "operator": "NYISO",
    "state": "NY",
    "tech": "Solar",
-   "mw": 20.0,
-   "entered": "2017-01-11",
-   "p": 0.1173,
+   "mw": 50.0,
+   "entered": "2017-01-30",
+   "p": 0.0885,
    "built": 0
   },
   {
-   "id": "AC2-044",
-   "name": "Blue Creek Wind Farm",
+   "id": "AC2-046",
+   "name": null,
    "operator": "PJM",
    "state": "OH",
    "tech": "Solar",
-   "mw": 20.0,
-   "entered": "2017-02-07",
-   "p": 0.1456,
-   "built": 0
-  },
-  {
-   "id": "611",
-   "name": "Badra Solar",
-   "operator": "NYISO",
-   "state": "NY",
-   "tech": "Solar",
-   "mw": 20.0,
-   "entered": "2017-02-10",
-   "p": 0.1137,
+   "mw": 63.0,
+   "entered": "2017-02-08",
+   "p": 0.0973,
    "built": 0
   },
   {
@@ -628,51 +639,51 @@ window.DEMO = {
    "tech": "Solar",
    "mw": 20.0,
    "entered": "2017-02-22",
-   "p": 0.1065,
+   "p": 0.1061,
    "built": 0
   },
   {
-   "id": "18INR0061",
-   "name": "Shakes Solar",
-   "operator": "ERCOT",
-   "state": "TX",
-   "tech": "Solar",
-   "mw": 42.0,
-   "entered": "2017-02-22",
-   "p": 0.2852,
-   "built": 0
-  },
-  {
-   "id": "AC2-119",
+   "id": "AC2-121",
    "name": null,
    "operator": "PJM",
-   "state": "WV",
+   "state": "VA",
    "tech": "Solar",
-   "mw": 25.0,
-   "entered": "2017-03-22",
-   "p": 0.1129,
+   "mw": 150.0,
+   "entered": "2017-03-23",
+   "p": 0.0705,
    "built": 0
   },
   {
-   "id": "AC2-147",
+   "id": "617",
+   "name": "Watkins Glen Solar",
+   "operator": "NYISO",
+   "state": "NY",
+   "tech": "Solar",
+   "mw": 50.0,
+   "entered": "2017-03-27",
+   "p": 0.0843,
+   "built": 0
+  },
+  {
+   "id": "AC2-149",
    "name": null,
    "operator": "PJM",
    "state": "IL",
    "tech": "Solar",
    "mw": 20.0,
    "entered": "2017-03-28",
-   "p": 0.1266,
+   "p": 0.1282,
    "built": 0
   },
   {
-   "id": "AC2-193",
-   "name": null,
+   "id": "AC2-195",
+   "name": "Marion County Solar Project",
    "operator": "PJM",
-   "state": "NJ",
+   "state": "OH",
    "tech": "Solar",
-   "mw": 10.0,
-   "entered": "2017-03-31",
-   "p": 0.1488,
+   "mw": 100.0,
+   "entered": "2017-04-01",
+   "p": 0.0734,
    "built": 0
   },
   {
@@ -683,7 +694,7 @@ window.DEMO = {
    "tech": "Solar",
    "mw": 155.7,
    "entered": "2017-05-01",
-   "p": 0.0807,
+   "p": 0.0815,
    "built": 0
   },
   {
@@ -694,40 +705,29 @@ window.DEMO = {
    "tech": "Solar+Battery",
    "mw": 189.5,
    "entered": "2017-05-01",
-   "p": 0.1036,
+   "p": 0.1052,
    "built": 0
   },
   {
-   "id": "GEN-2017-079",
+   "id": "GEN-2017-080",
    "name": null,
    "operator": "SPP",
    "state": "TX",
    "tech": "Solar",
-   "mw": 49.9,
+   "mw": 525.0,
    "entered": "2017-05-29",
-   "p": 0.0772,
+   "p": 0.0342,
    "built": 0
   },
   {
-   "id": "J715",
+   "id": "J881",
    "name": null,
    "operator": "MISO",
    "state": "IL",
-   "tech": "Wind",
-   "mw": 100.0,
+   "tech": "Solar",
+   "mw": 45.0,
    "entered": "2017-06-16",
-   "p": 0.2316,
-   "built": 1
-  },
-  {
-   "id": "J880",
-   "name": null,
-   "operator": "MISO",
-   "state": "ND",
-   "tech": "Wind",
-   "mw": 150.0,
-   "entered": "2017-06-16",
-   "p": 0.208,
+   "p": 0.1115,
    "built": 0
   },
   {
@@ -738,18 +738,7 @@ window.DEMO = {
    "tech": "Solar",
    "mw": 60.0,
    "entered": "2017-08-09",
-   "p": 0.2233,
-   "built": 0
-  },
-  {
-   "id": "AD1-053",
-   "name": "Plainsboro 13kV",
-   "operator": "PJM",
-   "state": "NJ",
-   "tech": "Solar",
-   "mw": 3.0,
-   "entered": "2017-08-11",
-   "p": 0.1933,
+   "p": 0.2222,
    "built": 0
   },
   {
@@ -760,7 +749,18 @@ window.DEMO = {
    "tech": "Solar",
    "mw": 78.2,
    "entered": "2017-08-15",
-   "p": 0.2056,
+   "p": 0.2046,
+   "built": 0
+  },
+  {
+   "id": "AD1-055",
+   "name": "Halifax County Solar",
+   "operator": "PJM",
+   "state": "VA",
+   "tech": "Solar",
+   "mw": 20.0,
+   "entered": "2017-08-16",
+   "p": 0.1195,
    "built": 0
   },
   {
@@ -771,62 +771,84 @@ window.DEMO = {
    "tech": "Wind",
    "mw": 9.0,
    "entered": "2017-08-22",
-   "p": 0.4675,
+   "p": 0.4649,
    "built": 0
   },
   {
-   "id": "AD1-071",
-   "name": "Levittown 13kV",
+   "id": "AD1-073",
+   "name": "Ross County Solar",
    "operator": "PJM",
-   "state": "NJ",
+   "state": "OH",
    "tech": "Solar",
-   "mw": 2.6,
-   "entered": "2017-08-31",
-   "p": 0.2062,
+   "mw": 20.0,
+   "entered": "2017-09-02",
+   "p": 0.1135,
    "built": 0
   },
   {
-   "id": "AD1-083",
-   "name": "Cape Solar",
+   "id": "AD1-087",
+   "name": "Foxhound Solar",
    "operator": "PJM",
    "state": "VA",
    "tech": "Solar",
-   "mw": 100.0,
-   "entered": "2017-09-11",
-   "p": 0.0661,
+   "mw": 64.2,
+   "entered": "2017-09-16",
+   "p": 0.0818,
    "built": 0
   },
   {
-   "id": "AD1-128",
-   "name": "Riverstart Solar Park IV",
+   "id": "AD1-130",
+   "name": "Hardin Energy Center \u201a\u00c4\u00ec Phase 2",
    "operator": "PJM",
-   "state": "IN",
+   "state": "OH",
    "tech": "Solar",
    "mw": 150.0,
-   "entered": "2017-09-29",
-   "p": 0.0609,
+   "entered": "2017-10-02",
+   "p": 0.0583,
    "built": 0
   },
   {
-   "id": "GEN-2017-119",
+   "id": "19INR0147",
+   "name": "March Road Solar",
+   "operator": "ERCOT",
+   "state": "TX",
+   "tech": "Solar",
+   "mw": 200.0,
+   "entered": "2017-11-12",
+   "p": 0.1553,
+   "built": 0
+  },
+  {
+   "id": "GEN-2017-120",
    "name": null,
    "operator": "SPP",
    "state": "KS",
    "tech": "Wind",
-   "mw": 180.0,
+   "mw": 260.0,
    "entered": "2017-11-17",
-   "p": 0.0544,
+   "p": 0.0479,
    "built": 0
   },
   {
-   "id": "GEN-2017-133",
+   "id": "GEN-2017-223",
+   "name": null,
+   "operator": "SPP",
+   "state": "SD",
+   "tech": "Wind",
+   "mw": 250.0,
+   "entered": "2017-11-19",
+   "p": 0.0516,
+   "built": 0
+  },
+  {
+   "id": "GEN-2017-134",
    "name": null,
    "operator": "SPP",
    "state": "OK",
    "tech": "Wind",
-   "mw": 200.0,
+   "mw": 250.0,
    "entered": "2017-11-22",
-   "p": 0.0992,
+   "p": 0.0919,
    "built": 0
   },
   {
@@ -837,29 +859,18 @@ window.DEMO = {
    "tech": "Wind",
    "mw": 470.0,
    "entered": "2017-11-22",
-   "p": 0.076,
+   "p": 0.0755,
    "built": 0
   },
   {
-   "id": "GEN-2017-198",
-   "name": null,
-   "operator": "SPP",
-   "state": "NE",
-   "tech": "Battery",
-   "mw": 11.6,
-   "entered": "2017-11-30",
-   "p": 0.165,
-   "built": 0
-  },
-  {
-   "id": "694",
-   "name": "Sunset Hill Solar",
+   "id": "698",
+   "name": "Ravenswood Energy Storage 2",
    "operator": "NYISO",
    "state": "NY",
-   "tech": "Solar",
-   "mw": 20.0,
-   "entered": "2018-02-16",
-   "p": 0.1077,
+   "tech": "Battery",
+   "mw": 129.0,
+   "entered": "2018-03-09",
+   "p": 0.1003,
    "built": 0
   },
   {
@@ -870,7 +881,7 @@ window.DEMO = {
    "tech": "Solar",
    "mw": 150.0,
    "entered": "2018-03-12",
-   "p": 0.0623,
+   "p": 0.0626,
    "built": 0
   },
   {
@@ -881,7 +892,7 @@ window.DEMO = {
    "tech": "Solar",
    "mw": 40.0,
    "entered": "2018-03-12",
-   "p": 0.1121,
+   "p": 0.1124,
    "built": 0
   },
   {
@@ -892,7 +903,7 @@ window.DEMO = {
    "tech": "Solar",
    "mw": 50.0,
    "entered": "2018-03-12",
-   "p": 0.1492,
+   "p": 0.1495,
    "built": 0
   },
   {
@@ -903,62 +914,62 @@ window.DEMO = {
    "tech": "Solar",
    "mw": 120.0,
    "entered": "2018-03-12",
-   "p": 0.0627,
+   "p": 0.063,
    "built": 0
   },
   {
-   "id": "J980",
+   "id": "J981",
    "name": null,
    "operator": "MISO",
-   "state": "IL",
+   "state": "IA",
    "tech": "Wind",
    "mw": 200.0,
    "entered": "2018-03-12",
-   "p": 0.1732,
+   "p": 0.2738,
    "built": 0
   },
   {
-   "id": "AD2-073",
-   "name": "Woodbine Road Solar",
-   "operator": "PJM",
-   "state": "VA",
-   "tech": "Solar",
-   "mw": 19.9,
-   "entered": "2018-03-14",
-   "p": 0.1216,
-   "built": 1
-  },
-  {
-   "id": "AD2-095",
-   "name": null,
+   "id": "AD2-076",
+   "name": "Concho Solar I",
    "operator": "PJM",
    "state": "MD",
-   "tech": "Battery",
-   "mw": 20.0,
-   "entered": "2018-03-20",
-   "p": 0.1737,
-   "built": 0
-  },
-  {
-   "id": "AD2-106",
-   "name": null,
-   "operator": "PJM",
-   "state": "KY",
    "tech": "Solar",
-   "mw": 80.0,
-   "entered": "2018-03-22",
-   "p": 0.0777,
+   "mw": 49.0,
+   "entered": "2018-03-15",
+   "p": 0.0933,
    "built": 0
   },
   {
-   "id": "AD2-152",
+   "id": "AD2-100",
+   "name": "Broomstick Solar Energy Centergy Center",
+   "operator": "PJM",
+   "state": "IL",
+   "tech": "Solar",
+   "mw": 210.0,
+   "entered": "2018-03-23",
+   "p": 0.0561,
+   "built": 0
+  },
+  {
+   "id": "AD2-154",
    "name": null,
    "operator": "PJM",
-   "state": "PA",
+   "state": "IL",
    "tech": "Wind",
    "mw": 150.0,
    "entered": "2018-03-23",
-   "p": 0.144,
+   "p": 0.1447,
+   "built": 0
+  },
+  {
+   "id": "AD2-115",
+   "name": "Lyons Solar",
+   "operator": "PJM",
+   "state": "PA",
+   "tech": "Solar",
+   "mw": 20.0,
+   "entered": "2018-03-24",
+   "p": 0.1126,
    "built": 0
   },
   {
@@ -969,40 +980,18 @@ window.DEMO = {
    "tech": "Solar",
    "mw": 100.0,
    "entered": "2018-03-30",
-   "p": 0.0648,
+   "p": 0.0654,
    "built": 0
   },
   {
-   "id": "AE1-004",
-   "name": "Walnut Solar I",
+   "id": "AD2-209",
+   "name": null,
    "operator": "PJM",
-   "state": "VA",
-   "tech": "Solar",
-   "mw": 20.0,
-   "entered": "2018-04-07",
-   "p": 0.103,
-   "built": 0
-  },
-  {
-   "id": "AD2-205",
-   "name": "Buck & Byllesby Hydro Project",
-   "operator": "PJM",
-   "state": "VA",
+   "state": "NJ",
    "tech": "Battery",
-   "mw": 4.0,
-   "entered": "2018-04-13",
-   "p": 0.2436,
-   "built": 1
-  },
-  {
-   "id": "1448",
-   "name": "DESCENDANT RANCH 2",
-   "operator": "CAISO",
-   "state": "CA",
-   "tech": "Solar+Battery",
-   "mw": 1023.5,
-   "entered": "2018-04-16",
-   "p": 0.0486,
+   "mw": 2.0,
+   "entered": "2018-03-30",
+   "p": 0.2964,
    "built": 0
   },
   {
@@ -1013,18 +1002,29 @@ window.DEMO = {
    "tech": "Solar+Battery",
    "mw": 120.0,
    "entered": "2018-04-16",
-   "p": 0.0929,
+   "p": 0.0944,
    "built": 0
   },
   {
-   "id": "708",
-   "name": "Bethlehem Solar",
+   "id": "AE1-005",
+   "name": null,
+   "operator": "PJM",
+   "state": "NC",
+   "tech": "Battery",
+   "mw": 20.0,
+   "entered": "2018-04-20",
+   "p": 0.1745,
+   "built": 0
+  },
+  {
+   "id": "710",
+   "name": "Horseshoe Solar",
    "operator": "NYISO",
    "state": "NY",
    "tech": "Solar",
-   "mw": 1.0,
-   "entered": "2018-05-04",
-   "p": 0.2109,
+   "mw": 180.0,
+   "entered": "2018-05-29",
+   "p": 0.0547,
    "built": 0
   },
   {
@@ -1035,18 +1035,18 @@ window.DEMO = {
    "tech": "Solar",
    "mw": 203.3,
    "entered": "2018-06-06",
-   "p": 0.1511,
+   "p": 0.1504,
    "built": 1
   },
   {
-   "id": "736",
-   "name": "Meads Hill Solar",
+   "id": "738",
+   "name": "El Melville",
    "operator": "NYISO",
    "state": "NY",
-   "tech": "Solar",
-   "mw": 20.0,
+   "tech": "Wind",
+   "mw": 816.0,
    "entered": "2018-06-12",
-   "p": 0.1027,
+   "p": 0.0626,
    "built": 0
   },
   {
@@ -1057,150 +1057,150 @@ window.DEMO = {
    "tech": "Solar",
    "mw": 215.2,
    "entered": "2018-07-03",
-   "p": 0.1454,
+   "p": 0.1447,
    "built": 0
   },
   {
-   "id": "AE1-045",
+   "id": "AE1-046",
    "name": null,
    "operator": "PJM",
    "state": "NJ",
    "tech": "Solar",
    "mw": 3.0,
    "entered": "2018-07-11",
-   "p": 0.176,
+   "p": 0.1772,
    "built": 0
   },
   {
-   "id": "743",
-   "name": "Hornell Solar",
+   "id": "745",
+   "name": "Huckleberry Ridge Energy",
    "operator": "NYISO",
    "state": "NY",
-   "tech": "Solar",
-   "mw": 20.0,
-   "entered": "2018-07-16",
-   "p": 0.1014,
+   "tech": "Battery",
+   "mw": 100.0,
+   "entered": "2018-07-25",
+   "p": 0.1027,
    "built": 0
   },
   {
-   "id": "AE1-060",
-   "name": "VESI \u201a\u00c4\u00ec Andover Energy Storage",
+   "id": "AE1-062",
+   "name": null,
    "operator": "PJM",
    "state": "NJ",
    "tech": "Battery",
-   "mw": 19.8,
-   "entered": "2018-07-26",
-   "p": 0.1748,
-   "built": 1
+   "mw": 20.0,
+   "entered": "2018-07-30",
+   "p": 0.1725,
+   "built": 0
   },
   {
-   "id": "AE1-066",
+   "id": "AE1-068",
    "name": null,
    "operator": "PJM",
    "state": "VA",
-   "tech": "Offshore Wind",
-   "mw": 800.1,
+   "tech": "Solar",
+   "mw": 500.0,
    "entered": "2018-07-31",
-   "p": 0.0513,
+   "p": 0.0399,
    "built": 0
   },
   {
-   "id": "AE1-223",
+   "id": "AE1-212",
+   "name": "Raleigh Solar Project",
+   "operator": "PJM",
+   "state": "WV",
+   "tech": "Solar",
+   "mw": 90.0,
+   "entered": "2018-09-10",
+   "p": 0.0653,
+   "built": 0
+  },
+  {
+   "id": "AE1-228",
    "name": null,
    "operator": "PJM",
-   "state": "NJ",
+   "state": "IL",
    "tech": "Solar",
-   "mw": 1.9,
+   "mw": 140.0,
    "entered": "2018-09-28",
-   "p": 0.1492,
+   "p": 0.0444,
    "built": 0
   },
   {
-   "id": "AE1-226",
-   "name": "Holtwood Solar",
+   "id": "AE1-242",
+   "name": null,
+   "operator": "PJM",
+   "state": "IL",
+   "tech": "Solar",
+   "mw": 150.0,
+   "entered": "2018-09-28",
+   "p": 0.044,
+   "built": 0
+  },
+  {
+   "id": "AE1-225",
+   "name": "Sunbury Solar",
    "operator": "PJM",
    "state": "PA",
    "tech": "Solar",
    "mw": 19.8,
    "entered": "2018-09-29",
-   "p": 0.0783,
+   "p": 0.0784,
    "built": 0
   },
   {
-   "id": "770",
-   "name": "KCE NY 8a",
+   "id": "AE2-001",
+   "name": "Confer Solar I",
+   "operator": "PJM",
+   "state": "PA",
+   "tech": "Solar",
+   "mw": 20.0,
+   "entered": "2018-10-02",
+   "p": 0.0794,
+   "built": 0
+  },
+  {
+   "id": "772",
+   "name": "Hollyhock Solar",
    "operator": "NYISO",
    "state": "NY",
-   "tech": "Battery",
+   "tech": "Solar",
    "mw": 20.0,
-   "entered": "2018-10-09",
-   "p": 0.1562,
+   "entered": "2018-10-15",
+   "p": 0.0978,
    "built": 0
   },
   {
-   "id": "20INR0153",
-   "name": "Tiger Wind",
-   "operator": "ERCOT",
-   "state": "TX",
-   "tech": "Wind",
-   "mw": 300.0,
-   "entered": "2018-10-09",
-   "p": 0.1856,
-   "built": 0
-  },
-  {
-   "id": "GEN-2018-129",
+   "id": "GEN-2018-125",
    "name": null,
    "operator": "SPP",
-   "state": "SD",
+   "state": "NE",
    "tech": "Wind",
-   "mw": 200.2,
+   "mw": 231.0,
    "entered": "2018-11-19",
-   "p": 0.0495,
-   "built": 0
-  },
-  {
-   "id": "GEN-2018-124",
-   "name": null,
-   "operator": "SPP",
-   "state": "TX",
-   "tech": "Solar",
-   "mw": 200.0,
-   "entered": "2018-11-21",
-   "p": 0.0335,
-   "built": 0
-  },
-  {
-   "id": "GEN-2018-126",
-   "name": null,
-   "operator": "SPP",
-   "state": "KS",
-   "tech": "Solar",
-   "mw": 250.0,
-   "entered": "2018-11-21",
-   "p": 0.0287,
-   "built": 0
-  },
-  {
-   "id": "21INR0226",
-   "name": "Equinox Solar 1",
-   "operator": "ERCOT",
-   "state": "TX",
-   "tech": "Solar",
-   "mw": 200.0,
-   "entered": "2018-12-10",
-   "p": 0.1456,
-   "built": 0
-  },
-  {
-   "id": "AE2-020",
-   "name": "Atlantic Shores Offshore Wind Project 1",
-   "operator": "PJM",
-   "state": "NJ",
-   "tech": "Offshore Wind",
-   "mw": 604.8,
-   "entered": "2018-12-16",
    "p": 0.0497,
+   "built": 0
+  },
+  {
+   "id": "GEN-2018-118",
+   "name": null,
+   "operator": "SPP",
+   "state": "NM",
+   "tech": "Solar",
+   "mw": 305.0,
+   "entered": "2018-11-21",
+   "p": 0.0291,
+   "built": 0
+  },
+  {
+   "id": "GEN-2018-130",
+   "name": null,
+   "operator": "SPP",
+   "state": "NE",
+   "tech": "Wind",
+   "mw": 122.0,
+   "entered": "2018-11-21",
+   "p": 0.0601,
    "built": 0
   }
  ]
