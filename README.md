@@ -44,7 +44,7 @@ python -m queue_risk.sabin             # download + parse Sabin reports (needs p
 python -m queue_risk.stack             # opposition as a second stage
 python demo/export_data.py && python demo/serve.py   # demo page
 ```
-GPU (Colab): `notebooks/tabpfn_colab.ipynb` (TabPFN); `notebooks/02_paul_text_models.ipynb` (DistilBERT). The paragraph labels hold report text, so they are shared privately, not in git.
+GPU (Colab): `notebooks/tabpfn_colab.ipynb` (TabPFN); `notebooks/02_paul_text_models.ipynb` (DistilBERT). The Sabin reports (public), their parse, and the paragraph labels are committed under `data/`, so no step needs a rebuild.
 
 ## Limitations
 - **Leakage handled:** blank fields are recorded after the outcome in this snapshot, so the model never sees whether a field was blank. Proposed dates, study results and agreement status are never features.
